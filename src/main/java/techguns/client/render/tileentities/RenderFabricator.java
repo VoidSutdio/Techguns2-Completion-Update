@@ -8,7 +8,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
-import techguns.*;
+import techguns.Tags;
 import techguns.client.models.machines.ModelFabricator;
 import techguns.client.models.machines.ModelMachine;
 import techguns.tileentities.FabricatorTileEntMaster;

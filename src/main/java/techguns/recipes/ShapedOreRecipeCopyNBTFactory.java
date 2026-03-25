@@ -1,7 +1,6 @@
 package techguns.recipes;
 
 import com.google.gson.JsonObject;
-
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
@@ -13,7 +12,7 @@ import net.minecraftforge.common.crafting.IRecipeFactory;
 import net.minecraftforge.common.crafting.JsonContext;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import org.jetbrains.annotations.NotNull;
-import techguns.*;
+import techguns.Tags;
 import techguns.items.guns.GenericGun;
 
 public class ShapedOreRecipeCopyNBTFactory implements IRecipeFactory {

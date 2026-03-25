@@ -1,7 +1,5 @@
 package techguns.world;
 
-import java.util.Random;
-
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
@@ -12,6 +10,8 @@ import net.minecraftforge.fml.common.IWorldGenerator;
 import techguns.TGConfig;
 import techguns.world.structures.NetherSubmarine;
 import techguns.world.structures.WorldgenStructure;
+
+import java.util.Random;
 
 public class WorldGenTGStructureSpawn implements IWorldGenerator {
     public static final int NETHER_STRUCT_MIN_Y = 20;
@@ -26,12 +26,12 @@ public class WorldGenTGStructureSpawn implements IWorldGenerator {
             Biome biome = world.getBiome(new BlockPos(chunkX * 16, 64, chunkZ * 16));
             generateSurface(world, random, chunkX, chunkZ, biome);
 
-        // Nether
+            // Nether
         } else if (world.provider.getDimension() == -1) {
             Biome biome = world.getBiome(new BlockPos(chunkX * 16, 64, chunkZ * 16));
             generateNether(world, random, chunkX, chunkZ, biome);
 
-        // End
+            // End
         } else if (world.provider.getDimension() == 1) {
             Biome biome = world.getBiome(new BlockPos(chunkX * 16, 64, chunkZ * 16));
             generateEnd(world, random, chunkX, chunkZ, biome);

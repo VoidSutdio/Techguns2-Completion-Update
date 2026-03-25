@@ -14,116 +14,113 @@ import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import techguns.TGuns;
-import techguns.*;
+import techguns.Tags;
 import techguns.api.npc.factions.ITGNpcTeam;
 
 public class CyberDemon extends GenericNPCUndead {
 
-	public static final ResourceLocation LOOT = new ResourceLocation(Tags.MOD_ID, "entities/cyberdemon");
-	
-	public CyberDemon(World world) {
-		super(world);
-		setTGArmorStats(10.0f, 0f);
-	}
+    public static final ResourceLocation LOOT = new ResourceLocation(Tags.MOD_ID, "entities/cyberdemon");
 
-	@Override
-	protected void applyEntityAttributes() {
-		super.applyEntityAttributes();
-		this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.35D);
-		this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(30);
-		this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(7);
-		this.getEntityAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(50.0D);
-		this.getEntityAttribute(SharedMonsterAttributes.ARMOR_TOUGHNESS).setBaseValue(1D);
-		this.isImmuneToFire = true;
-		this.hasAimedBowAnim = false;
-	}
+    public CyberDemon(World world) {
+        super(world);
+        setTGArmorStats(10.0f, 0f);
+    }
 
-	@Override
-	protected void addRandomArmor(int difficulty) {
+    @Override
+    protected void applyEntityAttributes() {
+        super.applyEntityAttributes();
+        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.35D);
+        this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(30);
+        this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(7);
+        this.getEntityAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(50.0D);
+        this.getEntityAttribute(SharedMonsterAttributes.ARMOR_TOUGHNESS).setBaseValue(1D);
+        this.isImmuneToFire = true;
+        this.hasAimedBowAnim = false;
+    }
 
-		// No Armor
-		// Weapons
-		Item weapon = null;
-		
-		weapon = TGuns.netherblaster;
-		
-		if (weapon != null) this.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, new ItemStack(weapon));
-	}
-	
-	@Override
-	public SoundEvent getAmbientSound() {
-		return techguns.TGSounds.CYBERDEMON_IDLE;
-	}
+    @Override
+    protected void addRandomArmor(int difficulty) {
 
-	@Override
-	public @NotNull SoundEvent getHurtSound(@NotNull DamageSource damageSourceIn) {
-		return techguns.TGSounds.CYBERDEMON_HURT;
-	}
+        // No Armor
+        // Weapons
+        Item weapon = null;
 
-	@Override
-	public @NotNull SoundEvent getDeathSound() {
-		return techguns.TGSounds.CYBERDEMON_DEATH;
-	}
+        weapon = TGuns.netherblaster;
 
-	public SoundEvent getStepSound() {
-		return techguns.TGSounds.CYBERDEMON_STEP;
-	}
-	
-	@Override
-	public boolean hasWeaponArmPose() {
-		return false;
-	}
+        if (weapon != null) this.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, new ItemStack(weapon));
+    }
 
-	
-	
-	@Override
-	public float getWeaponPosX() {
-		return 0.16f;
-	}
+    @Override
+    public SoundEvent getAmbientSound() {
+        return techguns.TGSounds.CYBERDEMON_IDLE;
+    }
 
-	@Override
-	public float getWeaponPosY() {
-		return 0.72f;
-	}
+    @Override
+    public @NotNull SoundEvent getHurtSound(@NotNull DamageSource damageSourceIn) {
+        return techguns.TGSounds.CYBERDEMON_HURT;
+    }
 
-	@Override
-	public float getWeaponPosZ() {
-		return 0.1f;
-	}
+    @Override
+    public @NotNull SoundEvent getDeathSound() {
+        return techguns.TGSounds.CYBERDEMON_DEATH;
+    }
 
-	@Override
-	public float getGunScale() {
-		return 1.5f;
-	}
+    public SoundEvent getStepSound() {
+        return techguns.TGSounds.CYBERDEMON_STEP;
+    }
 
-	
-	
-	@Override
-	public float getBulletOffsetSide() {
-		return 0.3f;
-	}
+    @Override
+    public boolean hasWeaponArmPose() {
+        return false;
+    }
 
-	@Override
-	public float getBulletOffsetHeight() {
-		return -0.59f;
-	}
 
-	@Override
-    protected void playStepSound(BlockPos pos, Block blockIn)
-    {
+    @Override
+    public float getWeaponPosX() {
+        return 0.16f;
+    }
+
+    @Override
+    public float getWeaponPosY() {
+        return 0.72f;
+    }
+
+    @Override
+    public float getWeaponPosZ() {
+        return 0.1f;
+    }
+
+    @Override
+    public float getGunScale() {
+        return 1.5f;
+    }
+
+
+    @Override
+    public float getBulletOffsetSide() {
+        return 0.3f;
+    }
+
+    @Override
+    public float getBulletOffsetHeight() {
+        return -0.59f;
+    }
+
+    @Override
+    protected void playStepSound(BlockPos pos, Block blockIn) {
         this.playSound(this.getStepSound(), 0.15F, 1.0F);
     }
-	
-	
-	@Override
-	protected ResourceLocation getLootTable() {
-		return LOOT;
-	}
 
-	@Override
-	protected boolean shouldBurnInDay() {
-		return false;
-	}
+
+    @Override
+    protected ResourceLocation getLootTable() {
+        return LOOT;
+    }
+
+    @Override
+    protected boolean shouldBurnInDay() {
+        return false;
+    }
 
     @Override
     public boolean attackEntityFrom(@NotNull DamageSource source, float amount) {
@@ -159,6 +156,6 @@ public class CyberDemon extends GenericNPCUndead {
     protected boolean useTargetOffsetPathing() {
         return true;
     }
-	
-	
+
+
 }

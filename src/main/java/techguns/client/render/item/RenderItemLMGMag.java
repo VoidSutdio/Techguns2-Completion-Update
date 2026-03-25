@@ -7,19 +7,19 @@ import techguns.client.models.ModelMultipart;
 
 public class RenderItemLMGMag extends RenderItemBase {
 
-	public RenderItemLMGMag(ModelMultipart model, ResourceLocation texture) {
-		super(model, texture);
-	}
+    public RenderItemLMGMag(ModelMultipart model, ResourceLocation texture) {
+        super(model, texture);
+    }
 
-	@Override
-	protected void setBaseRotation(TransformType transform) {
-		GlStateManager.rotate(-180.0f, 1.0f, 0, 0);
-		
-		if (TransformType.GUI == transform || TransformType.FIXED == transform) {
-			GlStateManager.rotate(90.0f, 0f, 1.0f, 0);
-		} else {
-			GlStateManager.rotate(180.0f, 0f, 1.0f, 0);
-		}
-	}
-	
+    @Override
+    protected void setBaseRotation(TransformType transform) {
+        GlStateManager.rotate(-180.0f, 1.0f, 0, 0);
+
+        if (TransformType.GUI == transform || TransformType.FIXED == transform) {
+            GlStateManager.rotate(90.0f, 0f, 1.0f, 0);
+        } else {
+            GlStateManager.rotate(180.0f, 0f, 1.0f, 0);
+        }
+    }
+
 }

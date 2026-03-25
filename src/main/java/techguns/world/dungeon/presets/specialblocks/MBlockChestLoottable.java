@@ -25,7 +25,7 @@ public class MBlockChestLoottable extends MBlock {
         TileEntity tile = w.getTileEntity(p);
         if (tile instanceof TileEntityChest chest) {
             chest.setLootTable(this.loottable, w.rand.nextLong());
-        } else if(tile instanceof TileEntityShulkerBox box) {
+        } else if (tile instanceof TileEntityShulkerBox box) {
             box.setLootTable(this.loottable, w.rand.nextLong());
         }
     }

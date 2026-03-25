@@ -1,10 +1,5 @@
 package techguns.world;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
@@ -14,6 +9,11 @@ import net.minecraft.world.World;
 import techguns.util.BlockUtils;
 import techguns.util.MBlock;
 import techguns.world.dungeon.presets.specialblocks.SpecialBlockHandler;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 public class Structure implements Serializable {
 

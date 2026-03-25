@@ -1,7 +1,6 @@
 package techguns.packets;
 
 import com.mojang.realmsclient.gui.ChatFormatting;
-
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.text.TextComponentString;

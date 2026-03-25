@@ -1,14 +1,12 @@
 package techguns.packets;
 
-import java.util.List;
-
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import techguns.TGPackets;
-import techguns.*;
+import techguns.Techguns;
 import techguns.api.npc.INPCTechgunsShooter;
 import techguns.api.render.IItemRenderer;
 import techguns.capabilities.TGExtendedPlayerClient;
@@ -18,6 +16,8 @@ import techguns.client.particle.TGParticleSystem;
 import techguns.client.render.ItemRenderHack;
 import techguns.client.render.item.RenderItemBase;
 import techguns.items.guns.GenericGun;
+
+import java.util.List;
 
 public class PacketNotifyAmbientEffectHandler extends HandlerTemplate<PacketNotifyAmbientEffectChange> {
 

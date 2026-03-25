@@ -1,7 +1,5 @@
 package techguns.items.additionalslots;
 
-import java.util.List;
-
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -20,6 +18,8 @@ import techguns.packets.PacketPlaySound;
 import techguns.packets.PacketSpawnParticle;
 import techguns.packets.PacketSpawnParticleOnEntity;
 import techguns.util.TextUtil;
+
+import java.util.List;
 
 public class ItemJumpPack extends ItemTGSpecialSlotAmmo {
 

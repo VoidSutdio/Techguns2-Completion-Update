@@ -3,7 +3,7 @@ package techguns.world.structures;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
-import techguns.*;
+import techguns.Tags;
 import techguns.blocks.EnumMonsterSpawnerType;
 import techguns.entities.npcs.Bandit;
 import techguns.entities.npcs.Commando;
@@ -17,10 +17,11 @@ import java.util.Random;
 
 public class FactoryBig extends WorldgenStructure {
 
-    private static final ResourceLocation CHEST_LOOT = new ResourceLocation(Tags.MOD_ID,"chests/factory_building_big");
+    private static final ResourceLocation CHEST_LOOT = new ResourceLocation(Tags.MOD_ID, "chests/factory_building_big");
 
     static ArrayList<MBlock> blockList = new ArrayList<>();
     static short[][] blocks;
+
     static {
         blockList.add(new MBlock("techguns:concrete", 3));
         blockList.add(new MBlock("minecraft:tallgrass", 1));
@@ -37,7 +38,7 @@ public class FactoryBig extends WorldgenStructure {
         blockList.add(new MBlock("techguns:stairs_concrete", 0));
         blockList.add(new MBlock("techguns:stairs_concrete", 3));
         blockList.add(new MBlock("techguns:stairs_concrete", 2));
-        blockList.add(new MBlockTGSpawner(EnumMonsterSpawnerType.HOLE,6,2,150,2).addMobType(Bandit.class, 1).addMobType(Commando.class, 1));
+        blockList.add(new MBlockTGSpawner(EnumMonsterSpawnerType.HOLE, 6, 2, 150, 2).addMobType(Bandit.class, 1).addMobType(Commando.class, 1));
         blockList.add(new MBlock("techguns:stairs_concrete", 4));
         blockList.add(new MBlock("techguns:metalpanel", 7));
         blockList.add(new MBlock("techguns:stairs_concrete", 6));

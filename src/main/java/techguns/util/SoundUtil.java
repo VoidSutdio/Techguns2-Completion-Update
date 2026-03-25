@@ -5,7 +5,7 @@ import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
 import techguns.TGPackets;
-import techguns.*;
+import techguns.Techguns;
 import techguns.client.ClientProxy;
 import techguns.client.audio.TGSoundCategory;
 import techguns.packets.PacketPlaySound;

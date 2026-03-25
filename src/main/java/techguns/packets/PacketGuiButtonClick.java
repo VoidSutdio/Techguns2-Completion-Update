@@ -1,7 +1,5 @@
 package techguns.packets;
 
-import java.nio.charset.StandardCharsets;
-
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
@@ -10,6 +8,8 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import techguns.TGPackets;
 import techguns.tileentities.BasicInventoryTileEnt;
+
+import java.nio.charset.StandardCharsets;
 
 public class PacketGuiButtonClick implements IMessage {
     private int x;

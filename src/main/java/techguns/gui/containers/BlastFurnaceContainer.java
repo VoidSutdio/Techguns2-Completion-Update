@@ -7,7 +7,11 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
-import techguns.gui.widgets.*;
+import techguns.gui.widgets.SlotFabricator;
+import techguns.gui.widgets.SlotItemHandlerOutput;
+import techguns.gui.widgets.SlotMachineInputBG;
+import techguns.gui.widgets.SlotMachineUpgrade;
+import techguns.gui.widgets.SlotTG;
 import techguns.tileentities.BlastFurnaceTileEnt;
 import techguns.tileentities.operation.ItemStackHandlerPlus;
 

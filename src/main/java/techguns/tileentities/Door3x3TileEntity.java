@@ -16,7 +16,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import org.jetbrains.annotations.NotNull;
 import techguns.TGBlocks;
 import techguns.TGPackets;
-import techguns.*;
+import techguns.Tags;
 import techguns.blocks.BlockTGDoor3x3;
 import techguns.packets.PacketDoorStateChange;
 

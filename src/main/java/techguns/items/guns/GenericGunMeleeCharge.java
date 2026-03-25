@@ -1,12 +1,8 @@
 package techguns.items.guns;
 
-import java.util.HashMap;
-import java.util.List;
-
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 import com.mojang.realmsclient.gui.ChatFormatting;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.util.ITooltipFlag;
@@ -35,7 +31,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jetbrains.annotations.NotNull;
 import techguns.TGPackets;
 import techguns.TGSounds;
-import techguns.*;
+import techguns.Tags;
 import techguns.api.damagesystem.DamageType;
 import techguns.capabilities.TGExtendedPlayer;
 import techguns.client.ShooterValues;
@@ -47,6 +43,9 @@ import techguns.plugins.crafttweaker.EnumGunStat;
 import techguns.util.BlockUtils;
 import techguns.util.ItemUtil;
 import techguns.util.TextUtil;
+
+import java.util.HashMap;
+import java.util.List;
 
 public class GenericGunMeleeCharge extends GenericGunCharge implements IGenericGunMelee<GenericGunMeleeCharge> {
 

@@ -1,10 +1,5 @@
 package techguns.entities.spawn;
 
-import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Random;
-
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.math.BlockPos;
@@ -15,6 +10,11 @@ import net.minecraftforge.common.BiomeDictionary;
 import techguns.TGConfig;
 import techguns.entities.npcs.GenericNPC;
 import techguns.util.MathUtil.Vec2;
+
+import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Random;
 
 
 /**

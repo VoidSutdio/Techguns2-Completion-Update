@@ -1,10 +1,10 @@
 package techguns.items.guns;
 
-import java.util.HashMap;
-
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+
+import java.util.HashMap;
 
 public interface IGenericGunMelee<T extends GenericGun> {
 

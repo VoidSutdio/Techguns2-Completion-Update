@@ -12,7 +12,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import techguns.TGArmors;
 import techguns.TGItems;
-import techguns.*;
+import techguns.Tags;
 import techguns.items.GenericItemShared;
 import techguns.items.armors.GenericArmor;
 import techguns.items.guns.GenericGrenade;
@@ -51,6 +51,7 @@ public class TGItemRenderEvents {
         TGArmors.armors.stream().filter(GenericArmor::usesRenderHack).forEach(item -> registerBuiltInModel(event, new ModelResourceLocation(item.getModelLocation(), "inventory")));
 
     }
+
     private static void registerBuiltInModel(ModelBakeEvent event, ModelResourceLocation loc) {
         IBakedModel original = event.getModelRegistry().getObject(loc);
         if (original != null) {

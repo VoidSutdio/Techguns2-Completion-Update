@@ -16,7 +16,8 @@ public final class TGItemRendererContext {
     private static final ThreadLocal<ItemCameraTransforms.TransformType> CURRENT_TRANSFORM = ThreadLocal.withInitial(() -> ItemCameraTransforms.TransformType.NONE);
     private static final ThreadLocal<Deque<EntityLivingBase>> ENTITY_STACK = ThreadLocal.withInitial(ArrayDeque::new);
 
-    private TGItemRendererContext() {}
+    private TGItemRendererContext() {
+    }
 
     public static void setTransform(ItemCameraTransforms.TransformType transform) {
         CURRENT_TRANSFORM.set(transform);

@@ -1,10 +1,10 @@
 package techguns.world.structures;
 
-import java.util.Random;
-
 import net.minecraft.world.World;
 import techguns.world.dungeon.Dungeon;
 import techguns.world.dungeon.presets.IDungeonPreset;
+
+import java.util.Random;
 
 public class CastleStructure extends WorldgenStructure {
 

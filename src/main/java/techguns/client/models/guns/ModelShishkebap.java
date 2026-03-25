@@ -1,6 +1,5 @@
 package techguns.client.models.guns;
 
-import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms.TransformType;
@@ -119,9 +118,9 @@ public class ModelShishkebap extends ModelMultipart {
     }
 
     @Override
-	public void render(Entity entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw,
-			float headPitch, float f5, int ammoLeft, float reloadProgress, TransformType transformType, int part,
-			float fireProgress, float chargeProgress) {
+    public void render(Entity entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw,
+                       float headPitch, float f5, int ammoLeft, float reloadProgress, TransformType transformType, int part,
+                       float fireProgress, float chargeProgress) {
         this.Grip3.render(f5);
         this.igniter.render(f5);
         this.Grip2.render(f5);

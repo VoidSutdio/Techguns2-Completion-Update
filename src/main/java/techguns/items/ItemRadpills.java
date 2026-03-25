@@ -1,9 +1,6 @@
 package techguns.items;
 
-import java.util.List;
-
 import com.mojang.realmsclient.gui.ChatFormatting;
-
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
@@ -16,6 +13,8 @@ import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
 import techguns.TGRadiationSystem;
 import techguns.util.TextUtil;
+
+import java.util.List;
 
 public class ItemRadpills extends GenericItemConsumable {
     public ItemRadpills(String name) {

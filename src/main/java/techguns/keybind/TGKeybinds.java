@@ -1,7 +1,5 @@
 package techguns.keybind;
 
-import org.lwjgl.input.Keyboard;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.player.EntityPlayer;
@@ -12,8 +10,9 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import org.lwjgl.input.Keyboard;
 import techguns.TGPackets;
-import techguns.*;
+import techguns.Techguns;
 import techguns.api.guns.GunManager;
 import techguns.capabilities.TGExtendedPlayer;
 import techguns.items.guns.GenericGun;

@@ -2,7 +2,7 @@ package techguns.tileentities;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
-import techguns.*;
+import techguns.Techguns;
 import techguns.api.machines.ITGTileEntSecurity;
 import techguns.factions.TGNpcFactions;
 

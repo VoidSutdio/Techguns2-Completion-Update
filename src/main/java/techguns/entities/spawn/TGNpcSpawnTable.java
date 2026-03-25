@@ -1,8 +1,8 @@
 package techguns.entities.spawn;
 
-import java.util.ArrayList;
-
 import techguns.util.MathUtil;
+
+import java.util.ArrayList;
 
 public class TGNpcSpawnTable {
     protected final int maxDanger;

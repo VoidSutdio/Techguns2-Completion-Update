@@ -15,85 +15,86 @@ import techguns.debug.Keybinds;
 import techguns.entities.npcs.NPCTurret;
 import techguns.items.guns.GenericGun;
 
-public class RenderNPCTurret extends RenderLiving<NPCTurret>{
-	private static final ModelMultipart model = new ModelTurret();
+public class RenderNPCTurret extends RenderLiving<NPCTurret> {
+    private static final ModelMultipart model = new ModelTurret();
 
 
-	public RenderNPCTurret(RenderManager renderManager) {
-		super(renderManager, model, 0f);
-	}
+    public RenderNPCTurret(RenderManager renderManager) {
+        super(renderManager, model, 0f);
+    }
 
-	@Override
-	protected ResourceLocation getEntityTexture(NPCTurret entity) {
-		return entity.getTexture();
-	}
+    @Override
+    protected ResourceLocation getEntityTexture(NPCTurret entity) {
+        return entity.getTexture();
+    }
 
-	@Override
-	public void doRender(NPCTurret turret, double x, double y, double z, float entityYaw, float partialTicks) {
-		TGItemRendererContext.pushEntity(turret);
-		GlStateManager.pushMatrix();
-	    GlStateManager.translate(x, y, z);
-	        
-	    GlStateManager.enableRescaleNormal();
-	        
-	    EnumFacing facing = EnumFacing.UP;
-	    if (turret.mountedTileEnt != null) {
-	    	facing = turret.mountedTileEnt.getFacing();
-		}
-		float mirrorYaw = 1.0f;
-		float mirrorPitch = 1.0f;
-		float yawOffset = 0f;
-	        
-		if(facing == EnumFacing.DOWN) {
-			mirrorYaw = -1f;
-			mirrorPitch = -1f;
-			yawOffset = 180.0f;
-		}
-	    	
-		Minecraft.getMinecraft().getTextureManager().bindTexture(turret.getTexture());
-	        
-		this.translate(facing);
-		this.rotatetoBase(facing);
-	        
-		GlStateManager.rotate(turret.rotationYawHead*mirrorYaw+yawOffset,0,1f,0);
-	        
-		model.render(turret, 0, 0, 0, 0, 0, 0.0625F, 0, 0.0f, TransformType.FIXED, 0, 0.0f, 0f);
-	        
-		float rotoffset=0.9f;
+    @Override
+    public void doRender(NPCTurret turret, double x, double y, double z, float entityYaw, float partialTicks) {
+        TGItemRendererContext.pushEntity(turret);
+        GlStateManager.pushMatrix();
+        GlStateManager.translate(x, y, z);
 
-		GlStateManager.translate(0, rotoffset, 0);
-		GlStateManager.rotate(turret.rotationPitch*mirrorPitch, 1f, 0, 0);
-		GlStateManager.translate(0, -rotoffset, 0);
-		model.render(turret, 0, 0, 0, 0, 0, 0.0625F, 0, 0.0f, TransformType.FIXED, 1, 0.0f, 0f);
-	        
-		this.renderEquippedItems(turret);
+        GlStateManager.enableRescaleNormal();
 
-		GlStateManager.disableRescaleNormal();
-		GlStateManager.popMatrix();
-		TGItemRendererContext.popEntity(turret);
-	}
+        EnumFacing facing = EnumFacing.UP;
+        if (turret.mountedTileEnt != null) {
+            facing = turret.mountedTileEnt.getFacing();
+        }
+        float mirrorYaw = 1.0f;
+        float mirrorPitch = 1.0f;
+        float yawOffset = 0f;
 
-	protected void rotatetoBase(EnumFacing facing) {
-		if (facing == EnumFacing.UP) GlStateManager.rotate(180.0f, 1f, 0, 0);
-	}
-	protected void translate(EnumFacing facing) {
-		if (facing == EnumFacing.UP) GlStateManager.translate(0, 1.5f, 0);
-		else if (facing == EnumFacing.DOWN) GlStateManager.translate(0, -0.6f, 0);
-	}
-	
-	protected void renderEquippedItems(NPCTurret turret) {
-		ItemStack gunstack = turret.getHeldItemMainhand();
-		if(gunstack.isEmpty()) return;
+        if (facing == EnumFacing.DOWN) {
+            mirrorYaw = -1f;
+            mirrorPitch = -1f;
+            yawOffset = 180.0f;
+        }
 
-		GenericGun gun = (GenericGun) gunstack.getItem();
-			
-		GlStateManager.pushMatrix();
+        Minecraft.getMinecraft().getTextureManager().bindTexture(turret.getTexture());
 
-		float gunOffsetY = 0.85f;
-		GlStateManager.translate(gun.turretPosOffsetX+Keybinds.X, gun.turretPosOffsetY+ gunOffsetY +Keybinds.Y, gun.turretPosOffsetZ+Keybinds.Z);
-		GlStateManager.rotate(180.0F, 1.0F, 0.0F, 0.0F);
-		GlStateManager.rotate(180.0F, 0.0F, 1.0F, 0.0F);
-		Minecraft.getMinecraft().getItemRenderer().renderItemSide(turret, gunstack, TransformType.THIRD_PERSON_RIGHT_HAND, false);
-		GlStateManager.popMatrix();
-	}
+        this.translate(facing);
+        this.rotatetoBase(facing);
+
+        GlStateManager.rotate(turret.rotationYawHead * mirrorYaw + yawOffset, 0, 1f, 0);
+
+        model.render(turret, 0, 0, 0, 0, 0, 0.0625F, 0, 0.0f, TransformType.FIXED, 0, 0.0f, 0f);
+
+        float rotoffset = 0.9f;
+
+        GlStateManager.translate(0, rotoffset, 0);
+        GlStateManager.rotate(turret.rotationPitch * mirrorPitch, 1f, 0, 0);
+        GlStateManager.translate(0, -rotoffset, 0);
+        model.render(turret, 0, 0, 0, 0, 0, 0.0625F, 0, 0.0f, TransformType.FIXED, 1, 0.0f, 0f);
+
+        this.renderEquippedItems(turret);
+
+        GlStateManager.disableRescaleNormal();
+        GlStateManager.popMatrix();
+        TGItemRendererContext.popEntity(turret);
+    }
+
+    protected void rotatetoBase(EnumFacing facing) {
+        if (facing == EnumFacing.UP) GlStateManager.rotate(180.0f, 1f, 0, 0);
+    }
+
+    protected void translate(EnumFacing facing) {
+        if (facing == EnumFacing.UP) GlStateManager.translate(0, 1.5f, 0);
+        else if (facing == EnumFacing.DOWN) GlStateManager.translate(0, -0.6f, 0);
+    }
+
+    protected void renderEquippedItems(NPCTurret turret) {
+        ItemStack gunstack = turret.getHeldItemMainhand();
+        if (gunstack.isEmpty()) return;
+
+        GenericGun gun = (GenericGun) gunstack.getItem();
+
+        GlStateManager.pushMatrix();
+
+        float gunOffsetY = 0.85f;
+        GlStateManager.translate(gun.turretPosOffsetX + Keybinds.X, gun.turretPosOffsetY + gunOffsetY + Keybinds.Y, gun.turretPosOffsetZ + Keybinds.Z);
+        GlStateManager.rotate(180.0F, 1.0F, 0.0F, 0.0F);
+        GlStateManager.rotate(180.0F, 0.0F, 1.0F, 0.0F);
+        Minecraft.getMinecraft().getItemRenderer().renderItemSide(turret, gunstack, TransformType.THIRD_PERSON_RIGHT_HAND, false);
+        GlStateManager.popMatrix();
+    }
 }

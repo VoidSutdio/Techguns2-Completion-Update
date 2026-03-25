@@ -1,11 +1,5 @@
 package techguns.items.armors;
 
-import java.util.List;
-import java.util.Random;
-
-import org.jetbrains.annotations.NotNull;
-import org.lwjgl.input.Keyboard;
-
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -18,8 +12,13 @@ import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
-import techguns.*;
+import org.jetbrains.annotations.NotNull;
+import org.lwjgl.input.Keyboard;
+import techguns.Tags;
 import techguns.util.TextUtil;
+
+import java.util.List;
+import java.util.Random;
 
 public class GenericArmorMultiCamo extends GenericArmor implements ICamoChangeable {
     protected static Random rnd = new Random();

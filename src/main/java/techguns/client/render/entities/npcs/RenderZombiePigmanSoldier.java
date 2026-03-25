@@ -8,28 +8,25 @@ import techguns.entities.npcs.ZombiePigmanSoldier;
 
 public class RenderZombiePigmanSoldier extends RenderGenericNPC<ZombiePigmanSoldier> {
 
-	
-	private static final ResourceLocation TEXTURE = new ResourceLocation("textures/entity/zombie_pigman.png");
 
-	
-	public RenderZombiePigmanSoldier(RenderManager renderManagerIn) {
-		super(renderManagerIn, new ModelGenericNPC(), 0.5f);
-		LayerBipedArmor layerbipedarmor = new LayerBipedArmor(this)
-        {
-            protected void initArmor()
-            {
+    private static final ResourceLocation TEXTURE = new ResourceLocation("textures/entity/zombie_pigman.png");
+
+
+    public RenderZombiePigmanSoldier(RenderManager renderManagerIn) {
+        super(renderManagerIn, new ModelGenericNPC(), 0.5f);
+        LayerBipedArmor layerbipedarmor = new LayerBipedArmor(this) {
+            protected void initArmor() {
                 this.modelLeggings = new ModelGenericNPC(0.5F, true);
                 this.modelArmor = new ModelGenericNPC(1.0F, true);
             }
         };
         this.addLayer(layerbipedarmor);
-	}
+    }
 
-	
-	
-	   @Override
-	protected ResourceLocation getEntityTexture(ZombiePigmanSoldier entity) {
-		return TEXTURE;
-	}
-	
+
+    @Override
+    protected ResourceLocation getEntityTexture(ZombiePigmanSoldier entity) {
+        return TEXTURE;
+    }
+
 }

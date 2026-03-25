@@ -1,8 +1,5 @@
 package techguns.packets;
 
-import java.nio.charset.StandardCharsets;
-import java.util.Objects;
-
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
@@ -12,6 +9,8 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import techguns.client.ClientProxy;
 import techguns.util.EntityCondition;
+
+import java.nio.charset.StandardCharsets;
 
 public class PacketSpawnParticleOnEntity implements IMessage {
 
@@ -82,8 +81,7 @@ public class PacketSpawnParticleOnEntity implements IMessage {
 
         if (condition == null) {
             buf.writeByte(EntityCondition.NONE.id);
-        }
-        else {
+        } else {
             buf.writeByte(condition.id);
         }
     }

@@ -1,9 +1,5 @@
 package techguns.world.dungeon;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
@@ -14,6 +10,10 @@ import techguns.TGBlocks;
 import techguns.tileentities.TGSpawnerTileEnt;
 import techguns.world.dungeon.TemplateSegment.SegmentType;
 import techguns.world.dungeon.presets.IDungeonPreset;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 public class MazeDungeonPath implements IDungeonPath {
 

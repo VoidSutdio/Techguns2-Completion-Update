@@ -1,21 +1,10 @@
 package techguns.items.armors;
 
-import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-import java.util.UUID;
-
-import net.minecraft.client.resources.I18n;
-import org.jetbrains.annotations.NotNull;
-import org.lwjgl.input.Keyboard;
-
 import com.google.common.collect.Multimap;
 import com.mojang.realmsclient.gui.ChatFormatting;
-
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
@@ -32,9 +21,12 @@ import net.minecraftforge.common.ISpecialArmor;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.oredict.OreDictionary;
+import org.jetbrains.annotations.NotNull;
+import org.lwjgl.input.Keyboard;
 import techguns.TGArmors;
 import techguns.TGItems;
-import techguns.*;
+import techguns.Tags;
+import techguns.Techguns;
 import techguns.api.damagesystem.DamageType;
 import techguns.api.radiation.TGRadiation;
 import techguns.api.render.IItemTGRenderer;
@@ -45,6 +37,13 @@ import techguns.damagesystem.DamageSystem;
 import techguns.damagesystem.TGDamageSource;
 import techguns.gui.player.TGPlayerInventory;
 import techguns.util.TextUtil;
+
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+import java.util.UUID;
 
 public class GenericArmor extends ItemArmor implements ISpecialArmor, IItemTGRenderer {
 

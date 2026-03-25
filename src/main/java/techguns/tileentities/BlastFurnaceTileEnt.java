@@ -9,7 +9,7 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
 import techguns.TGItems;
-import techguns.*;
+import techguns.Tags;
 import techguns.tileentities.operation.BlastFurnaceRecipes;
 import techguns.tileentities.operation.ItemStackHandlerPlus;
 import techguns.tileentities.operation.MachineOperation;

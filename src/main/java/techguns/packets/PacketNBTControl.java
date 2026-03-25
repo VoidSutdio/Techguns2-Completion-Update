@@ -21,7 +21,8 @@ public class PacketNBTControl implements IMessage {
     int y;
     int z;
 
-    public PacketNBTControl() { }
+    public PacketNBTControl() {
+    }
 
     public PacketNBTControl(NBTTagCompound nbt, int x, int y, int z) {
 
@@ -69,16 +70,16 @@ public class PacketNBTControl implements IMessage {
             ctx.getServerHandler().player.server.addScheduledTask(() -> {
                 EntityPlayerMP p = ctx.getServerHandler().player;
 
-                if(p.world == null)
+                if (p.world == null)
                     return;
 
                 TileEntity te = p.world.getTileEntity(new BlockPos(m.x, m.y, m.z));
 
                 try {
                     NBTTagCompound nbt = m.buffer.readCompoundTag();
-                    if(nbt != null) {
-                        if(te instanceof IControlReceiver tile) {
-                            if(tile.hasPermission(p)) {
+                    if (nbt != null) {
+                        if (te instanceof IControlReceiver tile) {
+                            if (tile.hasPermission(p)) {
                                 tile.receiveControl(p, nbt);
                                 tile.receiveControl(nbt);
                             }

@@ -6,85 +6,85 @@ import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.IStringSerializable;
 import org.jetbrains.annotations.NotNull;
 import techguns.api.machines.IMachineType;
+import techguns.tileentities.BlastFurnaceTileEnt;
 import techguns.tileentities.CamoBenchTileEnt;
 import techguns.tileentities.ChargingStationTileEnt;
 import techguns.tileentities.RepairBenchTileEnt;
-import techguns.tileentities.BlastFurnaceTileEnt;
 
 public enum EnumSimpleMachineType implements IStringSerializable, IMachineType {
-	CAMO_BENCH(0, CamoBenchTileEnt.class,true,EnumBlockRenderType.MODEL),
-	REPAIR_BENCH(1, RepairBenchTileEnt.class,true,EnumBlockRenderType.MODEL),
-	CHARGING_STATION(2, ChargingStationTileEnt.class, false, EnumBlockRenderType.MODEL),
-	BLAST_FURNACE(3, BlastFurnaceTileEnt.class, true, EnumBlockRenderType.MODEL);
-	
-	private final int id;
-	private final String name;
-	private final Class<? extends TileEntity> tile;
-	private final boolean isFullCube;
-	private final EnumBlockRenderType renderType;
-	private final BlockRenderLayer renderLayer;
-	
-	EnumSimpleMachineType(int id, Class<? extends TileEntity> tile, boolean isFullCube, EnumBlockRenderType renderType) {
-		this(id,tile,isFullCube,renderType, BlockRenderLayer.SOLID);
-	}
-	
-	
-	EnumSimpleMachineType(int id, Class<? extends TileEntity> tile, boolean isFullCube, EnumBlockRenderType renderType, BlockRenderLayer layer) {
-		this.id=id;
-		this.name=this.name().toLowerCase();
-		this.tile = tile;
-		this.isFullCube=isFullCube;
-		this.renderType=renderType;
-		this.renderLayer=layer;
-	}
-	
-	public int getIndex() {
-		return id;
-	}
-	
-	@Override
-	public @NotNull String getName() {
-		return this.name;
-	}
+    CAMO_BENCH(0, CamoBenchTileEnt.class, true, EnumBlockRenderType.MODEL),
+    REPAIR_BENCH(1, RepairBenchTileEnt.class, true, EnumBlockRenderType.MODEL),
+    CHARGING_STATION(2, ChargingStationTileEnt.class, false, EnumBlockRenderType.MODEL),
+    BLAST_FURNACE(3, BlastFurnaceTileEnt.class, true, EnumBlockRenderType.MODEL);
 
-	@Override
-	public int getMaxMachineIndex() {
-		return EnumSimpleMachineType.values().length;
-	}
+    private final int id;
+    private final String name;
+    private final Class<? extends TileEntity> tile;
+    private final boolean isFullCube;
+    private final EnumBlockRenderType renderType;
+    private final BlockRenderLayer renderLayer;
 
-	@Override
-	public TileEntity getTile() {
-		try {
-			return this.tile.newInstance();
-		} catch (InstantiationException | IllegalAccessException e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
-	
-	@Override
-	public Class<? extends TileEntity> getTileClass() {
-		return this.tile;
-	}
+    EnumSimpleMachineType(int id, Class<? extends TileEntity> tile, boolean isFullCube, EnumBlockRenderType renderType) {
+        this(id, tile, isFullCube, renderType, BlockRenderLayer.SOLID);
+    }
 
-	@Override
-	public boolean isFullCube() {
-		return isFullCube;
-	}
 
-	@Override
-	public EnumBlockRenderType getRenderType() {
-		return renderType;
-	}
+    EnumSimpleMachineType(int id, Class<? extends TileEntity> tile, boolean isFullCube, EnumBlockRenderType renderType, BlockRenderLayer layer) {
+        this.id = id;
+        this.name = this.name().toLowerCase();
+        this.tile = tile;
+        this.isFullCube = isFullCube;
+        this.renderType = renderType;
+        this.renderLayer = layer;
+    }
 
-	@Override
-	public BlockRenderLayer getBlockRenderLayer() {
-		return this.renderLayer;
-	}
+    public int getIndex() {
+        return id;
+    }
 
-	@Override
-	public boolean debugOnly() {
-		return false;
-	}
-	
+    @Override
+    public @NotNull String getName() {
+        return this.name;
+    }
+
+    @Override
+    public int getMaxMachineIndex() {
+        return EnumSimpleMachineType.values().length;
+    }
+
+    @Override
+    public TileEntity getTile() {
+        try {
+            return this.tile.newInstance();
+        } catch (InstantiationException | IllegalAccessException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public Class<? extends TileEntity> getTileClass() {
+        return this.tile;
+    }
+
+    @Override
+    public boolean isFullCube() {
+        return isFullCube;
+    }
+
+    @Override
+    public EnumBlockRenderType getRenderType() {
+        return renderType;
+    }
+
+    @Override
+    public BlockRenderLayer getBlockRenderLayer() {
+        return this.renderLayer;
+    }
+
+    @Override
+    public boolean debugOnly() {
+        return false;
+    }
+
 }

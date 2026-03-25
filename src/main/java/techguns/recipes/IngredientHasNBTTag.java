@@ -1,13 +1,13 @@
 package techguns.recipes;
 
-import javax.annotation.Nonnull;
-
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import org.jetbrains.annotations.NotNull;
 import techguns.items.guns.GenericGun;
+
+import javax.annotation.Nonnull;
 
 public class IngredientHasNBTTag extends Ingredient {
 

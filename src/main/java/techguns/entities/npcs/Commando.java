@@ -19,45 +19,45 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import techguns.TGArmors;
 import techguns.TGuns;
-import techguns.*;
+import techguns.Tags;
 import techguns.api.npc.factions.ITGNpcTeam;
 
 import java.util.List;
 
 public class Commando extends GenericNPC implements ILivingSoldier {
 
-	public static final ResourceLocation LOOT = new ResourceLocation(Tags.MOD_ID, "entities/commando");
+    public static final ResourceLocation LOOT = new ResourceLocation(Tags.MOD_ID, "entities/commando");
 
     private int soundAggroCooldown = 0;
 
-	public Commando(World world) {
-		super(world);
-		setTGArmorStats(8.0f, 0f);
-	}
+    public Commando(World world) {
+        super(world);
+        setTGArmorStats(8.0f, 0f);
+    }
 
-	@Override
-	protected void applyEntityAttributes() {
-		super.applyEntityAttributes();
-		this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.35D);
-		this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(30);
-		this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(5);
-		this.getEntityAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(75.0D);
-	}
+    @Override
+    protected void applyEntityAttributes() {
+        super.applyEntityAttributes();
+        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.35D);
+        this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(30);
+        this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(5);
+        this.getEntityAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(75.0D);
+    }
 
-	@Override
-	protected void addRandomArmor(int difficulty) {
+    @Override
+    protected void addRandomArmor(int difficulty) {
 
-		// Armors
-		this.setItemStackToSlot(EntityEquipmentSlot.HEAD, new ItemStack(TGArmors.t2_commando_Helmet));
-		this.setItemStackToSlot(EntityEquipmentSlot.CHEST,new ItemStack(TGArmors.t2_commando_Chestplate));
-		this.setItemStackToSlot(EntityEquipmentSlot.LEGS, new ItemStack(TGArmors.t2_commando_Leggings));
-	    this.setItemStackToSlot(EntityEquipmentSlot.FEET, new ItemStack(TGArmors.t2_commando_Boots));
+        // Armors
+        this.setItemStackToSlot(EntityEquipmentSlot.HEAD, new ItemStack(TGArmors.t2_commando_Helmet));
+        this.setItemStackToSlot(EntityEquipmentSlot.CHEST, new ItemStack(TGArmors.t2_commando_Chestplate));
+        this.setItemStackToSlot(EntityEquipmentSlot.LEGS, new ItemStack(TGArmors.t2_commando_Leggings));
+        this.setItemStackToSlot(EntityEquipmentSlot.FEET, new ItemStack(TGArmors.t2_commando_Boots));
 
-		// Weapons
-		Item weapon = TGuns.m4_infiltrator;
-		
-		if (weapon != null) this.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, new ItemStack(weapon));
-	}
+        // Weapons
+        Item weapon = TGuns.m4_infiltrator;
+
+        if (weapon != null) this.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, new ItemStack(weapon));
+    }
 
     @Override
     public void onLivingUpdate() {
@@ -66,6 +66,7 @@ public class Commando extends GenericNPC implements ILivingSoldier {
             this.tickHearingAI();
         }
     }
+
     @Override
     public void tickHearingAI() {
         if ((this.ticksExisted & 3) != 0) {
@@ -117,36 +118,35 @@ public class Commando extends GenericNPC implements ILivingSoldier {
     private boolean canHearPlayer(EntityPlayer player) {
         return this.isValidPlayerTarget(player);
     }
-	
-	@Override
-	public SoundEvent getAmbientSound() {
-		return SoundEvents.ENTITY_VILLAGER_AMBIENT;
-	}
 
-	@Override
-	public @NotNull SoundEvent getHurtSound(@NotNull DamageSource damageSourceIn) {
-		return SoundEvents.ENTITY_VILLAGER_HURT;
-	}
+    @Override
+    public SoundEvent getAmbientSound() {
+        return SoundEvents.ENTITY_VILLAGER_AMBIENT;
+    }
 
-	@Override
-	public @NotNull SoundEvent getDeathSound() {
-		return SoundEvents.ENTITY_VILLAGER_DEATH;
-	}
+    @Override
+    public @NotNull SoundEvent getHurtSound(@NotNull DamageSource damageSourceIn) {
+        return SoundEvents.ENTITY_VILLAGER_HURT;
+    }
 
-	public SoundEvent getStepSound() {
-		return SoundEvents.ENTITY_ZOMBIE_VILLAGER_STEP;
-	}
-	
-	@Override
-    protected void playStepSound(BlockPos pos, Block blockIn)
-    {
+    @Override
+    public @NotNull SoundEvent getDeathSound() {
+        return SoundEvents.ENTITY_VILLAGER_DEATH;
+    }
+
+    public SoundEvent getStepSound() {
+        return SoundEvents.ENTITY_ZOMBIE_VILLAGER_STEP;
+    }
+
+    @Override
+    protected void playStepSound(BlockPos pos, Block blockIn) {
         this.playSound(this.getStepSound(), 0.15F, 1.0F);
     }
-	
-	@Override
-	protected ResourceLocation getLootTable() {
-		return LOOT;
-	}
+
+    @Override
+    protected ResourceLocation getLootTable() {
+        return LOOT;
+    }
 
     @Override
     public boolean attackEntityFrom(@NotNull DamageSource source, float amount) {

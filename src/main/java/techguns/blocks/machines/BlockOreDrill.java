@@ -14,36 +14,36 @@ import techguns.blocks.ItemBlockOreDrill;
 
 public class BlockOreDrill extends MultiBlockMachine<EnumOreDrillType> {
 
-	public BlockOreDrill(String name) {
-		super(name, EnumOreDrillType.class);
-	}
+    public BlockOreDrill(String name) {
+        super(name, EnumOreDrillType.class);
+    }
 
-	@SideOnly(Side.CLIENT)
-	@Override
-	public boolean shouldSideBeRendered(@NotNull IBlockState blockState, IBlockAccess blockAccess, BlockPos pos,
-										@NotNull EnumFacing side) {
+    @SideOnly(Side.CLIENT)
+    @Override
+    public boolean shouldSideBeRendered(@NotNull IBlockState blockState, IBlockAccess blockAccess, BlockPos pos,
+                                        @NotNull EnumFacing side) {
 
         IBlockState iblockstate = blockAccess.getBlockState(pos.offset(side));
         Block block = iblockstate.getBlock();
 
-        if(this.getClass().isInstance(block)) {
-        	if(blockState.getValue(MACHINE_TYPE)==EnumOreDrillType.SCAFFOLD && blockState.getValue(FORMED)) {
-        		return iblockstate!=blockState;
-        	}
+        if (this.getClass().isInstance(block)) {
+            if (blockState.getValue(MACHINE_TYPE) == EnumOreDrillType.SCAFFOLD && blockState.getValue(FORMED)) {
+                return iblockstate != blockState;
+            }
         }
-        return super.shouldSideBeRendered(blockState, blockAccess, pos, side);	
-	}
+        return super.shouldSideBeRendered(blockState, blockAccess, pos, side);
+    }
 
-	@Override
-	public ItemBlock createItemBlock() {
-		ItemBlockOreDrill itemblock =  new ItemBlockOreDrill(this);
-		this.itemblock=itemblock;
-		return itemblock;
-	}
+    @Override
+    public ItemBlock createItemBlock() {
+        ItemBlockOreDrill itemblock = new ItemBlockOreDrill(this);
+        this.itemblock = itemblock;
+        return itemblock;
+    }
 
-	@Override
-	public @NotNull BlockFaceShape getBlockFaceShape(@NotNull IBlockAccess worldIn, IBlockState state, @NotNull BlockPos pos, @NotNull EnumFacing face) {
-		return BlockFaceShape.SOLID;
-	}
-	
+    @Override
+    public @NotNull BlockFaceShape getBlockFaceShape(@NotNull IBlockAccess worldIn, IBlockState state, @NotNull BlockPos pos, @NotNull EnumFacing face) {
+        return BlockFaceShape.SOLID;
+    }
+
 }

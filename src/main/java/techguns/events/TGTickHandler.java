@@ -1,7 +1,5 @@
 package techguns.events;
 
-import java.util.UUID;
-
 import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityLivingBase;
@@ -27,7 +25,12 @@ import net.minecraftforge.fml.common.gameevent.TickEvent.PlayerTickEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.RenderTickEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import techguns.*;
+import techguns.TGConfig;
+import techguns.TGPackets;
+import techguns.TGRadiationSystem;
+import techguns.TGSounds;
+import techguns.Tags;
+import techguns.Techguns;
 import techguns.api.guns.IGenericGun;
 import techguns.api.npc.INPCTechgunsShooter;
 import techguns.api.radiation.TGRadiation;
@@ -54,6 +57,8 @@ import techguns.packets.PacketTGExtendedPlayerSync;
 import techguns.radiation.ItemRadiationData;
 import techguns.radiation.ItemRadiationRegistry;
 import techguns.util.InventoryUtil;
+
+import java.util.UUID;
 
 @Mod.EventBusSubscriber(modid = Tags.MOD_ID)
 public class TGTickHandler {

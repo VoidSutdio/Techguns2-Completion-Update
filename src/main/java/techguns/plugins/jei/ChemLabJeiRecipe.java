@@ -1,9 +1,5 @@
 package techguns.plugins.jei;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.ingredients.VanillaTypes;
 import net.minecraft.client.Minecraft;
@@ -13,6 +9,10 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 import org.jetbrains.annotations.NotNull;
 import techguns.tileentities.operation.ChemLabRecipes;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class ChemLabJeiRecipe extends BasicRecipeWrapper {
 

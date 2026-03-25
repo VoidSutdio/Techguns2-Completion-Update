@@ -1,9 +1,5 @@
 package techguns.plugins.jei;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import org.jetbrains.annotations.NotNull;
@@ -11,6 +7,10 @@ import techguns.TGItems;
 import techguns.tileentities.FabricatorTileEntMaster;
 import techguns.tileentities.operation.FabricatorRecipe;
 import techguns.util.TextUtil;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class FabricatorJeiRecipe extends BasicRecipeWrapper {
 
@@ -24,10 +24,10 @@ public class FabricatorJeiRecipe extends BasicRecipeWrapper {
         this.recipe = recipe;
     }
 
-	@Override
-	protected int getRFperTick() {
-		return FabricatorTileEntMaster.powerPerTick;
-	}
+    @Override
+    protected int getRFperTick() {
+        return FabricatorTileEntMaster.powerPerTick;
+    }
 
     public static List<FabricatorJeiRecipe> getRecipes() {
         List<FabricatorJeiRecipe> recipes = new ArrayList<>();
@@ -38,7 +38,7 @@ public class FabricatorJeiRecipe extends BasicRecipeWrapper {
 
     @Override
     public void drawInfo(@NotNull Minecraft minecraft, int recipeWidth, int recipeHeight, int mouseX, int mouseY) {
-        if(this.recipe.outputItem != TGItems.CYBERNETIC_PARTS) return;
+        if (this.recipe.outputItem != TGItems.CYBERNETIC_PARTS) return;
 
         minecraft.getTextureManager().bindTexture(FabricatorJeiRecipeCategory.TEXTURE);
         Gui.drawModalRectWithCustomSizedTexture(BLUEPRINT_X, BLUEPRINT_Y, 240, 240, 16, 16, 256, 256);

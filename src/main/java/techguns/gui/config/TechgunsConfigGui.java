@@ -1,13 +1,13 @@
 package techguns.gui.config;
 
-import java.util.List;
-
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraftforge.common.config.ConfigElement;
 import net.minecraftforge.fml.client.config.GuiConfig;
 import net.minecraftforge.fml.client.config.IConfigElement;
 import techguns.TGConfig;
 import techguns.Tags;
+
+import java.util.List;
 
 public class TechgunsConfigGui extends GuiConfig {
 

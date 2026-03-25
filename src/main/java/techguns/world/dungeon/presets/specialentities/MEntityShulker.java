@@ -9,8 +9,6 @@ import techguns.util.MEntity;
 import techguns.world.EnumLootType;
 import techguns.world.structures.WorldgenStructure.BiomeColorType;
 
-import java.util.Random;
-
 public class MEntityShulker extends MEntity {
 
     private final EnumFacing attachFace;

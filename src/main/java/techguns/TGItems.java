@@ -1,7 +1,5 @@
 package techguns;
 
-import java.util.ArrayList;
-
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
 import net.minecraft.item.Item.ToolMaterial;
@@ -42,6 +40,8 @@ import techguns.items.tools.TGCrowbar;
 import techguns.items.tools.TGSword;
 import techguns.recipes.Recipewriter;
 import techguns.tools.ItemJsonCreator;
+
+import java.util.ArrayList;
 
 
 public class TGItems implements ITGInitializer {

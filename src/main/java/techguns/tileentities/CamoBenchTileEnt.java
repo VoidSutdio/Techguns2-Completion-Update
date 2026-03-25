@@ -8,7 +8,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.network.play.server.SPacketSetSlot;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
-import techguns.*;
+import techguns.Tags;
 import techguns.capabilities.TGExtendedPlayer;
 import techguns.gui.player.TGPlayerInventory;
 import techguns.items.armors.ICamoChangeable;

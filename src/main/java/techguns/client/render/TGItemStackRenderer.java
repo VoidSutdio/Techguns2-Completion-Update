@@ -14,7 +14,8 @@ public class TGItemStackRenderer extends TileEntityItemStackRenderer {
 
     public static final TGItemStackRenderer INSTANCE = new TGItemStackRenderer();
 
-    private TGItemStackRenderer() {}
+    private TGItemStackRenderer() {
+    }
 
     @Override
     public void renderByItem(ItemStack stack) {

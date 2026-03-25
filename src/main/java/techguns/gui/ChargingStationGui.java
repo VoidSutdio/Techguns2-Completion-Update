@@ -4,7 +4,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
 import techguns.Tags;
-import techguns.gui.containers.BlastFurnaceContainer;
 import techguns.gui.containers.ChargingStationContainer;
 import techguns.tileentities.ChargingStationTileEnt;
 

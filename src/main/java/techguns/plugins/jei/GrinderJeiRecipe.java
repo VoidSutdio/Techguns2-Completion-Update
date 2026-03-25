@@ -1,17 +1,14 @@
 package techguns.plugins.jei;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
-import mezz.jei.api.gui.IGuiItemStackGroup;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.ingredients.VanillaTypes;
 import net.minecraft.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import techguns.tileentities.GrinderTileEnt;
 import techguns.tileentities.operation.GrinderRecipes;
-import techguns.util.TextUtil;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class GrinderJeiRecipe extends BasicRecipeWrapper {
 

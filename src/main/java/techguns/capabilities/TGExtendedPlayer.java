@@ -1,7 +1,5 @@
 package techguns.capabilities;
 
-import java.util.BitSet;
-
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
@@ -13,146 +11,148 @@ import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.EnumHand;
 import techguns.TGItems;
 import techguns.TGRadiationSystem;
-import techguns.*;
+import techguns.Techguns;
 import techguns.api.capabilities.AttackTime;
 import techguns.api.capabilities.ITGExtendedPlayer;
 import techguns.gui.player.TGPlayerInventory;
 import techguns.util.DataUtil;
 
+import java.util.BitSet;
+
 public class TGExtendedPlayer implements ITGExtendedPlayer {
 
-	public static final int MAX_RADIATION=1000;
-	
-	public static final DataParameter<ItemStack> DATA_FACE_SLOT = EntityDataManager.createKey(EntityPlayer.class, DataSerializers.ITEM_STACK);
-	public static final DataParameter<ItemStack> DATA_BACK_SLOT = EntityDataManager.createKey(EntityPlayer.class, DataSerializers.ITEM_STACK);
-	public static final DataParameter<ItemStack> DATA_HAND_SLOT = EntityDataManager.createKey(EntityPlayer.class, DataSerializers.ITEM_STACK);
-	
-	public static final DataParameter<Boolean> DATA_FLAG_CHARGING_WEAPON = EntityDataManager.createKey(EntityPlayer.class, DataSerializers.BOOLEAN);
-	
-	public int fireDelayMainhand=0;
-	public int fireDelayOffhand=0;
-	
-	public int loopSoundDelayMainhand=0;
-	public int loopSoundDelayOffhand=0;
-	
-	public EntityPlayer entity;
-	
-	protected AttackTime[] attackTimes = {new AttackTime(),new AttackTime()};
-	
-	public int swingSoundDelay=0;
+    public static final int MAX_RADIATION = 1000;
 
-	public boolean gotCreativeFlightLastTick=false;
-	public boolean wasFlying=false;
-	
-	public ItemStack gunMainHand=ItemStack.EMPTY;
-	public ItemStack gunOffHand=ItemStack.EMPTY;
-	
-	public Entity lockOnEntity; //Guided Missile tracking target
-	public int lockOnTicks; //number of ticks the tracked target has been locked on.
-	
-	/**
-	 * Used by server only, needed for jetpack, not saved to nbt
-	 */
-	protected  boolean isJumpkeyPressed=false;
-	
-	/**
-	 * Used by server only, needed for jetpack, not saved to nbt
-	 */
-	public boolean isForwardKeyPressed=false;
+    public static final DataParameter<ItemStack> DATA_FACE_SLOT = EntityDataManager.createKey(EntityPlayer.class, DataSerializers.ITEM_STACK);
+    public static final DataParameter<ItemStack> DATA_BACK_SLOT = EntityDataManager.createKey(EntityPlayer.class, DataSerializers.ITEM_STACK);
+    public static final DataParameter<ItemStack> DATA_HAND_SLOT = EntityDataManager.createKey(EntityPlayer.class, DataSerializers.ITEM_STACK);
 
-	/**
-	 * only used by client, not synced
-	 */
-	public boolean isGliding=false;
-	
-	/**
-	 * SAVED FIELDS
-	 */
-	public TGPlayerInventory tg_inventory;
-	
-	public boolean enableJetpack = true;
-	public boolean enableStepAssist = true;
-	public boolean enableNightVision = false;
-	public boolean enableSafemode = true;
+    public static final DataParameter<Boolean> DATA_FLAG_CHARGING_WEAPON = EntityDataManager.createKey(EntityPlayer.class, DataSerializers.BOOLEAN);
+
+    public int fireDelayMainhand = 0;
+    public int fireDelayOffhand = 0;
+
+    public int loopSoundDelayMainhand = 0;
+    public int loopSoundDelayOffhand = 0;
+
+    public EntityPlayer entity;
+
+    protected AttackTime[] attackTimes = {new AttackTime(), new AttackTime()};
+
+    public int swingSoundDelay = 0;
+
+    public boolean gotCreativeFlightLastTick = false;
+    public boolean wasFlying = false;
+
+    public ItemStack gunMainHand = ItemStack.EMPTY;
+    public ItemStack gunOffHand = ItemStack.EMPTY;
+
+    public Entity lockOnEntity; //Guided Missile tracking target
+    public int lockOnTicks; //number of ticks the tracked target has been locked on.
+
+    /**
+     * Used by server only, needed for jetpack, not saved to nbt
+     */
+    protected boolean isJumpkeyPressed = false;
+
+    /**
+     * Used by server only, needed for jetpack, not saved to nbt
+     */
+    public boolean isForwardKeyPressed = false;
+
+    /**
+     * only used by client, not synced
+     */
+    public boolean isGliding = false;
+
+    /**
+     * SAVED FIELDS
+     */
+    public TGPlayerInventory tg_inventory;
+
+    public boolean enableJetpack = true;
+    public boolean enableStepAssist = true;
+    public boolean enableNightVision = false;
+    public boolean enableSafemode = true;
 
     public static final DataParameter<Boolean> DATA_UNLOCK_CYBERNETIC_PARTS = EntityDataManager.createKey(EntityPlayer.class, DataSerializers.BOOLEAN);
-	
-	/**
-	 * for jetpack
-	 */
-	public boolean enableHovermode=false;
-		
-	public int radlevel=0;
-	
-	public short foodleft=0;
-	public float lastSaturation=1.0f;
-	
-	/**
-	 * used by client only, but saved serverside
-	 */
-	public boolean showTGHudElements=true;
 
-	public TGExtendedPlayer(EntityPlayer entity) {
-		this.entity = entity;
-		this.tg_inventory = new TGPlayerInventory(entity);
-		if (entity != null) {
-			entity.getDataManager().register(DATA_FACE_SLOT, ItemStack.EMPTY);
-			entity.getDataManager().register(DATA_BACK_SLOT, ItemStack.EMPTY);
-			entity.getDataManager().register(DATA_HAND_SLOT, ItemStack.EMPTY);
-			entity.getDataManager().register(DATA_FLAG_CHARGING_WEAPON, false);
-			entity.getDataManager().register(DATA_UNLOCK_CYBERNETIC_PARTS, false);
-		}
-	}
-	
-	@Override
-	public EntityPlayer getEntity() {
-		return entity;
-	}
+    /**
+     * for jetpack
+     */
+    public boolean enableHovermode = false;
 
-	public void copyFrom(TGExtendedPlayer other){
+    public int radlevel = 0;
 
-		this.entity=other.getEntity();
-		
-		this.fireDelayMainhand=other.fireDelayMainhand;
-		this.fireDelayOffhand=other.fireDelayOffhand;
-		
-		this.loopSoundDelayMainhand=other.loopSoundDelayMainhand;
-		this.loopSoundDelayOffhand=other.loopSoundDelayOffhand;
-		
-		this.attackTimes = other.attackTimes;
-		
-		this.swingSoundDelay=other.swingSoundDelay;
+    public short foodleft = 0;
+    public float lastSaturation = 1.0f;
 
-		this.gotCreativeFlightLastTick=other.gotCreativeFlightLastTick;
-		this.wasFlying=other.wasFlying;
-		
-		this.gunMainHand=other.gunMainHand;
-		this.gunOffHand=other.gunOffHand;
-		this.isJumpkeyPressed=other.isJumpkeyPressed;
-		this.isForwardKeyPressed=other.isForwardKeyPressed;
+    /**
+     * used by client only, but saved serverside
+     */
+    public boolean showTGHudElements = true;
 
-		this.isGliding=other.isGliding;
-		
-		this.tg_inventory = other.tg_inventory;
-		
-		this.enableJetpack=other.enableJetpack;
-		this.enableStepAssist=other.enableStepAssist;
-		this.enableNightVision=other.enableNightVision;
-		this.enableSafemode=other.enableSafemode;
+    public TGExtendedPlayer(EntityPlayer entity) {
+        this.entity = entity;
+        this.tg_inventory = new TGPlayerInventory(entity);
+        if (entity != null) {
+            entity.getDataManager().register(DATA_FACE_SLOT, ItemStack.EMPTY);
+            entity.getDataManager().register(DATA_BACK_SLOT, ItemStack.EMPTY);
+            entity.getDataManager().register(DATA_HAND_SLOT, ItemStack.EMPTY);
+            entity.getDataManager().register(DATA_FLAG_CHARGING_WEAPON, false);
+            entity.getDataManager().register(DATA_UNLOCK_CYBERNETIC_PARTS, false);
+        }
+    }
 
-		this.enableHovermode=other.enableHovermode;
-			
-		this.radlevel=other.radlevel;
-		
-		this.foodleft=other.foodleft;
-		this.lastSaturation=other.lastSaturation;
+    @Override
+    public EntityPlayer getEntity() {
+        return entity;
+    }
 
-		this.showTGHudElements=other.showTGHudElements;
-	}
-	
-	public static TGExtendedPlayer get(EntityPlayer ply){
-		return (TGExtendedPlayer) ply.getCapability(TGExtendedPlayerCapProvider.TG_EXTENDED_PLAYER, null);
-	}
+    public void copyFrom(TGExtendedPlayer other) {
+
+        this.entity = other.getEntity();
+
+        this.fireDelayMainhand = other.fireDelayMainhand;
+        this.fireDelayOffhand = other.fireDelayOffhand;
+
+        this.loopSoundDelayMainhand = other.loopSoundDelayMainhand;
+        this.loopSoundDelayOffhand = other.loopSoundDelayOffhand;
+
+        this.attackTimes = other.attackTimes;
+
+        this.swingSoundDelay = other.swingSoundDelay;
+
+        this.gotCreativeFlightLastTick = other.gotCreativeFlightLastTick;
+        this.wasFlying = other.wasFlying;
+
+        this.gunMainHand = other.gunMainHand;
+        this.gunOffHand = other.gunOffHand;
+        this.isJumpkeyPressed = other.isJumpkeyPressed;
+        this.isForwardKeyPressed = other.isForwardKeyPressed;
+
+        this.isGliding = other.isGliding;
+
+        this.tg_inventory = other.tg_inventory;
+
+        this.enableJetpack = other.enableJetpack;
+        this.enableStepAssist = other.enableStepAssist;
+        this.enableNightVision = other.enableNightVision;
+        this.enableSafemode = other.enableSafemode;
+
+        this.enableHovermode = other.enableHovermode;
+
+        this.radlevel = other.radlevel;
+
+        this.foodleft = other.foodleft;
+        this.lastSaturation = other.lastSaturation;
+
+        this.showTGHudElements = other.showTGHudElements;
+    }
+
+    public static TGExtendedPlayer get(EntityPlayer ply) {
+        return (TGExtendedPlayer) ply.getCapability(TGExtendedPlayerCapProvider.TG_EXTENDED_PLAYER, null);
+    }
 
     public static boolean isCyberneticPartsOutput(ItemStack stack) {
         return !stack.isEmpty()
@@ -160,64 +160,64 @@ public class TGExtendedPlayer implements ITGExtendedPlayer {
                 && ItemStack.areItemStackTagsEqual(stack, TGItems.CYBERNETIC_PARTS);
     }
 
-	@Override
-	public AttackTime getAttackTime(boolean offHand) {
-		return attackTimes[offHand?1:0];
-	}
+    @Override
+    public AttackTime getAttackTime(boolean offHand) {
+        return attackTimes[offHand ? 1 : 0];
+    }
 
-	@Override
-	public int getFireDelay(EnumHand hand) {
-		switch(hand){
-			case MAIN_HAND:
-				return fireDelayMainhand;
-			case OFF_HAND:
-				return fireDelayOffhand;
-		}
-		return 0;
-	}
+    @Override
+    public int getFireDelay(EnumHand hand) {
+        switch (hand) {
+            case MAIN_HAND:
+                return fireDelayMainhand;
+            case OFF_HAND:
+                return fireDelayOffhand;
+        }
+        return 0;
+    }
 
-	@Override
-	public void setFireDelay(EnumHand hand, int delay) {
-		switch(hand){
-		case MAIN_HAND:
-			this.fireDelayMainhand=delay;
-			break;
-		case OFF_HAND:
-			this.fireDelayOffhand=delay;
-			break;
-		}
-	}
-	
-	public int getLoopSoundDelay(EnumHand hand) {
-		switch(hand){
-			case MAIN_HAND:
-				return loopSoundDelayMainhand;
-			case OFF_HAND:
-				return loopSoundDelayOffhand;
-		}
-		return 0;
-	}
+    @Override
+    public void setFireDelay(EnumHand hand, int delay) {
+        switch (hand) {
+            case MAIN_HAND:
+                this.fireDelayMainhand = delay;
+                break;
+            case OFF_HAND:
+                this.fireDelayOffhand = delay;
+                break;
+        }
+    }
 
-	public void setLoopSoundDelay(EnumHand hand, int delay) {
-		switch(hand){
-		case MAIN_HAND:
-			this.loopSoundDelayMainhand=delay;
-			break;
-		case OFF_HAND:
-			this.loopSoundDelayOffhand=delay;
-			break;
-		}
-	}
+    public int getLoopSoundDelay(EnumHand hand) {
+        switch (hand) {
+            case MAIN_HAND:
+                return loopSoundDelayMainhand;
+            case OFF_HAND:
+                return loopSoundDelayOffhand;
+        }
+        return 0;
+    }
 
-	@Override
-	public boolean isRecoiling(boolean offHand) {
-		return getAttackTime(offHand).isRecoiling();
-	}
+    public void setLoopSoundDelay(EnumHand hand, int delay) {
+        switch (hand) {
+            case MAIN_HAND:
+                this.loopSoundDelayMainhand = delay;
+                break;
+            case OFF_HAND:
+                this.loopSoundDelayOffhand = delay;
+                break;
+        }
+    }
 
-	@Override
-	public boolean isReloading(boolean offHand) {
-		return getAttackTime(offHand).isReloading();
-	}
+    @Override
+    public boolean isRecoiling(boolean offHand) {
+        return getAttackTime(offHand).isRecoiling();
+    }
+
+    @Override
+    public boolean isReloading(boolean offHand) {
+        return getAttackTime(offHand).isReloading();
+    }
 
     @Override
     public boolean hasFabricatorRecipeUnlocked(ItemStack output) {
@@ -238,110 +238,109 @@ public class TGExtendedPlayer implements ITGExtendedPlayer {
         }
         return false;
     }
-	
-	public void swapAttackTimes() {
-		AttackTime a = this.attackTimes[0];
-		this.attackTimes[0]=this.attackTimes[1];
-		this.attackTimes[1]=a;
-		
-		int i = fireDelayMainhand;
-		this.fireDelayMainhand=fireDelayOffhand;
-		this.fireDelayOffhand=i;
-	}
 
-	@Override
-	public IInventory getTGInventory() {
-		return this.tg_inventory;
-	}
+    public void swapAttackTimes() {
+        AttackTime a = this.attackTimes[0];
+        this.attackTimes[0] = this.attackTimes[1];
+        this.attackTimes[1] = a;
 
-	@Override
-	public void saveToNBT(NBTTagCompound tags) {
-		this.tg_inventory.saveNBTData(tags);
-		
-		byte data = DataUtil.compress(this.enableJetpack,this.enableNightVision,this.enableSafemode,this.enableStepAssist,this.showTGHudElements,this.enableHovermode);
-		tags.setByte("states", data);
-		tags.setShort("foodLeft", this.foodleft);
-		tags.setFloat("lastSaturation", this.lastSaturation);
-		tags.setInteger("radlevel", this.radlevel);
+        int i = fireDelayMainhand;
+        this.fireDelayMainhand = fireDelayOffhand;
+        this.fireDelayOffhand = i;
+    }
+
+    @Override
+    public IInventory getTGInventory() {
+        return this.tg_inventory;
+    }
+
+    @Override
+    public void saveToNBT(NBTTagCompound tags) {
+        this.tg_inventory.saveNBTData(tags);
+
+        byte data = DataUtil.compress(this.enableJetpack, this.enableNightVision, this.enableSafemode, this.enableStepAssist, this.showTGHudElements, this.enableHovermode);
+        tags.setByte("states", data);
+        tags.setShort("foodLeft", this.foodleft);
+        tags.setFloat("lastSaturation", this.lastSaturation);
+        tags.setInteger("radlevel", this.radlevel);
 
         tags.setBoolean("unlockCyberParts", this.entity != null && this.entity.getDataManager().get(DATA_UNLOCK_CYBERNETIC_PARTS));
-	}
+    }
 
-	@Override
-	public void loadFromNBT(NBTTagCompound tags) {
-		this.tg_inventory.loadNBTData(tags);
-		BitSet states = DataUtil.uncompress(tags.getByte("states"));
-		
-		this.enableJetpack=states.get(0);
-		this.enableNightVision=states.get(1);
-		this.enableSafemode=states.get(2);
-		
-		if (entity!=null && Techguns.instance.permissions.canUseUnsafeMode(entity)) {
-			this.enableSafemode=true;
-		}
-		
-		this.enableStepAssist=states.get(3);
-		this.showTGHudElements=states.get(4);
-		this.enableHovermode=states.get(5);
-		
-		this.foodleft = tags.getShort("foodLeft");
-		this.lastSaturation = tags.getFloat("lastSaturation");
-		this.radlevel = tags.getInteger("radlevel");
+    @Override
+    public void loadFromNBT(NBTTagCompound tags) {
+        this.tg_inventory.loadNBTData(tags);
+        BitSet states = DataUtil.uncompress(tags.getByte("states"));
+
+        this.enableJetpack = states.get(0);
+        this.enableNightVision = states.get(1);
+        this.enableSafemode = states.get(2);
+
+        if (entity != null && Techguns.instance.permissions.canUseUnsafeMode(entity)) {
+            this.enableSafemode = true;
+        }
+
+        this.enableStepAssist = states.get(3);
+        this.showTGHudElements = states.get(4);
+        this.enableHovermode = states.get(5);
+
+        this.foodleft = tags.getShort("foodLeft");
+        this.lastSaturation = tags.getFloat("lastSaturation");
+        this.radlevel = tags.getInteger("radlevel");
 
         if (this.entity != null) {
             this.entity.getDataManager().set(DATA_UNLOCK_CYBERNETIC_PARTS, tags.getBoolean("unlockCyberParts"));
         }
-	}	
-	
-	public boolean isJumpkeyPressed() {
-		return isJumpkeyPressed;
-	}
+    }
 
-	public void setJumpkeyPressed(boolean isJumpkeyPressed) {
-		this.isJumpkeyPressed = isJumpkeyPressed;
-	}
-	
-	/**
-	 * Drops to world (player death)
-	 */
-	public void dropInventory(EntityPlayer player){
-		if(!player.world.isRemote){
-			if (!player.world.getGameRules().getBoolean("keepInventory"))
-	        {
-	            int i;
-	        
-	            player.captureDrops=true;
-	            for (i = 0; i < this.tg_inventory.inventory.size(); ++i)
-	            {
-	                if (!this.tg_inventory.inventory.get(i).isEmpty())
-	                {
-	                    player.dropItem(this.tg_inventory.inventory.get(i), true, false);
-	                    this.tg_inventory.inventory.set(i, ItemStack.EMPTY);
-	                }
-	            }
-	            player.captureDrops=false;
-	         
-	        }
-		}
-	}
-	
-	public boolean isChargingWeapon() {
-		return this.entity.getDataManager().get(DATA_FLAG_CHARGING_WEAPON);
-	}
-	
-	public void setChargingWeapon(boolean charging) {
-		this.entity.getDataManager().set(DATA_FLAG_CHARGING_WEAPON, charging);
-	}
-	
-	public void addRadiation(int amount) {
-		
-		if (!TGRadiationSystem.isEnabled()) {amount=0;}
-		
-		this.radlevel+=amount;
-		if(this.radlevel<0) {
-			this.radlevel=0;
-		} else if (this.radlevel>MAX_RADIATION) {
-			this.radlevel=MAX_RADIATION;
-		}
-	}
+    public boolean isJumpkeyPressed() {
+        return isJumpkeyPressed;
+    }
+
+    public void setJumpkeyPressed(boolean isJumpkeyPressed) {
+        this.isJumpkeyPressed = isJumpkeyPressed;
+    }
+
+    /**
+     * Drops to world (player death)
+     */
+    public void dropInventory(EntityPlayer player) {
+        if (!player.world.isRemote) {
+            if (!player.world.getGameRules().getBoolean("keepInventory")) {
+                int i;
+
+                player.captureDrops = true;
+                for (i = 0; i < this.tg_inventory.inventory.size(); ++i) {
+                    if (!this.tg_inventory.inventory.get(i).isEmpty()) {
+                        player.dropItem(this.tg_inventory.inventory.get(i), true, false);
+                        this.tg_inventory.inventory.set(i, ItemStack.EMPTY);
+                    }
+                }
+                player.captureDrops = false;
+
+            }
+        }
+    }
+
+    public boolean isChargingWeapon() {
+        return this.entity.getDataManager().get(DATA_FLAG_CHARGING_WEAPON);
+    }
+
+    public void setChargingWeapon(boolean charging) {
+        this.entity.getDataManager().set(DATA_FLAG_CHARGING_WEAPON, charging);
+    }
+
+    public void addRadiation(int amount) {
+
+        if (!TGRadiationSystem.isEnabled()) {
+            amount = 0;
+        }
+
+        this.radlevel += amount;
+        if (this.radlevel < 0) {
+            this.radlevel = 0;
+        } else if (this.radlevel > MAX_RADIATION) {
+            this.radlevel = MAX_RADIATION;
+        }
+    }
 }

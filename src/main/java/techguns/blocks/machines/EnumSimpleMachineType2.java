@@ -15,103 +15,103 @@ import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jetbrains.annotations.NotNull;
-import techguns.*;
+import techguns.Tags;
 import techguns.api.machines.IMachineType;
 import techguns.tileentities.GrinderTileEnt;
 import techguns.tileentities.UpgradeBenchTileEnt;
 
 public enum EnumSimpleMachineType2 implements IStringSerializable, IMachineType {
-	GRINDER(0, GrinderTileEnt.class,true,EnumBlockRenderType.MODEL),
-	ARMOR_BENCH(1, UpgradeBenchTileEnt.class, false, EnumBlockRenderType.MODEL);
-	
-	private final int id;
-	private final String name;
-	private final Class<? extends TileEntity> tile;
-	private final boolean isFullCube;
-	private final EnumBlockRenderType renderType;
-	private final BlockRenderLayer renderLayer;
-	
-	EnumSimpleMachineType2(int id, Class<? extends TileEntity> tile, boolean isFullCube, EnumBlockRenderType renderType) {
-		this(id,tile,isFullCube,renderType, BlockRenderLayer.SOLID);
-	}
-	
-	EnumSimpleMachineType2(int id, Class<? extends TileEntity> tile, boolean isFullCube, EnumBlockRenderType renderType, BlockRenderLayer layer) {
-		this.id=id;
-		this.name=this.name().toLowerCase();
-		this.tile = tile;
-		this.isFullCube=isFullCube;
-		this.renderType=renderType;
-		this.renderLayer=layer;
-	}
-	
-	public int getIndex() {
-		return id;
-	}
-	
-	@Override
-	public @NotNull String getName() {
-		return this.name;
-	}
+    GRINDER(0, GrinderTileEnt.class, true, EnumBlockRenderType.MODEL),
+    ARMOR_BENCH(1, UpgradeBenchTileEnt.class, false, EnumBlockRenderType.MODEL);
 
-	@Override
-	public int getMaxMachineIndex() {
-		return values().length;
-	}
+    private final int id;
+    private final String name;
+    private final Class<? extends TileEntity> tile;
+    private final boolean isFullCube;
+    private final EnumBlockRenderType renderType;
+    private final BlockRenderLayer renderLayer;
 
-	@Override
-	public TileEntity getTile() {
-		try {
-			return this.tile.newInstance();
-		} catch (InstantiationException | IllegalAccessException e) {
-			e.printStackTrace();
-		}
+    EnumSimpleMachineType2(int id, Class<? extends TileEntity> tile, boolean isFullCube, EnumBlockRenderType renderType) {
+        this(id, tile, isFullCube, renderType, BlockRenderLayer.SOLID);
+    }
+
+    EnumSimpleMachineType2(int id, Class<? extends TileEntity> tile, boolean isFullCube, EnumBlockRenderType renderType, BlockRenderLayer layer) {
+        this.id = id;
+        this.name = this.name().toLowerCase();
+        this.tile = tile;
+        this.isFullCube = isFullCube;
+        this.renderType = renderType;
+        this.renderLayer = layer;
+    }
+
+    public int getIndex() {
+        return id;
+    }
+
+    @Override
+    public @NotNull String getName() {
+        return this.name;
+    }
+
+    @Override
+    public int getMaxMachineIndex() {
+        return values().length;
+    }
+
+    @Override
+    public TileEntity getTile() {
+        try {
+            return this.tile.newInstance();
+        } catch (InstantiationException | IllegalAccessException e) {
+            e.printStackTrace();
+        }
         return null;
-	}
-	
-	@Override
-	public Class<? extends TileEntity> getTileClass() {
-		return this.tile;
-	}
+    }
 
-	@Override
-	public boolean isFullCube() {
-		return isFullCube;
-	}
+    @Override
+    public Class<? extends TileEntity> getTileClass() {
+        return this.tile;
+    }
 
-	@Override
-	public EnumBlockRenderType getRenderType() {
-		return renderType;
-	}
+    @Override
+    public boolean isFullCube() {
+        return isFullCube;
+    }
 
-	@Override
-	public BlockRenderLayer getBlockRenderLayer() {
-		return this.renderLayer;
-	}
+    @Override
+    public EnumBlockRenderType getRenderType() {
+        return renderType;
+    }
 
-	@Override
-	public boolean debugOnly() {
-		return false;
-	}
+    @Override
+    public BlockRenderLayer getBlockRenderLayer() {
+        return this.renderLayer;
+    }
 
-	@Override
-	public boolean hasCustomModelLocation() {
-		return this==GRINDER;
-	}
+    @Override
+    public boolean debugOnly() {
+        return false;
+    }
 
-	@SideOnly(Side.CLIENT)
-	@Override
-	public void setCustomModelLocation(Item itemblock, int meta, ResourceLocation registryName, IBlockState state) {
-		ResourceLocation loc = new ResourceLocation(Tags.MOD_ID, registryName.getPath()+"_"+this.name().toLowerCase()+"_inv");
-		ModelLoader.setCustomModelResourceLocation(itemblock, meta, new ModelResourceLocation(loc, "inventory"));
-	}
+    @Override
+    public boolean hasCustomModelLocation() {
+        return this == GRINDER;
+    }
 
-	@Override
-	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
-		if(this==EnumSimpleMachineType2.ARMOR_BENCH) {
-			 return UpgradeBenchTileEnt.BLOCK_BB;
-		}
-		return IMachineType.super.getBoundingBox(state, source, pos);
-	}
-	
-	
+    @SideOnly(Side.CLIENT)
+    @Override
+    public void setCustomModelLocation(Item itemblock, int meta, ResourceLocation registryName, IBlockState state) {
+        ResourceLocation loc = new ResourceLocation(Tags.MOD_ID, registryName.getPath() + "_" + this.name().toLowerCase() + "_inv");
+        ModelLoader.setCustomModelResourceLocation(itemblock, meta, new ModelResourceLocation(loc, "inventory"));
+    }
+
+    @Override
+    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
+        if (this == EnumSimpleMachineType2.ARMOR_BENCH) {
+            return UpgradeBenchTileEnt.BLOCK_BB;
+        }
+        return IMachineType.super.getBoundingBox(state, source, pos);
+    }
+
+
 }

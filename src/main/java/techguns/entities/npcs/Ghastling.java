@@ -1,8 +1,9 @@
 package techguns.entities.npcs;
 
-import javax.annotation.Nullable;
-
-import net.minecraft.entity.*;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.EnumCreatureAttribute;
+import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.entity.ai.EntityAIHurtByTarget;
 import net.minecraft.entity.ai.EntityAILookIdle;
@@ -31,7 +32,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jetbrains.annotations.NotNull;
 import techguns.TGPackets;
 import techguns.TGSounds;
-import techguns.*;
+import techguns.Tags;
 import techguns.api.npc.INPCTechgunsShooter;
 import techguns.api.npc.INpcTGDamageSystem;
 import techguns.api.npc.factions.ITGNpcTeam;
@@ -43,62 +44,59 @@ import techguns.entities.projectiles.EnumBulletFirePos;
 import techguns.entities.projectiles.RocketProjectile;
 import techguns.packets.PacketPlaySound;
 
+import javax.annotation.Nullable;
+
 public class Ghastling extends EntityMob implements IMob, INpcTGDamageSystem, INPCTechgunsShooter, ITGSpawnerNPC, ITGNpcTeam {
 
     private static final DataParameter<Boolean> ATTACKING = EntityDataManager.createKey(Ghastling.class, DataSerializers.BOOLEAN);
 
     protected static final ResourceLocation LOOT = new ResourceLocation(Tags.MOD_ID, "entities/ghastling");
-    
-    protected boolean tryLink=true;
-    
-	public Ghastling(World worldIn) {
-		super(worldIn);
-		this.setSize(1.0F, 2.1F);
-		this.setPathPriority(PathNodeType.WATER, -1.0F);
+
+    protected boolean tryLink = true;
+
+    public Ghastling(World worldIn) {
+        super(worldIn);
+        this.setSize(1.0F, 2.1F);
+        this.setPathPriority(PathNodeType.WATER, -1.0F);
         this.setPathPriority(PathNodeType.LAVA, 8.0F);
         this.setPathPriority(PathNodeType.DANGER_FIRE, 0.0F);
         this.setPathPriority(PathNodeType.DAMAGE_FIRE, 0.0F);
         this.isImmuneToFire = true;
         this.experienceValue = 10;
-	}
-	
-	@Override
+    }
+
+    @Override
     @Nullable
-    protected ResourceLocation getLootTable()
-    { 
+    protected ResourceLocation getLootTable() {
         return LOOT;
         //return LootTableList.ENTITIES_GHAST;
     }
 
     @Override
-    public @NotNull EnumCreatureAttribute getCreatureAttribute()
-    {
+    public @NotNull EnumCreatureAttribute getCreatureAttribute() {
         return EnumCreatureAttribute.UNDEAD;
     }
-    
+
 
     /**
      * Checks to make sure the light is not too bright where the mob is spawning
      */
-    protected boolean isValidLightLevel()
-    {
+    protected boolean isValidLightLevel() {
         return true;
     }
-	
-    protected void initEntityAI()
-    {
-    	 this.tasks.addTask(4, new AIFireballAttack(this));
-         this.tasks.addTask(5, new EntityAIMoveTowardsRestriction(this, 1.0D));
-         this.tasks.addTask(7, new EntityAIWanderAvoidWater(this, 1.0D, 0.0F));
-         this.tasks.addTask(8, new EntityAIWatchClosest(this, EntityPlayer.class, 8.0F));
-         this.tasks.addTask(8, new EntityAILookIdle(this));
-         this.targetTasks.addTask(1, new EntityAIHurtByTarget(this, true));
-         this.targetTasks.addTask(2, new EntityAINearestAttackableTarget(this, EntityPlayer.class, true));
+
+    protected void initEntityAI() {
+        this.tasks.addTask(4, new AIFireballAttack(this));
+        this.tasks.addTask(5, new EntityAIMoveTowardsRestriction(this, 1.0D));
+        this.tasks.addTask(7, new EntityAIWanderAvoidWater(this, 1.0D, 0.0F));
+        this.tasks.addTask(8, new EntityAIWatchClosest(this, EntityPlayer.class, 8.0F));
+        this.tasks.addTask(8, new EntityAILookIdle(this));
+        this.targetTasks.addTask(1, new EntityAIHurtByTarget(this, true));
+        this.targetTasks.addTask(2, new EntityAINearestAttackableTarget(this, EntityPlayer.class, true));
     }
 
     @SideOnly(Side.CLIENT)
-    public boolean isAttacking()
-    {
+    public boolean isAttacking() {
         return this.dataManager.get(ATTACKING);
     }
 
@@ -107,67 +105,60 @@ public class Ghastling extends EntityMob implements IMob, INpcTGDamageSystem, IN
     }
 
     @Override
-    protected void entityInit()
-    {
+    protected void entityInit() {
         super.entityInit();
         this.dataManager.register(ATTACKING, Boolean.FALSE);
     }
 
-    protected void applyEntityAttributes()
-    {
+    protected void applyEntityAttributes() {
         super.applyEntityAttributes();
         this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(20.0D);
         this.getEntityAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(72.0D);
-       	this.getEntityAttribute(SharedMonsterAttributes.ARMOR).setBaseValue(10.0);
-       	this.getEntityAttribute(SharedMonsterAttributes.ARMOR_TOUGHNESS).setBaseValue(0);
+        this.getEntityAttribute(SharedMonsterAttributes.ARMOR).setBaseValue(10.0);
+        this.getEntityAttribute(SharedMonsterAttributes.ARMOR_TOUGHNESS).setBaseValue(0);
     }
 
-    protected SoundEvent getAmbientSound()
-    {
+    protected SoundEvent getAmbientSound() {
         return SoundEvents.ENTITY_GHAST_AMBIENT;
     }
 
-    protected @NotNull SoundEvent getHurtSound(@NotNull DamageSource damageSourceIn)
-    {
+    protected @NotNull SoundEvent getHurtSound(@NotNull DamageSource damageSourceIn) {
         return SoundEvents.ENTITY_GHAST_HURT;
     }
 
-    protected @NotNull SoundEvent getDeathSound()
-    {
+    protected @NotNull SoundEvent getDeathSound() {
         return SoundEvents.ENTITY_GHAST_DEATH;
     }
-	
+
     /**
      * Returns the volume for the sounds this mob makes.
      */
-    protected float getSoundVolume()
-    {
+    protected float getSoundVolume() {
         return 5.0F;
     }
-    
-    public float getEyeHeight()
-    {
+
+    public float getEyeHeight() {
         return 1.5f;
     }
 
-	@Override
-	public float getWeaponPosX() {
-		return 0;
-	}
+    @Override
+    public float getWeaponPosX() {
+        return 0;
+    }
 
-	@Override
-	public float getWeaponPosY() {
-		return 0;
-	}
+    @Override
+    public float getWeaponPosY() {
+        return 0;
+    }
 
-	@Override
-	public float getWeaponPosZ() {
-		return 0;
-	}
+    @Override
+    public float getWeaponPosZ() {
+        return 0;
+    }
 
-	@Override
-	public float getTotalArmorAgainstType(TGDamageSource dmgsrc) {
-        switch(dmgsrc.damageType){
+    @Override
+    public float getTotalArmorAgainstType(TGDamageSource dmgsrc) {
+        switch (dmgsrc.damageType) {
             case EXPLOSION:
                 return 30.0f;
             case LIGHTNING:
@@ -183,11 +174,11 @@ public class Ghastling extends EntityMob implements IMob, INpcTGDamageSystem, IN
             default:
                 return 0.0f;
         }
-	}
+    }
 
-	@Override
-	public float getPenetrationResistance(TGDamageSource dmgsrc) {
-        switch(dmgsrc.damageType){
+    @Override
+    public float getPenetrationResistance(TGDamageSource dmgsrc) {
+        switch (dmgsrc.damageType) {
             case PROJECTILE:
                 return 0.1f;
             case EXPLOSION:
@@ -203,57 +194,50 @@ public class Ghastling extends EntityMob implements IMob, INpcTGDamageSystem, IN
             default:
                 return 0.0f;
         }
-	}
+    }
 
     @Override
     public TGNpcFaction getTGFaction() {
         return TGNpcFaction.HOSTILE;
     }
 
-	protected static class AIGhastlingAttack extends EntityAIBase
-    {
+    protected static class AIGhastlingAttack extends EntityAIBase {
         private final Ghastling parentEntity;
         public int attackTimer;
 
-        public AIGhastlingAttack(Ghastling mob)
-        {
+        public AIGhastlingAttack(Ghastling mob) {
             this.parentEntity = mob;
         }
 
         /**
          * Returns whether the EntityAIBase should begin execution.
          */
-        public boolean shouldExecute()
-        {
+        public boolean shouldExecute() {
             return this.parentEntity.getAttackTarget() != null;
         }
 
         /**
          * Execute a one shot task or start executing a continuous task
          */
-        public void startExecuting()
-        {
+        public void startExecuting() {
             this.attackTimer = 0;
         }
 
         /**
          * Reset the task's internal state. Called when this task is interrupted by another one
          */
-        public void resetTask()
-        {
+        public void resetTask() {
             this.parentEntity.setAttacking(false);
         }
 
         /**
          * Keep ticking a continuous task that has already been started
          */
-        public void updateTask()
-        {
+        public void updateTask() {
             EntityLivingBase entitylivingbase = this.parentEntity.getAttackTarget();
             //double d0 = 64.0D;
 
-            if (entitylivingbase.getDistanceSq(this.parentEntity) < 4096.0D && this.parentEntity.canEntityBeSeen(entitylivingbase))
-            {
+            if (entitylivingbase.getDistanceSq(this.parentEntity) < 4096.0D && this.parentEntity.canEntityBeSeen(entitylivingbase)) {
                 World world = this.parentEntity.world;
                 ++this.attackTimer;
 
@@ -269,20 +253,18 @@ public class Ghastling extends EntityMob implements IMob, INpcTGDamageSystem, IN
 
                 } else*/
                 if (attackTimer == 15) {
-                	
 
-                   TGPackets.wrapper.sendToAllAround(new PacketPlaySound(TGSounds.NETHERBLASTER_FIRE, this.parentEntity, 1.0f, 1.0f, false, false, TGSoundCategory.GUN_FIRE), TGPackets.targetPointAroundEnt(parentEntity, 100.0f));
-                   RocketProjectile rocket = new RocketProjectile(this.parentEntity.world, this.parentEntity,12.0f, 1.15f, 100, 0.05f, 30, 40, 8.0f, 0.25f,false,this.parentEntity.rand.nextBoolean()?EnumBulletFirePos.LEFT:EnumBulletFirePos.RIGHT, 2.0f, 0.0f);
-            	    
-            	    world.spawnEntity(rocket);
-                	
-                	
-                } else if (attackTimer >30) {
-                	this.attackTimer=0;
+
+                    TGPackets.wrapper.sendToAllAround(new PacketPlaySound(TGSounds.NETHERBLASTER_FIRE, this.parentEntity, 1.0f, 1.0f, false, false, TGSoundCategory.GUN_FIRE), TGPackets.targetPointAroundEnt(parentEntity, 100.0f));
+                    RocketProjectile rocket = new RocketProjectile(this.parentEntity.world, this.parentEntity, 12.0f, 1.15f, 100, 0.05f, 30, 40, 8.0f, 0.25f, false, this.parentEntity.rand.nextBoolean() ? EnumBulletFirePos.LEFT : EnumBulletFirePos.RIGHT, 2.0f, 0.0f);
+
+                    world.spawnEntity(rocket);
+
+
+                } else if (attackTimer > 30) {
+                    this.attackTimer = 0;
                 }
-            }
-            else if (this.attackTimer > 0)
-            {
+            } else if (this.attackTimer > 0) {
                 --this.attackTimer;
             }
 
@@ -290,143 +272,135 @@ public class Ghastling extends EntityMob implements IMob, INpcTGDamageSystem, IN
         }
     }
 
-	protected static class AIFireballAttack extends EntityAIBase
-     {
-         private final Ghastling parentEntity;
-         private int attackStep;
-         private int attackTime;
+    protected static class AIFireballAttack extends EntityAIBase {
+        private final Ghastling parentEntity;
+        private int attackStep;
+        private int attackTime;
 
-         public AIFireballAttack(Ghastling mob)
-         {
-             this.parentEntity = mob;
-             this.setMutexBits(3);
-         }
+        public AIFireballAttack(Ghastling mob) {
+            this.parentEntity = mob;
+            this.setMutexBits(3);
+        }
 
-         /**
-          * Returns whether the EntityAIBase should begin execution.
-          */
-         public boolean shouldExecute()
-         {
-             EntityLivingBase entitylivingbase = this.parentEntity.getAttackTarget();
-             return entitylivingbase != null && entitylivingbase.isEntityAlive();
-         }
+        /**
+         * Returns whether the EntityAIBase should begin execution.
+         */
+        public boolean shouldExecute() {
+            EntityLivingBase entitylivingbase = this.parentEntity.getAttackTarget();
+            return entitylivingbase != null && entitylivingbase.isEntityAlive();
+        }
 
-         /**
-          * Execute a one shot task or start executing a continuous task
-          */
-         public void startExecuting()
-         {
-             this.attackStep = 0;
-         }
+        /**
+         * Execute a one shot task or start executing a continuous task
+         */
+        public void startExecuting() {
+            this.attackStep = 0;
+        }
 
-         /**
-          * Reset the task's internal state. Called when this task is interrupted by another one
-          */
-         public void resetTask()
-         {
-             //this.parentEntity.setOnFire(false);
-        	 this.parentEntity.setAttacking(false);
-         }
+        /**
+         * Reset the task's internal state. Called when this task is interrupted by another one
+         */
+        public void resetTask() {
+            //this.parentEntity.setOnFire(false);
+            this.parentEntity.setAttacking(false);
+        }
 
-         /**
-          * Keep ticking a continuous task that has already been started
-          */
-         public void updateTask() {
-             --this.attackTime;
-             EntityLivingBase entitylivingbase = this.parentEntity.getAttackTarget();
-             double d0 = this.parentEntity.getDistanceSq(entitylivingbase);
+        /**
+         * Keep ticking a continuous task that has already been started
+         */
+        public void updateTask() {
+            --this.attackTime;
+            EntityLivingBase entitylivingbase = this.parentEntity.getAttackTarget();
+            double d0 = this.parentEntity.getDistanceSq(entitylivingbase);
 
-             if (d0 < 4.0D) {
-                 if (this.attackTime <= 0) {
-                     this.attackTime = 20;
-                     this.parentEntity.attackEntityAsMob(entitylivingbase);
-                 }
+            if (d0 < 4.0D) {
+                if (this.attackTime <= 0) {
+                    this.attackTime = 20;
+                    this.parentEntity.attackEntityAsMob(entitylivingbase);
+                }
 
-                 this.parentEntity.getMoveHelper().setMoveTo(entitylivingbase.posX, entitylivingbase.posY, entitylivingbase.posZ, 1.0D);
-             }
-             else if (d0 < this.getFollowDistance() * this.getFollowDistance()) {
-                 if (this.attackTime <= 0) {
-                     ++this.attackStep;
+                this.parentEntity.getMoveHelper().setMoveTo(entitylivingbase.posX, entitylivingbase.posY, entitylivingbase.posZ, 1.0D);
+            } else if (d0 < this.getFollowDistance() * this.getFollowDistance()) {
+                if (this.attackTime <= 0) {
+                    ++this.attackStep;
 
-                     if (this.attackStep == 1) {
-                         this.attackTime = 30;
-                         this.parentEntity.setAttacking(true);
-                     } else if (this.attackStep <= 4) {
-                         this.attackTime = 6;
-                     } else {
-                         this.attackTime = 50;
-                         this.attackStep = 0;
-                         //this.parentEntity.setOnFire(false);
-                         this.parentEntity.setAttacking(false);
-                     }
+                    if (this.attackStep == 1) {
+                        this.attackTime = 30;
+                        this.parentEntity.setAttacking(true);
+                    } else if (this.attackStep <= 4) {
+                        this.attackTime = 6;
+                    } else {
+                        this.attackTime = 50;
+                        this.attackStep = 0;
+                        //this.parentEntity.setOnFire(false);
+                        this.parentEntity.setAttacking(false);
+                    }
 
-                     if (this.attackStep > 1) {
-                         this.parentEntity.world.playEvent(null, 1018, new BlockPos((int)this.parentEntity.posX, (int)this.parentEntity.posY, (int)this.parentEntity.posZ), 0);
-                 	    RocketProjectile rocket = new RocketProjectile(this.parentEntity.world, this.parentEntity,15.0f, 1.0f, 100, 0.05f, 30, 40, 8.0f, 0.25f,false,this.parentEntity.rand.nextBoolean()?EnumBulletFirePos.LEFT:EnumBulletFirePos.RIGHT, 1.0f, 0.0f);
-                 	    
-                 	    this.parentEntity.world.spawnEntity(rocket);
-                         
-                     }
-                 }
+                    if (this.attackStep > 1) {
+                        this.parentEntity.world.playEvent(null, 1018, new BlockPos((int) this.parentEntity.posX, (int) this.parentEntity.posY, (int) this.parentEntity.posZ), 0);
+                        RocketProjectile rocket = new RocketProjectile(this.parentEntity.world, this.parentEntity, 15.0f, 1.0f, 100, 0.05f, 30, 40, 8.0f, 0.25f, false, this.parentEntity.rand.nextBoolean() ? EnumBulletFirePos.LEFT : EnumBulletFirePos.RIGHT, 1.0f, 0.0f);
 
-                 this.parentEntity.getLookHelper().setLookPositionWithEntity(entitylivingbase, 10.0F, 10.0F);
-             } else {
-                 this.parentEntity.getNavigator().clearPath();
-                 this.parentEntity.getMoveHelper().setMoveTo(entitylivingbase.posX, entitylivingbase.posY, entitylivingbase.posZ, 1.0D);
-             }
+                        this.parentEntity.world.spawnEntity(rocket);
 
-             super.updateTask();
-         }
+                    }
+                }
 
-         private double getFollowDistance() {
-             IAttributeInstance iattributeinstance = this.parentEntity.getEntityAttribute(SharedMonsterAttributes.FOLLOW_RANGE);
-             return iattributeinstance.getAttributeValue();
-         }
-     }
-	
-	/***
-	 * Spawner linking behavior
-	 */
-	@Override
-	public boolean getTryLink() {
-		return tryLink;
-	}
+                this.parentEntity.getLookHelper().setLookPositionWithEntity(entitylivingbase, 10.0F, 10.0F);
+            } else {
+                this.parentEntity.getNavigator().clearPath();
+                this.parentEntity.getMoveHelper().setMoveTo(entitylivingbase.posX, entitylivingbase.posY, entitylivingbase.posZ, 1.0D);
+            }
 
-	@Override
-	public void setTryLink(boolean value) {
-		this.tryLink=value;
-	}
+            super.updateTask();
+        }
 
-	@Override
-	public TGSpawnerNPCData getCapability(Capability<TGSpawnerNPCData> tgGenericnpcData) {
-		return this.getCapability(tgGenericnpcData, null);
-	}
-	
-	@Override
-	protected void despawnEntity() {
-		super.despawnEntity();
-		this.despawnEntitySpawner(world, dead);
-	}
+        private double getFollowDistance() {
+            IAttributeInstance iattributeinstance = this.parentEntity.getEntityAttribute(SharedMonsterAttributes.FOLLOW_RANGE);
+            return iattributeinstance.getAttributeValue();
+        }
+    }
 
-	@Override
-	public void onDeath(@NotNull DamageSource cause) {
-		super.onDeath(cause);
-		this.onDeathSpawner(world, dead);
-	}
-	
+    /***
+     * Spawner linking behavior
+     */
+    @Override
+    public boolean getTryLink() {
+        return tryLink;
+    }
+
+    @Override
+    public void setTryLink(boolean value) {
+        this.tryLink = value;
+    }
+
+    @Override
+    public TGSpawnerNPCData getCapability(Capability<TGSpawnerNPCData> tgGenericnpcData) {
+        return this.getCapability(tgGenericnpcData, null);
+    }
+
+    @Override
+    protected void despawnEntity() {
+        super.despawnEntity();
+        this.despawnEntitySpawner(world, dead);
+    }
+
+    @Override
+    public void onDeath(@NotNull DamageSource cause) {
+        super.onDeath(cause);
+        this.onDeathSpawner(world, dead);
+    }
+
     /**
      * Called to update the entity's position/logic.
      */
-	@Override
-    public void onUpdate()
-    {
+    @Override
+    public void onUpdate() {
         super.onUpdate();
 
-        if (!this.world.isRemote && this.world.getDifficulty() == EnumDifficulty.PEACEFUL)
-        {
+        if (!this.world.isRemote && this.world.getDifficulty() == EnumDifficulty.PEACEFUL) {
             this.setDead();
         }
-        
+
         this.onUpdateSpawner(world);
     }
 

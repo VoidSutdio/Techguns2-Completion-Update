@@ -1,7 +1,5 @@
 package techguns.items;
 
-import java.util.Random;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -18,6 +16,8 @@ import org.jetbrains.annotations.NotNull;
 import techguns.gui.StructureSpawnerGui;
 import techguns.world.StructureRegistry;
 import techguns.world.structures.WorldgenStructure;
+
+import java.util.Random;
 
 public class WorldGenTestTool extends GenericItem {
 

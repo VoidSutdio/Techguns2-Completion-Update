@@ -15,7 +15,8 @@ public class PacketSetStructure implements IMessage {
 
     private String structureName;
 
-    public PacketSetStructure() {}
+    public PacketSetStructure() {
+    }
 
     public PacketSetStructure(String structureName) {
         this.structureName = structureName;

@@ -6,8 +6,6 @@ import net.minecraft.world.World;
 import techguns.world.EnumLootType;
 import techguns.world.structures.WorldgenStructure.BiomeColorType;
 
-import java.util.Random;
-
 public abstract class MEntity {
 
     protected double offsetX;

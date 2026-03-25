@@ -12,24 +12,23 @@ import org.jetbrains.annotations.NotNull;
 
 public class ItemBlockLamp extends GenericItemBlockMeta {
 
-	public ItemBlockLamp(Block block) {
-		super(block);
-	}
+    public ItemBlockLamp(Block block) {
+        super(block);
+    }
 
-	@Override
-	public boolean canPlaceBlockOnSide(World worldIn, @NotNull BlockPos pos, @NotNull EnumFacing side, @NotNull EntityPlayer player,
-									   ItemStack stack) {
-		IBlockState state = worldIn.getBlockState(pos);
-		BlockFaceShape shape = state.getBlockFaceShape(worldIn, pos, side);
-		
-		boolean isLantern = stack.getMetadata()==12 || stack.getMetadata()==13;
-		
-		if( shape==BlockFaceShape.SOLID || shape==BlockFaceShape.CENTER_BIG || shape== BlockFaceShape.MIDDLE_POLE_THICK || (isLantern&&(side==EnumFacing.UP||side==EnumFacing.DOWN)&&state.getBlock().canPlaceTorchOnTop(state, worldIn, pos))) {	
-			return super.canPlaceBlockOnSide(worldIn, pos, side, player, stack);
-		}
-		return false;
-	}
-	
-	
+    @Override
+    public boolean canPlaceBlockOnSide(World worldIn, @NotNull BlockPos pos, @NotNull EnumFacing side, @NotNull EntityPlayer player,
+                                       ItemStack stack) {
+        IBlockState state = worldIn.getBlockState(pos);
+        BlockFaceShape shape = state.getBlockFaceShape(worldIn, pos, side);
+
+        boolean isLantern = stack.getMetadata() == 12 || stack.getMetadata() == 13;
+
+        if (shape == BlockFaceShape.SOLID || shape == BlockFaceShape.CENTER_BIG || shape == BlockFaceShape.MIDDLE_POLE_THICK || (isLantern && (side == EnumFacing.UP || side == EnumFacing.DOWN) && state.getBlock().canPlaceTorchOnTop(state, worldIn, pos))) {
+            return super.canPlaceBlockOnSide(worldIn, pos, side, player, stack);
+        }
+        return false;
+    }
+
 
 }

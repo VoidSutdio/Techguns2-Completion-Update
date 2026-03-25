@@ -11,7 +11,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 import techguns.TGItems;
-import techguns.*;
+import techguns.Tags;
 import techguns.gui.AmmoPressGui;
 
 public class ChemLabJeiRecipeCategory extends BasicRecipeCategory<ChemLabJeiRecipe> {

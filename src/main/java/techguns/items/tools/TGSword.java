@@ -1,19 +1,20 @@
 package techguns.items.tools;
 
-import java.util.List;
-
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
-import techguns.*;
+import techguns.Tags;
+import techguns.Techguns;
 import techguns.api.damagesystem.DamageType;
 import techguns.api.damagesystem.IToolTGDamageSystem;
 import techguns.damagesystem.TGDamageSource;
 import techguns.deatheffects.EntityDeathUtils.DeathType;
 import techguns.util.TextUtil;
+
+import java.util.List;
 
 public class TGSword extends ItemSword implements IToolTGDamageSystem {
 

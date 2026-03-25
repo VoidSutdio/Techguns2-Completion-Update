@@ -1,7 +1,5 @@
 package techguns.client.render.item;
 
-import java.util.List;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
@@ -23,262 +21,262 @@ import techguns.client.models.ModelMultipart;
 import techguns.client.particle.ITGParticle;
 import techguns.entities.npcs.NPCTurret;
 
+import java.util.List;
+
 public class RenderItemBase implements IItemRenderer {
 
-	public static final float SCALE = 0.0625f;
+    public static final float SCALE = 0.0625f;
 
-	protected ModelMultipart model;
-	protected ResourceLocation texture;
-	
-	protected float baseScale = 1.0f;
+    protected ModelMultipart model;
+    protected ResourceLocation texture;
 
-	protected float scale_thirdp = 0.35f;
-	protected float scale_ground = 0.5f;
-	protected float scale_ego = 0.5f;
-	protected float scale_gui = 0.4f;
-	protected float scale_itemframe = 0.5f;
+    protected float baseScale = 1.0f;
 
-	protected float[] translateBase = { 0f, 0f, 0f };
+    protected float scale_thirdp = 0.35f;
+    protected float scale_ground = 0.5f;
+    protected float scale_ego = 0.5f;
+    protected float scale_gui = 0.4f;
+    protected float scale_itemframe = 0.5f;
 
-	protected float[][] translateType = { { 0f, 0f, 0f }, // TRANSLATE FIRST
-			// PERSON
-			{ 0f, 0f, 0f }, // TRANSLATE THIRD PERSON
-			{ 0f, 0f, 0f }, // TRANSLATE GUI
-			{ 0f, 0f, 0f }, // TRANSLATE GROUND
-			{ 0f, 0f, -0.05f } // TRANLATE FIXED (frame)
-	};
+    protected float[] translateBase = {0f, 0f, 0f};
 
-	protected int parts = 1;
+    protected float[][] translateType = {{0f, 0f, 0f}, // TRANSLATE FIRST
+            // PERSON
+            {0f, 0f, 0f}, // TRANSLATE THIRD PERSON
+            {0f, 0f, 0f}, // TRANSLATE GUI
+            {0f, 0f, 0f}, // TRANSLATE GROUND
+            {0f, 0f, -0.05f} // TRANLATE FIXED (frame)
+    };
 
-	protected String ambientParticleFX=null;
-	
-	public RenderItemBase(ModelMultipart model, ResourceLocation texture) {
-		super();
-		this.model = model;
-		this.texture = texture;
-	}
+    protected int parts = 1;
 
-	public RenderItemBase setGUIScale(float guiscale) {
-		this.scale_gui = guiscale;
-		return this;
-	}
-	
-	public RenderItemBase setFirstPersonScale(float scale) {
-		this.scale_ego = scale;
-		return this;
-	}
-	
-	public RenderItemBase setGroundAndFrameScale(float scale) {
-		this.scale_ground = scale;
-		this.scale_itemframe=scale;
-		return this;
-	}
+    protected String ambientParticleFX = null;
 
-	/**
-	 * Set the basic translation applied to ALL types
-	 * 
-	 * @param x
-	 * @param y
-	 * @param z
-	 * @return
-	 */
-	public RenderItemBase setBaseTranslation(float x, float y, float z) {
-		this.translateBase[0] = x;
-		this.translateBase[1] = y;
-		this.translateBase[2] = z;
-		return this;
-	}
+    public RenderItemBase(ModelMultipart model, ResourceLocation texture) {
+        super();
+        this.model = model;
+        this.texture = texture;
+    }
 
-	/**
-	 * TRANSLATE FIRST PERSON x,y,z
-	 * TRANSLATE THIRD PERSON x,y,z
-	 * TRANSLATE GUI x,y,z
-	 * TRANSLATEGROUND x,y,z
-	 * TRANLATE FIXED (frame) x,y,z
-	 * 
-	 * Left hand gets automatically mirrored
-	 * 
-	 * @param translations
-	 *            - must be a float[5][3]
-	 * @return
-	 */
-	public RenderItemBase setTransformTranslations(float[][] translations) {
-		this.translateType = translations;
-		return this;
-	}
-	
-	public RenderItemBase setBaseScale(float baseScale) {
-		this.baseScale = baseScale;
-		return this;
-	}
+    public RenderItemBase setGUIScale(float guiscale) {
+        this.scale_gui = guiscale;
+        return this;
+    }
 
-	protected float getScaleFactorFromTransform(TransformType transform) {
-		switch (transform) {
-		case FIRST_PERSON_LEFT_HAND:
-		case FIRST_PERSON_RIGHT_HAND:
-			return baseScale * scale_ego;
+    public RenderItemBase setFirstPersonScale(float scale) {
+        this.scale_ego = scale;
+        return this;
+    }
 
-		case THIRD_PERSON_LEFT_HAND:
-		case THIRD_PERSON_RIGHT_HAND:
-			return baseScale * scale_thirdp;
+    public RenderItemBase setGroundAndFrameScale(float scale) {
+        this.scale_ground = scale;
+        this.scale_itemframe = scale;
+        return this;
+    }
 
-		case GUI:
-			return baseScale * scale_gui;
+    /**
+     * Set the basic translation applied to ALL types
+     *
+     * @param x
+     * @param y
+     * @param z
+     * @return
+     */
+    public RenderItemBase setBaseTranslation(float x, float y, float z) {
+        this.translateBase[0] = x;
+        this.translateBase[1] = y;
+        this.translateBase[2] = z;
+        return this;
+    }
 
-		case GROUND:
-			return baseScale * scale_ground;
+    /**
+     * TRANSLATE FIRST PERSON x,y,z
+     * TRANSLATE THIRD PERSON x,y,z
+     * TRANSLATE GUI x,y,z
+     * TRANSLATEGROUND x,y,z
+     * TRANLATE FIXED (frame) x,y,z
+     * <p>
+     * Left hand gets automatically mirrored
+     *
+     * @param translations - must be a float[5][3]
+     * @return
+     */
+    public RenderItemBase setTransformTranslations(float[][] translations) {
+        this.translateType = translations;
+        return this;
+    }
 
-		case FIXED:
-			return baseScale * scale_itemframe;
+    public RenderItemBase setBaseScale(float baseScale) {
+        this.baseScale = baseScale;
+        return this;
+    }
 
-		default:
-			return baseScale;
+    protected float getScaleFactorFromTransform(TransformType transform) {
+        switch (transform) {
+            case FIRST_PERSON_LEFT_HAND:
+            case FIRST_PERSON_RIGHT_HAND:
+                return baseScale * scale_ego;
 
-		}
-	}
+            case THIRD_PERSON_LEFT_HAND:
+            case THIRD_PERSON_RIGHT_HAND:
+                return baseScale * scale_thirdp;
 
-	protected void applyTranslation(TransformType transform) {
-		int index = -1;
-		boolean flip = false;
+            case GUI:
+                return baseScale * scale_gui;
 
-		switch (transform) {
-		case FIRST_PERSON_LEFT_HAND:
-			flip = true; // fallthrough
-		case FIRST_PERSON_RIGHT_HAND:
-			index = 0;
-			break;
+            case GROUND:
+                return baseScale * scale_ground;
 
-		case THIRD_PERSON_LEFT_HAND:
-			flip = true; // fallthrough
-		case THIRD_PERSON_RIGHT_HAND:
-			index = 1;
-			break;
-		case GUI:
-			index = 2;
-			break;
-		case GROUND:
-			index = 3;
-			break;
-		case FIXED:
-			index = 4;
-			break;
-		default:
-			break;
-		}
-		if (index >= 0) {
-			float mirror = flip?-1.0f:1.0f;
-			//GlStateManager.translate((translateType[index][0]+Keybinds.X)*mirror, translateType[index][1]+Keybinds.Y, translateType[index][2]+Keybinds.Z);
-			GlStateManager.translate((translateType[index][0])*mirror, translateType[index][1], translateType[index][2]);
-		}
-	}
-	
-	/**
-	 * center the model
-	 */
-	protected void applyBaseTranslation(){
-		GlStateManager.translate(this.translateBase[0], this.translateBase[1], this.translateBase[2]);
-		//GlStateManager.translate(this.translateBase[0]+Keybinds.X, this.translateBase[1]+Keybinds.Y, this.translateBase[2]+Keybinds.Z);
-	}
-	
-	
-	@Override
-	public void renderItem(@NotNull TransformType transform, @NotNull ItemStack stack, EntityLivingBase elb, boolean leftHanded) {
-		GlStateManager.pushMatrix();
+            case FIXED:
+                return baseScale * scale_itemframe;
+
+            default:
+                return baseScale;
+
+        }
+    }
+
+    protected void applyTranslation(TransformType transform) {
+        int index = -1;
+        boolean flip = false;
+
+        switch (transform) {
+            case FIRST_PERSON_LEFT_HAND:
+                flip = true; // fallthrough
+            case FIRST_PERSON_RIGHT_HAND:
+                index = 0;
+                break;
+
+            case THIRD_PERSON_LEFT_HAND:
+                flip = true; // fallthrough
+            case THIRD_PERSON_RIGHT_HAND:
+                index = 1;
+                break;
+            case GUI:
+                index = 2;
+                break;
+            case GROUND:
+                index = 3;
+                break;
+            case FIXED:
+                index = 4;
+                break;
+            default:
+                break;
+        }
+        if (index >= 0) {
+            float mirror = flip ? -1.0f : 1.0f;
+            //GlStateManager.translate((translateType[index][0]+Keybinds.X)*mirror, translateType[index][1]+Keybinds.Y, translateType[index][2]+Keybinds.Z);
+            GlStateManager.translate((translateType[index][0]) * mirror, translateType[index][1], translateType[index][2]);
+        }
+    }
+
+    /**
+     * center the model
+     */
+    protected void applyBaseTranslation() {
+        GlStateManager.translate(this.translateBase[0], this.translateBase[1], this.translateBase[2]);
+        //GlStateManager.translate(this.translateBase[0]+Keybinds.X, this.translateBase[1]+Keybinds.Y, this.translateBase[2]+Keybinds.Z);
+    }
+
+
+    @Override
+    public void renderItem(@NotNull TransformType transform, @NotNull ItemStack stack, EntityLivingBase elb, boolean leftHanded) {
+        GlStateManager.pushMatrix();
         GlStateManager.disableCull();
-		GlStateManager.translate(0.5f, 0.5f, 0.5f);
+        GlStateManager.translate(0.5f, 0.5f, 0.5f);
 
-		Minecraft.getMinecraft().getTextureManager().bindTexture(texture);
+        Minecraft.getMinecraft().getTextureManager().bindTexture(texture);
 
-		this.applyTranslation(transform);
+        this.applyTranslation(transform);
 
         if (transform == TransformType.FIRST_PERSON_LEFT_HAND || transform == TransformType.THIRD_PERSON_LEFT_HAND) {
             GlStateManager.translate(-1f, 0f, 0f);
         }
 
-		if (TransformType.GUI == transform) {
-			GlStateManager.rotate(40.0f, 0, 1f, 0);
-			GlStateManager.rotate(20.0f, 1f, 0, 0);
+        if (TransformType.GUI == transform) {
+            GlStateManager.rotate(40.0f, 0, 1f, 0);
+            GlStateManager.rotate(20.0f, 1f, 0, 0);
 
-		} else if (TransformType.FIXED == transform) {
-			GlStateManager.rotate(-90.0f, 0, 1.0f, 0);
-		}
+        } else if (TransformType.FIXED == transform) {
+            GlStateManager.rotate(-90.0f, 0, 1.0f, 0);
+        }
 
-		this.setBaseScale(elb,transform);
-		this.setBaseRotation(transform);
-		this.applyBaseTranslation();
-			
-		for (int i = 0; i < parts; i++) {
-			model.render(elb, 0, 0, 0, 0, 0, SCALE, 0, 0, transform, i, 0, 0f);
-		}
-		this.renderItemParticles(elb, transform, ClientProxy.get().PARTIAL_TICK_TIME);
+        this.setBaseScale(elb, transform);
+        this.setBaseRotation(transform);
+        this.applyBaseTranslation();
+
+        for (int i = 0; i < parts; i++) {
+            model.render(elb, 0, 0, 0, 0, 0, SCALE, 0, 0, transform, i, 0, 0f);
+        }
+        this.renderItemParticles(elb, transform, ClientProxy.get().PARTIAL_TICK_TIME);
         GlStateManager.enableCull();
-		GlStateManager.popMatrix();
-	}
+        GlStateManager.popMatrix();
+    }
 
-	protected void setBaseScale(EntityLivingBase entity, TransformType transform) {
-		float scale = getScaleFactorFromTransform(transform);
-		
-		if(entity instanceof INPCTechgunsShooter) {
-			INPCTechgunsShooter shooter = (INPCTechgunsShooter) entity;
-			scale *=shooter.getGunScale();
-		}
-		
-		GlStateManager.scale(scale, scale, scale);
-	}
+    protected void setBaseScale(EntityLivingBase entity, TransformType transform) {
+        float scale = getScaleFactorFromTransform(transform);
 
-	protected void setBaseRotation(TransformType transform) {
-		GlStateManager.rotate(-180.0f, 1.0f, 0, 0);
-		GlStateManager.rotate(180.0f, 0f, 1.0f, 0);
-	}
+        if (entity instanceof INPCTechgunsShooter) {
+            INPCTechgunsShooter shooter = (INPCTechgunsShooter) entity;
+            scale *= shooter.getGunScale();
+        }
 
-	protected void renderItemParticles(EntityLivingBase ent, TransformType transform, float ptt) {
-		EnumHand hand = EnumHand.MAIN_HAND;
-		if(ent == null) return;
-		if (ent instanceof NPCTurret) {
+        GlStateManager.scale(scale, scale, scale);
+    }
 
-		}
-		else if (transform == TransformType.FIRST_PERSON_LEFT_HAND || transform == TransformType.THIRD_PERSON_LEFT_HAND) {
-			GlStateManager.translate(-1f, 0f, 0f);
-			if(ent.getPrimaryHand() == EnumHandSide.RIGHT) {
-				hand = EnumHand.OFF_HAND;
-			}
-		} else if (transform == TransformType.FIRST_PERSON_RIGHT_HAND || transform == TransformType.THIRD_PERSON_RIGHT_HAND) {
-			if(ent.getPrimaryHand() == EnumHandSide.LEFT) {
-				hand = EnumHand.OFF_HAND;
-			}
-		} else return;
-		
-		
-		List<ITGParticle> particles = null;
-		if(ent instanceof EntityPlayer) {
-			if(hand==EnumHand.MAIN_HAND) {
-				particles = TGExtendedPlayerClient.get((EntityPlayer) ent).getEntityParticlesMH();
-			} else {
-				particles = TGExtendedPlayerClient.get((EntityPlayer) ent).getEntityParticlesOH();
-			}
-		} else if (ent instanceof INPCTechgunsShooter){
-			if (hand==EnumHand.MAIN_HAND) {
-				particles = TGShooterValues.get(ent).getEntityParticlesMH();
-			} else {
-				particles = TGShooterValues.get(ent).getEntityParticlesOH();
-			}
-		} 
-			
-		if (particles != null && !particles.isEmpty()) {
-			Tessellator tessellator = Tessellator.getInstance();
-			BufferBuilder buffer = tessellator.getBuffer();
-			
-			particles.forEach(p -> p.doRender(buffer, ent, ptt, 1.0f, 1.0f, 0, 0, 0));
-		}
-		
-	}
+    protected void setBaseRotation(TransformType transform) {
+        GlStateManager.rotate(-180.0f, 1.0f, 0, 0);
+        GlStateManager.rotate(180.0f, 0f, 1.0f, 0);
+    }
 
-	public String getAmbientParticleFX() {
-		return ambientParticleFX;
-	}
+    protected void renderItemParticles(EntityLivingBase ent, TransformType transform, float ptt) {
+        EnumHand hand = EnumHand.MAIN_HAND;
+        if (ent == null) return;
+        if (ent instanceof NPCTurret) {
 
-	public RenderItemBase setAmbientParticleFX(String ambientParticleFX) {
-		this.ambientParticleFX = ambientParticleFX;
-		return this;
-	}
+        } else if (transform == TransformType.FIRST_PERSON_LEFT_HAND || transform == TransformType.THIRD_PERSON_LEFT_HAND) {
+            GlStateManager.translate(-1f, 0f, 0f);
+            if (ent.getPrimaryHand() == EnumHandSide.RIGHT) {
+                hand = EnumHand.OFF_HAND;
+            }
+        } else if (transform == TransformType.FIRST_PERSON_RIGHT_HAND || transform == TransformType.THIRD_PERSON_RIGHT_HAND) {
+            if (ent.getPrimaryHand() == EnumHandSide.LEFT) {
+                hand = EnumHand.OFF_HAND;
+            }
+        } else return;
+
+
+        List<ITGParticle> particles = null;
+        if (ent instanceof EntityPlayer) {
+            if (hand == EnumHand.MAIN_HAND) {
+                particles = TGExtendedPlayerClient.get((EntityPlayer) ent).getEntityParticlesMH();
+            } else {
+                particles = TGExtendedPlayerClient.get((EntityPlayer) ent).getEntityParticlesOH();
+            }
+        } else if (ent instanceof INPCTechgunsShooter) {
+            if (hand == EnumHand.MAIN_HAND) {
+                particles = TGShooterValues.get(ent).getEntityParticlesMH();
+            } else {
+                particles = TGShooterValues.get(ent).getEntityParticlesOH();
+            }
+        }
+
+        if (particles != null && !particles.isEmpty()) {
+            Tessellator tessellator = Tessellator.getInstance();
+            BufferBuilder buffer = tessellator.getBuffer();
+
+            particles.forEach(p -> p.doRender(buffer, ent, ptt, 1.0f, 1.0f, 0, 0, 0));
+        }
+
+    }
+
+    public String getAmbientParticleFX() {
+        return ambientParticleFX;
+    }
+
+    public RenderItemBase setAmbientParticleFX(String ambientParticleFX) {
+        this.ambientParticleFX = ambientParticleFX;
+        return this;
+    }
 }

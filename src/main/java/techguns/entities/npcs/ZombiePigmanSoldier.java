@@ -1,7 +1,5 @@
 package techguns.entities.npcs;
 
-import java.util.Random;
-
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.SharedMonsterAttributes;
@@ -18,112 +16,113 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import techguns.TGArmors;
 import techguns.TGuns;
-import techguns.*;
+import techguns.Tags;
 import techguns.api.npc.factions.ITGNpcTeam;
 import techguns.items.armors.GenericArmorMultiCamo;
 
+import java.util.Random;
+
 public class ZombiePigmanSoldier extends GenericNPCUndead {
 
-	public static final ResourceLocation LOOT = new ResourceLocation(Tags.MOD_ID, "entities/zombiepigmansoldier");
-	
-	public ZombiePigmanSoldier(World world) {
-		super(world);
-		setTGArmorStats(10.0f, 0f);
-		this.isImmuneToFire=true;
-	}
+    public static final ResourceLocation LOOT = new ResourceLocation(Tags.MOD_ID, "entities/zombiepigmansoldier");
 
-	@Override
-	protected void applyEntityAttributes() {
-		super.applyEntityAttributes();
-		this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.30D);
-		this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(25);
-		this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(5);
-		this.getEntityAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(50.0D);
-	}
+    public ZombiePigmanSoldier(World world) {
+        super(world);
+        setTGArmorStats(10.0f, 0f);
+        this.isImmuneToFire = true;
+    }
 
-	@Override
-	protected void addRandomArmor(int difficulty) {
+    @Override
+    protected void applyEntityAttributes() {
+        super.applyEntityAttributes();
+        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.30D);
+        this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(25);
+        this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(5);
+        this.getEntityAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(50.0D);
+    }
 
-		// Armors
-		double chance = 0.5;
-		int camo=3;
-		if (Math.random() <= chance) {
+    @Override
+    protected void addRandomArmor(int difficulty) {
+
+        // Armors
+        double chance = 0.5;
+        int camo = 3;
+        if (Math.random() <= chance) {
             GenericArmorMultiCamo.getNewWithCamo(TGArmors.t2_combat_Helmet, camo);
             this.setItemStackToSlot(EntityEquipmentSlot.HEAD,
                     GenericArmorMultiCamo.getNewWithCamo(TGArmors.t2_combat_Helmet, camo));
         }
-		if (Math.random() <= chance)
-			this.setItemStackToSlot(EntityEquipmentSlot.CHEST, 
-					GenericArmorMultiCamo.getNewWithCamo(TGArmors.t2_combat_Chestplate, camo));
-		if (Math.random() <= chance)
-			this.setItemStackToSlot(EntityEquipmentSlot.LEGS, GenericArmorMultiCamo.getNewWithCamo(TGArmors.t2_combat_Leggings, camo));
-		if (Math.random() <= chance)
-			this.setItemStackToSlot(EntityEquipmentSlot.FEET, GenericArmorMultiCamo.getNewWithCamo(TGArmors.t2_combat_Boots, camo));
+        if (Math.random() <= chance)
+            this.setItemStackToSlot(EntityEquipmentSlot.CHEST,
+                    GenericArmorMultiCamo.getNewWithCamo(TGArmors.t2_combat_Chestplate, camo));
+        if (Math.random() <= chance)
+            this.setItemStackToSlot(EntityEquipmentSlot.LEGS, GenericArmorMultiCamo.getNewWithCamo(TGArmors.t2_combat_Leggings, camo));
+        if (Math.random() <= chance)
+            this.setItemStackToSlot(EntityEquipmentSlot.FEET, GenericArmorMultiCamo.getNewWithCamo(TGArmors.t2_combat_Boots, camo));
 
-		// Weapons
-		Random r = new Random();
-		Item weapon;
-		int bound = 9;
-		
-		switch (r.nextInt(bound)) {
-		case 0:
-		case 1:
-		case 2:
-			weapon = TGuns.thompson;
-			break;
-		case 3:
-		case 4:
-			weapon = TGuns.revolver;
-			break;
-		case 5:
-		case 6:
-			weapon = TGuns.ak47;
-			break;
-		case 7:
-		case 8:
-			weapon = TGuns.pistol;
-			break;
+        // Weapons
+        Random r = new Random();
+        Item weapon;
+        int bound = 9;
+
+        switch (r.nextInt(bound)) {
+            case 0:
+            case 1:
+            case 2:
+                weapon = TGuns.thompson;
+                break;
+            case 3:
+            case 4:
+                weapon = TGuns.revolver;
+                break;
+            case 5:
+            case 6:
+                weapon = TGuns.ak47;
+                break;
+            case 7:
+            case 8:
+                weapon = TGuns.pistol;
+                break;
             default:
-			weapon = TGuns.rocketlauncher;
-			break;
-		}
-		if (weapon != null) this.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, new ItemStack(weapon));
-	}
+                weapon = TGuns.rocketlauncher;
+                break;
+        }
+        if (weapon != null) this.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, new ItemStack(weapon));
+    }
 
-	@Override
-	protected boolean shouldBurnInDay() {
-		return false;
-	}
+    @Override
+    protected boolean shouldBurnInDay() {
+        return false;
+    }
 
-	@Override
-	public SoundEvent getAmbientSound() {
-		return SoundEvents.ENTITY_ZOMBIE_PIG_AMBIENT;
-	}
+    @Override
+    public SoundEvent getAmbientSound() {
+        return SoundEvents.ENTITY_ZOMBIE_PIG_AMBIENT;
+    }
 
-	@Override
-	public @NotNull SoundEvent getHurtSound(@NotNull DamageSource damageSourceIn) {
-		return SoundEvents.ENTITY_ZOMBIE_PIG_HURT;
-	}
+    @Override
+    public @NotNull SoundEvent getHurtSound(@NotNull DamageSource damageSourceIn) {
+        return SoundEvents.ENTITY_ZOMBIE_PIG_HURT;
+    }
 
-	@Override
-	public @NotNull SoundEvent getDeathSound() {
-		return SoundEvents.ENTITY_ZOMBIE_PIG_DEATH;
-	}
+    @Override
+    public @NotNull SoundEvent getDeathSound() {
+        return SoundEvents.ENTITY_ZOMBIE_PIG_DEATH;
+    }
 
-	public SoundEvent getStepSound() {
-		return SoundEvents.ENTITY_ZOMBIE_STEP;
-	}
-	
-	@Override
-    protected void playStepSound(@NotNull BlockPos pos, @NotNull Block blockIn)
-    {
+    public SoundEvent getStepSound() {
+        return SoundEvents.ENTITY_ZOMBIE_STEP;
+    }
+
+    @Override
+    protected void playStepSound(@NotNull BlockPos pos, @NotNull Block blockIn) {
         this.playSound(this.getStepSound(), 0.15F, 1.0F);
     }
 
-	@Override
-	protected ResourceLocation getLootTable() {
-		return LOOT;
-	}
+    @Override
+    protected ResourceLocation getLootTable() {
+        return LOOT;
+    }
 
     @Override
     public boolean attackEntityFrom(@NotNull DamageSource source, float amount) {

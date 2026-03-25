@@ -1,7 +1,5 @@
 package techguns.client.particle;
 
-import java.util.List;
-
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.entity.Entity;
@@ -16,6 +14,8 @@ import techguns.client.ClientProxy;
 import techguns.client.particle.TGParticleSystemType.DirResult;
 import techguns.util.EntityCondition;
 import techguns.util.MathUtil;
+
+import java.util.List;
 
 /**
  * A particle system which spawns particles

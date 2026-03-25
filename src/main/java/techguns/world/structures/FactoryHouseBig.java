@@ -3,7 +3,7 @@ package techguns.world.structures;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
-import techguns.*;
+import techguns.Tags;
 import techguns.blocks.EnumMonsterSpawnerType;
 import techguns.entities.npcs.ZombieMiner;
 import techguns.entities.npcs.ZombieSoldier;
@@ -17,10 +17,11 @@ import java.util.Random;
 
 public class FactoryHouseBig extends WorldgenStructure {
 
-    private static final ResourceLocation CHEST_LOOT = new ResourceLocation(Tags.MOD_ID,"chests/factory_building");
+    private static final ResourceLocation CHEST_LOOT = new ResourceLocation(Tags.MOD_ID, "chests/factory_building");
 
     static ArrayList<MBlock> blockList = new ArrayList<>();
     static short[][] blocks;
+
     static {
         blockList.add(new MBlock("minecraft:air", 0));
         blockList.add(new MBlock("minecraft:air", 0));
@@ -36,7 +37,7 @@ public class FactoryHouseBig extends WorldgenStructure {
         blockList.add(new MBlock("minecraft:hardened_clay", 0));
         blockList.add(new MBlock("techguns:lamp0", 4));
         blockList.add(new MBlock("techguns:bunkerdoor", 1));
-        blockList.add(new MBlockTGSpawner(EnumMonsterSpawnerType.HOLE,6,2,100,2).addMobType(ZombieMiner.class, 1).addMobType(ZombieSoldier.class, 1));
+        blockList.add(new MBlockTGSpawner(EnumMonsterSpawnerType.HOLE, 6, 2, 100, 2).addMobType(ZombieMiner.class, 1).addMobType(ZombieSoldier.class, 1));
         blockList.add(new MBlock("minecraft:crafting_table", 0));
         blockList.add(new MBlock("techguns:bunkerdoor", 9));
         blockList.add(new MBlock("techguns:lamp0", 2));
@@ -58,7 +59,7 @@ public class FactoryHouseBig extends WorldgenStructure {
     }
 
     public FactoryHouseBig(int minX, int minY, int minZ, int maxX, int maxY,
-                             int maxZ) {
+                           int maxZ) {
         super(minX, minY, minZ, maxX, maxY, maxZ);
         this.setSwapXZ(true);
     }
@@ -69,19 +70,18 @@ public class FactoryHouseBig extends WorldgenStructure {
         int centerX, centerZ;
 
         if (((sizeX < this.minX) && (sizeZ > this.minX) && (sizeX >= this.minZ))
-                ||((sizeZ < this.minZ) && (sizeX > this.minZ) && (sizeZ >= this.minX)))
-        {
-            direction = (direction+1) % 4;
-            centerZ = (int) (sizeX/2.0f);
-            centerX = (int) (sizeZ/2.0f);
-        }else {
-            centerX = (int) (sizeX/2.0f);
-            centerZ = (int) (sizeZ/2.0f);
+                || ((sizeZ < this.minZ) && (sizeX > this.minZ) && (sizeZ >= this.minX))) {
+            direction = (direction + 1) % 4;
+            centerZ = (int) (sizeX / 2.0f);
+            centerX = (int) (sizeZ / 2.0f);
+        } else {
+            centerX = (int) (sizeX / 2.0f);
+            centerZ = (int) (sizeZ / 2.0f);
         }
 
         BlockUtils.cleanUpwards(world, blocks, posX, posY, posZ, centerX, centerZ, direction, 7);
-        BlockUtils.placeFoundation(world, blocks, blockList, posX, posY, posZ, centerX, centerZ, direction, 0,3);
-        BlockUtils.placeScannedStructure(world, blocks, blockList, posX, posY, posZ, centerX, centerZ, direction, 0,this.lootTier,colorType);
-        BlockUtils.placeScannedStructure(world, blocks, blockList, posX, posY, posZ, centerX, centerZ, direction, 1,this.lootTier,colorType);
+        BlockUtils.placeFoundation(world, blocks, blockList, posX, posY, posZ, centerX, centerZ, direction, 0, 3);
+        BlockUtils.placeScannedStructure(world, blocks, blockList, posX, posY, posZ, centerX, centerZ, direction, 0, this.lootTier, colorType);
+        BlockUtils.placeScannedStructure(world, blocks, blockList, posX, posY, posZ, centerX, centerZ, direction, 1, this.lootTier, colorType);
     }
 }

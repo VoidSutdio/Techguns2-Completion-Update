@@ -15,20 +15,20 @@ import techguns.entities.projectiles.GenericProjectile;
 
 public class BlockFluidAcid extends BlockFluidClassic {
 
-	public BlockFluidAcid(Fluid fluid, Material material) {
-		super(fluid, material);
-	}
+    public BlockFluidAcid(Fluid fluid, Material material) {
+        super(fluid, material);
+    }
 
-	@Override
-	public void onEntityCollision(@NotNull World w, @NotNull BlockPos pos, @NotNull IBlockState state, @NotNull Entity ent) {
-		if (ent instanceof EntityLivingBase && GenericProjectile.BULLET_TARGETS.test(ent)){
-			TGDamageSource acidDamage = TGDamageSource.causePoisonDamage(null, null, DeathType.BIO);
-			acidDamage.goreChance=1.0f;
-			acidDamage.ignoreHurtresistTime=false;
-			acidDamage.knockbackMultiplier=0.0f;
-			ent.attackEntityFrom(acidDamage, 2.0f);
-		}
-	}
-    
-	
+    @Override
+    public void onEntityCollision(@NotNull World w, @NotNull BlockPos pos, @NotNull IBlockState state, @NotNull Entity ent) {
+        if (ent instanceof EntityLivingBase && GenericProjectile.BULLET_TARGETS.test(ent)) {
+            TGDamageSource acidDamage = TGDamageSource.causePoisonDamage(null, null, DeathType.BIO);
+            acidDamage.goreChance = 1.0f;
+            acidDamage.ignoreHurtresistTime = false;
+            acidDamage.knockbackMultiplier = 0.0f;
+            ent.attackEntityFrom(acidDamage, 2.0f);
+        }
+    }
+
+
 }

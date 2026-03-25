@@ -1,9 +1,5 @@
 package techguns.plugins.jei;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 import mezz.jei.api.IJeiHelpers;
 import org.jetbrains.annotations.NotNull;
 import techguns.gui.PoweredTileEntGui;
@@ -12,47 +8,51 @@ import techguns.tileentities.ChargingStationTileEnt;
 import techguns.tileentities.operation.ChargingStationRecipe;
 import techguns.util.TextUtil;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 public class ChargingStationJeiRecipe extends BasicRecipeWrapper {
 
-	ChargingStationRecipe rec;
-	
-	public ChargingStationJeiRecipe(ChargingStationRecipe recipe) {
-		super(recipe);
-		this.rec=recipe;
-	}
+    ChargingStationRecipe rec;
 
-	@Override
-	protected int getRFperTick() {
-		return ChargingStationTileEnt.CHARGERATE;
-	}
-	
-	@Override
-	public @NotNull List<String> getTooltipStrings(int mouseX, int mouseY) {
-		if (TGBaseGui.isInRect(mouseX, mouseY, 8+BasicRecipeCategory.JEI_OFFSET_X, 17+BasicRecipeCategory.JEI_OFFSET_Y, 6, 60)) {
-			
-			List<String> tooltip = new ArrayList<>();
-			tooltip.add(TextUtil.trans("techguns.container.power")+":");
-			
-			
-			double duration = ((double)rec.chargeAmount) / ((double)this.getRFperTick());
-			
-			tooltip.add("-"+this.getRFperTick()+" "+PoweredTileEntGui.POWER_UNIT+"/t");
-			tooltip.add("-"+rec.chargeAmount+" "+PoweredTileEntGui.POWER_UNIT);
-			tooltip.add(TextUtil.trans("techguns.container.chargingstation.duration")+": "+String.format("%.2f", duration/20.0f)+"s");
-			
-			return tooltip;
-		} else {
-			return Collections.emptyList();
-		}
-		
-	}
+    public ChargingStationJeiRecipe(ChargingStationRecipe recipe) {
+        super(recipe);
+        this.rec = recipe;
+    }
 
-	public static List<ChargingStationJeiRecipe> getRecipes(IJeiHelpers helpers) {
+    @Override
+    protected int getRFperTick() {
+        return ChargingStationTileEnt.CHARGERATE;
+    }
+
+    @Override
+    public @NotNull List<String> getTooltipStrings(int mouseX, int mouseY) {
+        if (TGBaseGui.isInRect(mouseX, mouseY, 8 + BasicRecipeCategory.JEI_OFFSET_X, 17 + BasicRecipeCategory.JEI_OFFSET_Y, 6, 60)) {
+
+            List<String> tooltip = new ArrayList<>();
+            tooltip.add(TextUtil.trans("techguns.container.power") + ":");
+
+
+            double duration = ((double) rec.chargeAmount) / ((double) this.getRFperTick());
+
+            tooltip.add("-" + this.getRFperTick() + " " + PoweredTileEntGui.POWER_UNIT + "/t");
+            tooltip.add("-" + rec.chargeAmount + " " + PoweredTileEntGui.POWER_UNIT);
+            tooltip.add(TextUtil.trans("techguns.container.chargingstation.duration") + ": " + String.format("%.2f", duration / 20.0f) + "s");
+
+            return tooltip;
+        } else {
+            return Collections.emptyList();
+        }
+
+    }
+
+    public static List<ChargingStationJeiRecipe> getRecipes(IJeiHelpers helpers) {
 
         List<ChargingStationJeiRecipe> recipes = new ArrayList<>();
-		
-		ChargingStationRecipe.getRecipes().forEach(r -> recipes.add(new ChargingStationJeiRecipe(r)));
-		
-		return recipes;
-	}
+
+        ChargingStationRecipe.getRecipes().forEach(r -> recipes.add(new ChargingStationJeiRecipe(r)));
+
+        return recipes;
+    }
 }

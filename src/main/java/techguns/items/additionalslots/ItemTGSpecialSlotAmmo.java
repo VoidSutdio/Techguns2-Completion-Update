@@ -1,9 +1,6 @@
 package techguns.items.additionalslots;
 
-import java.util.List;
-
 import com.mojang.realmsclient.gui.ChatFormatting;
-
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
@@ -13,6 +10,8 @@ import org.jetbrains.annotations.NotNull;
 import techguns.api.tginventory.TGSlotType;
 import techguns.util.InventoryUtil;
 import techguns.util.TextUtil;
+
+import java.util.List;
 
 public abstract class ItemTGSpecialSlotAmmo extends ItemTGSpecialSlot {
 

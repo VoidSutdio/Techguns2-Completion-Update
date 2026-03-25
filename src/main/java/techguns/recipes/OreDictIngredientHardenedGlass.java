@@ -1,7 +1,6 @@
 package techguns.recipes;
 
 import com.google.gson.JsonObject;
-
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraftforge.common.crafting.IIngredientFactory;
 import net.minecraftforge.common.crafting.JsonContext;

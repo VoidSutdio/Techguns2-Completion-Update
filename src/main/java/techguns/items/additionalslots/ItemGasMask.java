@@ -1,10 +1,6 @@
 package techguns.items.additionalslots;
 
-import java.util.List;
-import java.util.UUID;
-
 import com.mojang.realmsclient.gui.ChatFormatting;
-
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.IAttributeInstance;
@@ -16,6 +12,9 @@ import net.minecraftforge.fml.common.gameevent.TickEvent.PlayerTickEvent;
 import org.jetbrains.annotations.NotNull;
 import techguns.api.radiation.TGRadiation;
 import techguns.api.tginventory.TGSlotType;
+
+import java.util.List;
+import java.util.UUID;
 
 public class ItemGasMask extends ItemTGSpecialSlot {
 

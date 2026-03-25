@@ -12,64 +12,68 @@ import techguns.tileentities.TGSpawnerTileEnt;
  */
 public interface ITGSpawnerNPC {
 
-	boolean getTryLink();
-	void setTryLink(boolean value);
-	
-	/**
-	 * call this in Entity onUpdate()
-	 * @param w
-	 */
-	default void onUpdateSpawner(World w) {
-		if(getTryLink()) {
-			setTryLink(false);
-			if(!w.isRemote) {
-				TGSpawnerNPCData dat = TGSpawnerNPCData.get(this);
-				if(dat!=null) {
-					dat.tryRelink(w, this);
-				}
-			}
-		}
-	}
-	
-	/**
-	 * call this in onDeath
-	 * @param w
-	 * @param isDead
-	 */
-	default void onDeathSpawner(World w, boolean dead) {
-		if(!w.isRemote && dead) {
-			TGSpawnerNPCData dat = TGSpawnerNPCData.get(this);
-			if(dat!=null) {
-				BlockPos spawner = dat.getSpawnerPos();
-				if(spawner!=null) {
-					TileEntity tile = w.getTileEntity(spawner);
-					if (tile!=null && tile instanceof TGSpawnerTileEnt) {
-						((TGSpawnerTileEnt)tile).killedEntity(this);
-					}
-				}
-			}
-		}
-	}
-	
-	/**
-	 * call this in despawnEntity()
-	 * @param w
-	 * @param isDead
-	 */
-	default void despawnEntitySpawner(World w, boolean dead) {
-		if(!w.isRemote && dead) {
-			TGSpawnerNPCData dat = TGSpawnerNPCData.get(this);
-			if(dat!=null) {
-				BlockPos spawner = dat.getSpawnerPos();
-				if(spawner!=null) {
-					TileEntity tile = w.getTileEntity(spawner);
-					if (tile!=null && tile instanceof TGSpawnerTileEnt) {
-						((TGSpawnerTileEnt)tile).despawnedEntity(this);
-					}
-				}
-			}
-		}
-	}
-	
-	TGSpawnerNPCData getCapability(Capability<TGSpawnerNPCData> tgGenericnpcData);
+    boolean getTryLink();
+
+    void setTryLink(boolean value);
+
+    /**
+     * call this in Entity onUpdate()
+     *
+     * @param w
+     */
+    default void onUpdateSpawner(World w) {
+        if (getTryLink()) {
+            setTryLink(false);
+            if (!w.isRemote) {
+                TGSpawnerNPCData dat = TGSpawnerNPCData.get(this);
+                if (dat != null) {
+                    dat.tryRelink(w, this);
+                }
+            }
+        }
+    }
+
+    /**
+     * call this in onDeath
+     *
+     * @param w
+     * @param isDead
+     */
+    default void onDeathSpawner(World w, boolean dead) {
+        if (!w.isRemote && dead) {
+            TGSpawnerNPCData dat = TGSpawnerNPCData.get(this);
+            if (dat != null) {
+                BlockPos spawner = dat.getSpawnerPos();
+                if (spawner != null) {
+                    TileEntity tile = w.getTileEntity(spawner);
+                    if (tile != null && tile instanceof TGSpawnerTileEnt) {
+                        ((TGSpawnerTileEnt) tile).killedEntity(this);
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * call this in despawnEntity()
+     *
+     * @param w
+     * @param isDead
+     */
+    default void despawnEntitySpawner(World w, boolean dead) {
+        if (!w.isRemote && dead) {
+            TGSpawnerNPCData dat = TGSpawnerNPCData.get(this);
+            if (dat != null) {
+                BlockPos spawner = dat.getSpawnerPos();
+                if (spawner != null) {
+                    TileEntity tile = w.getTileEntity(spawner);
+                    if (tile != null && tile instanceof TGSpawnerTileEnt) {
+                        ((TGSpawnerTileEnt) tile).despawnedEntity(this);
+                    }
+                }
+            }
+        }
+    }
+
+    TGSpawnerNPCData getCapability(Capability<TGSpawnerNPCData> tgGenericnpcData);
 }

@@ -10,7 +10,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import techguns.TGConfig;
 import techguns.TGItems;
-import techguns.*;
+import techguns.Tags;
 import techguns.blocks.machines.BasicMachine;
 import techguns.items.GenericItemShared;
 import techguns.items.guns.GenericGun;
@@ -19,7 +19,14 @@ import techguns.items.guns.ammo.AmmoType;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
 
 
 /**

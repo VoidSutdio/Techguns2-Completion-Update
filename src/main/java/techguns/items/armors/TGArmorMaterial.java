@@ -1,13 +1,13 @@
 package techguns.items.armors;
 
-import java.util.ArrayList;
-
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemArmor.ArmorMaterial;
 import net.minecraft.util.SoundEvent;
 import net.minecraftforge.common.util.EnumHelper;
-import techguns.*;
+import techguns.Tags;
 import techguns.api.damagesystem.DamageType;
+
+import java.util.ArrayList;
 
 public class TGArmorMaterial {
 
@@ -139,7 +139,7 @@ public class TGArmorMaterial {
         };
     }
 
-	/**
+    /**
      * gets a vanilla armor material from this
      *
      * @return
@@ -148,7 +148,7 @@ public class TGArmorMaterial {
         return EnumHelper.addArmorMaterial(name, this.modid + ":" + this.texture, baseDur, new int[]{0, 0, 0, 0}, enchantability, equipSound, toughness);
     }
 
-	public TGArmorMaterial setArmorExplosion(float armorExplosion) {
+    public TGArmorMaterial setArmorExplosion(float armorExplosion) {
         this.armorExplosion = armorExplosion;
         return this;
     }
@@ -183,7 +183,7 @@ public class TGArmorMaterial {
         return this;
     }
 
-	public int getDurability(EntityEquipmentSlot type) {
+    public int getDurability(EntityEquipmentSlot type) {
         return switch (type) {
             case HEAD -> //helmet:
                     Math.round(this.durHead * VANILLA_DURABILITY_FACTOR_SUM * this.baseDur);

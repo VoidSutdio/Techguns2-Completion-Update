@@ -1,6 +1,10 @@
 package techguns.events;
 
-import net.minecraft.world.storage.loot.*;
+import net.minecraft.world.storage.loot.LootEntry;
+import net.minecraft.world.storage.loot.LootEntryItem;
+import net.minecraft.world.storage.loot.LootPool;
+import net.minecraft.world.storage.loot.LootTable;
+import net.minecraft.world.storage.loot.RandomValueRange;
 import net.minecraft.world.storage.loot.conditions.LootCondition;
 import net.minecraft.world.storage.loot.conditions.RandomChance;
 import net.minecraft.world.storage.loot.functions.LootFunction;
@@ -9,7 +13,7 @@ import net.minecraftforge.event.LootTableLoadEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import techguns.TGItems;
-import techguns.*;
+import techguns.Tags;
 
 import static net.minecraft.world.storage.loot.LootTableList.CHESTS_NETHER_BRIDGE;
 
@@ -24,16 +28,16 @@ public final class TGLootInjector {
         final int meta = TGItems.BLUEPRINTS.getItemDamage();
 
         LootPool pool = new LootPool(
-                new LootEntry[] {
+                new LootEntry[]{
                         new LootEntryItem(
                                 TGItems.BLUEPRINTS.getItem(),
                                 1, 0,
-                                new LootFunction[] { new SetMetadata(new LootCondition[0], new RandomValueRange(meta, meta)) },
+                                new LootFunction[]{new SetMetadata(new LootCondition[0], new RandomValueRange(meta, meta))},
                                 new LootCondition[0],
                                 "tg_blueprint"
                         )
                 },
-                new LootCondition[] { new RandomChance(0.25F) },
+                new LootCondition[]{new RandomChance(0.25F)},
                 new RandomValueRange(1),
                 new RandomValueRange(0),
                 "tg_blueprints"

@@ -1,7 +1,5 @@
 package techguns.debug;
 
-import org.lwjgl.input.Keyboard;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.util.text.TextComponentString;
@@ -9,8 +7,9 @@ import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent;
+import org.lwjgl.input.Keyboard;
 import techguns.TGConfig;
-import techguns.*;
+import techguns.Tags;
 import techguns.client.particle.TGFX;
 
 @Mod.EventBusSubscriber(modid = Tags.MOD_ID)

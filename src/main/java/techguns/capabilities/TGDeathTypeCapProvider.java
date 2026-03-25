@@ -7,45 +7,45 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 import org.jetbrains.annotations.NotNull;
-import techguns.*;
+import techguns.Tags;
 
 public class TGDeathTypeCapProvider implements ICapabilitySerializable<NBTBase> {
 
-	@CapabilityInject(TGDeathTypeCap.class)
-	public static final Capability<TGDeathTypeCap> TG_DEATHTYPE_CAP = null;
-	
-	private final TGDeathTypeCap instance; // = TG_DEATHTYPE_CAP.getDefaultInstance();
-	
-	public static final EnumFacing DEFAULT_FACING = null;
-	
-	/**
-	 * The ID of this capability.
-	 */
-	public static final ResourceLocation ID = new ResourceLocation(Tags.MOD_ID, "deathType");
-	
-	public TGDeathTypeCapProvider(TGDeathTypeCap cap) {
-		this.instance = cap;
-	}
+    @CapabilityInject(TGDeathTypeCap.class)
+    public static final Capability<TGDeathTypeCap> TG_DEATHTYPE_CAP = null;
 
-	@Override
-	public boolean hasCapability(@NotNull Capability<?> capability, EnumFacing facing) {
-		return false;
-	}
+    private final TGDeathTypeCap instance; // = TG_DEATHTYPE_CAP.getDefaultInstance();
 
-	@Override
-	public <T> T getCapability(@NotNull Capability<T> capability, EnumFacing facing) {
-		return capability == TG_DEATHTYPE_CAP ? TG_DEATHTYPE_CAP.cast(this.instance) : null;
-	}
+    public static final EnumFacing DEFAULT_FACING = null;
 
-	@Override
-	public NBTBase serializeNBT() {
-		 return TG_DEATHTYPE_CAP.getStorage().writeNBT(TG_DEATHTYPE_CAP, this.instance, DEFAULT_FACING);
-	}
+    /**
+     * The ID of this capability.
+     */
+    public static final ResourceLocation ID = new ResourceLocation(Tags.MOD_ID, "deathType");
 
-	@Override
-	public void deserializeNBT(NBTBase nbt) {
-		TG_DEATHTYPE_CAP.getStorage().readNBT(TG_DEATHTYPE_CAP, this.instance, DEFAULT_FACING, nbt);
-	}	
+    public TGDeathTypeCapProvider(TGDeathTypeCap cap) {
+        this.instance = cap;
+    }
 
-	
+    @Override
+    public boolean hasCapability(@NotNull Capability<?> capability, EnumFacing facing) {
+        return false;
+    }
+
+    @Override
+    public <T> T getCapability(@NotNull Capability<T> capability, EnumFacing facing) {
+        return capability == TG_DEATHTYPE_CAP ? TG_DEATHTYPE_CAP.cast(this.instance) : null;
+    }
+
+    @Override
+    public NBTBase serializeNBT() {
+        return TG_DEATHTYPE_CAP.getStorage().writeNBT(TG_DEATHTYPE_CAP, this.instance, DEFAULT_FACING);
+    }
+
+    @Override
+    public void deserializeNBT(NBTBase nbt) {
+        TG_DEATHTYPE_CAP.getStorage().readNBT(TG_DEATHTYPE_CAP, this.instance, DEFAULT_FACING, nbt);
+    }
+
+
 }

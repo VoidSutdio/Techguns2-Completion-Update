@@ -7,8 +7,12 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.util.SoundCategory;
-import net.minecraft.util.math.*;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.RayTraceResult.Type;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
 import net.minecraftforge.event.ForgeEventFactory;
@@ -21,10 +25,12 @@ import java.util.Map;
 import java.util.Random;
 
 public class TGExplosion {
-	
-	 /** whether or not the explosion sets fire to blocks around it */
+
+    /** whether or not the explosion sets fire to blocks around it */
     //private final boolean causesFire;
-    /** whether or not this explosion spawns smoke particles */
+    /**
+     * whether or not this explosion spawns smoke particles
+     */
     boolean damagesTerrain;
     Random random;
     World world;
@@ -42,19 +48,18 @@ public class TGExplosion {
     double secondaryDamage;
     double blockDamageFactor;
     public float blockDropChance = 0.25f;
-    
-    Explosion explosionDummy;
-    TGDamageSource dmgSrc=null;
 
-    public TGExplosion(World world, Entity exploder, Entity projectile, double x, double y, double z, double primaryDamage, double secondaryDamage, double primaryRadius, double secondaryRadius, double blockDamageFactor)
-    {
+    Explosion explosionDummy;
+    TGDamageSource dmgSrc = null;
+
+    public TGExplosion(World world, Entity exploder, Entity projectile, double x, double y, double z, double primaryDamage, double secondaryDamage, double primaryRadius, double secondaryRadius, double blockDamageFactor) {
         this.random = new Random();
         this.affectedBlockPositions = new HashMap<>();// Lists.<BlockPos>newArrayList();
         //this.playerKnockbackMap = Maps.<EntityPlayer, Vec3d>newHashMap();
         this.world = world;
         this.exploder = exploder;
         this.projectile = projectile;
-        
+
         this.x = x;
         this.y = y;
         this.z = z;
@@ -66,43 +71,39 @@ public class TGExplosion {
 
         this.blockDamageFactor = blockDamageFactor;
         this.damagesTerrain = (blockDamageFactor >= 0.01);
-        
+
         this.position = new Vec3d(this.x, this.y, this.z);
-        
-        this.explosionDummy = new Explosion(world, exploder, x, y, z, (float)Math.max(primaryRadius, secondaryRadius), false, this.damagesTerrain);
+
+        this.explosionDummy = new Explosion(world, exploder, x, y, z, (float) Math.max(primaryRadius, secondaryRadius), false, this.damagesTerrain);
     }
 
     public void setDmgSrc(TGDamageSource src) {
-    	this.dmgSrc=src;
+        this.dmgSrc = src;
     }
 
     /**
      * Does the first part of the explosion (destroy blocks)
      */
-    public void doExplosion(boolean playSound)
-    {
-    	//TODO: Move Sound to different
-    	if (playSound) this.world.playSound(null, this.x, this.y, this.z, SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.BLOCKS, 4.0F, (1.0F + (this.world.rand.nextFloat() - this.world.rand.nextFloat()) * 0.2F) * 0.7F);
+    public void doExplosion(boolean playSound) {
+        //TODO: Move Sound to different
+        if (playSound)
+            this.world.playSound(null, this.x, this.y, this.z, SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.BLOCKS, 4.0F, (1.0F + (this.world.rand.nextFloat() - this.world.rand.nextFloat()) * 0.2F) * 0.7F);
 
         HashMap<BlockPos, Double> set = new HashMap<>();
-        
+
         double totalRadius = Math.max(primaryRadius, secondaryRadius);
         int radius = (int) Math.ceil(totalRadius);
-        
-        double stepOffset = 0.30000001192092896D;
-        int steps = (int)Math.ceil((double)radius/stepOffset);
 
-        for (int j = -radius; j < radius; ++j)
-        {
-            for (int k = -radius; k < radius; ++k)
-            {
-                for (int l = -radius; l < radius; ++l)
-                {
-                    if (j == -radius || j == radius-1 || k == -radius || k == radius-1 || l == -radius || l == radius-1)
-                    {
-                        double dx = (float)j / (float)radius;
-                        double dy = (float)k / (float)radius;
-                        double dz = (float)l / (float)radius;
+        double stepOffset = 0.30000001192092896D;
+        int steps = (int) Math.ceil((double) radius / stepOffset);
+
+        for (int j = -radius; j < radius; ++j) {
+            for (int k = -radius; k < radius; ++k) {
+                for (int l = -radius; l < radius; ++l) {
+                    if (j == -radius || j == radius - 1 || k == -radius || k == radius - 1 || l == -radius || l == radius - 1) {
+                        double dx = (float) j / (float) radius;
+                        double dy = (float) k / (float) radius;
+                        double dz = (float) l / (float) radius;
                         //normalize
                         double length = Math.sqrt(dx * dx + dy * dy + dz * dz);
                         dx = dx / length;
@@ -112,42 +113,40 @@ public class TGExplosion {
                         double py = 0; //this.y;
                         double pz = 0; //this.z;
 
-                        
+
                         double explosionDamping = 0.0;
                         double explosionPower = this.primaryDamage;
-                        
+
                         BlockPos prevPos = null;
-                        
-                        for (int i = 0; i < steps && explosionPower > 0.0; i++)
-                        {
-                            BlockPos blockpos = new BlockPos(x +px, y +py, z +pz);
+
+                        for (int i = 0; i < steps && explosionPower > 0.0; i++) {
+                            BlockPos blockpos = new BlockPos(x + px, y + py, z + pz);
                             IBlockState iblockstate = this.world.getBlockState(blockpos);
-                            
-                            double distance = this.position.distanceTo(new Vec3d(blockpos.getX()+0.5,blockpos.getY()+0.5,blockpos.getZ()+0.5));
+
+                            double distance = this.position.distanceTo(new Vec3d(blockpos.getX() + 0.5, blockpos.getY() + 0.5, blockpos.getZ() + 0.5));
                             if (distance <= primaryRadius) explosionPower = primaryDamage;
-                            else if (distance <= secondaryRadius) explosionPower = secondaryDamage + ((distance-primaryRadius)/(secondaryRadius-primaryRadius)) * (primaryDamage-secondaryDamage);
+                            else if (distance <= secondaryRadius)
+                                explosionPower = secondaryDamage + ((distance - primaryRadius) / (secondaryRadius - primaryRadius)) * (primaryDamage - secondaryDamage);
                             else explosionPower = 0.0;
-                            
+
                             float resistance;
-                            if (iblockstate.getMaterial() != Material.AIR)
-                            {
-                            	resistance = iblockstate.getBlock().getExplosionResistance(world, blockpos, exploder, explosionDummy);
-                            	
-                            	if (explosionPower-explosionDamping > 0.0f && resistance < (explosionPower-explosionDamping)*blockDamageFactor && (this.exploder == null || this.exploder.canExplosionDestroyBlock(explosionDummy, this.world, blockpos, iblockstate, (float)explosionPower)))
-                                {
+                            if (iblockstate.getMaterial() != Material.AIR) {
+                                resistance = iblockstate.getBlock().getExplosionResistance(world, blockpos, exploder, explosionDummy);
+
+                                if (explosionPower - explosionDamping > 0.0f && resistance < (explosionPower - explosionDamping) * blockDamageFactor && (this.exploder == null || this.exploder.canExplosionDestroyBlock(explosionDummy, this.world, blockpos, iblockstate, (float) explosionPower))) {
                                     set.put(blockpos, distance);
                                     if (prevPos == null || !(prevPos.getX() == blockpos.getX() && prevPos.getY() == blockpos.getY() && prevPos.getZ() == blockpos.getZ())) {
-                                    	explosionDamping += resistance;
-                                    }   
-                                }else {
-                                	explosionPower = 0.0;
+                                        explosionDamping += resistance;
+                                    }
+                                } else {
+                                    explosionPower = 0.0;
                                 }
                             }
-                            
+
                             px += dx * stepOffset;
                             py += dy * stepOffset;
                             pz += dz * stepOffset;
-                            
+
                             prevPos = blockpos;
                         }
                     }
@@ -157,23 +156,23 @@ public class TGExplosion {
 
         this.affectedBlockPositions.putAll(set); //addAll(set.keySet());
         float f3 = (float) (totalRadius);
-        int k1 = MathHelper.floor(this.x - (double)f3 - 1.0D);
-        int l1 = MathHelper.floor(this.x + (double)f3 + 1.0D);
-        int i2 = MathHelper.floor(this.y - (double)f3 - 1.0D);
-        int i1 = MathHelper.floor(this.y + (double)f3 + 1.0D);
-        int j2 = MathHelper.floor(this.z - (double)f3 - 1.0D);
-        int j1 = MathHelper.floor(this.z + (double)f3 + 1.0D);
+        int k1 = MathHelper.floor(this.x - (double) f3 - 1.0D);
+        int l1 = MathHelper.floor(this.x + (double) f3 + 1.0D);
+        int i2 = MathHelper.floor(this.y - (double) f3 - 1.0D);
+        int i1 = MathHelper.floor(this.y + (double) f3 + 1.0D);
+        int j2 = MathHelper.floor(this.z - (double) f3 - 1.0D);
+        int j1 = MathHelper.floor(this.z + (double) f3 + 1.0D);
         List<Entity> list = this.world.getEntitiesWithinAABBExcludingEntity(this.projectile, new AxisAlignedBB(k1, i2, j2, l1, i1, j1));
         ForgeEventFactory.onExplosionDetonate(this.world, explosionDummy, list, f3);
 
         breakBlocks();
-        
+
         TGDamageSource tgs;
-    	if(this.dmgSrc==null) {
-    		tgs = TGDamageSource.causeExplosionDamage(projectile,exploder, DeathType.GORE);
-    	} else {
-    		tgs = TGDamageSource.copyWithNewEnt(this.dmgSrc, projectile, exploder);
-    	}
+        if (this.dmgSrc == null) {
+            tgs = TGDamageSource.causeExplosionDamage(projectile, exploder, DeathType.GORE);
+        } else {
+            tgs = TGDamageSource.copyWithNewEnt(this.dmgSrc, projectile, exploder);
+        }
 
 
         for (Entity entity : list) {
@@ -217,27 +216,23 @@ public class TGExplosion {
             }
         }
     }
-    
+
     private void breakBlocks() {
-    	if (this.damagesTerrain)
-        {
-    		double r = (this.secondaryRadius-this.primaryRadius);
-    		
-    		for (Map.Entry<BlockPos, Double> entry : this.affectedBlockPositions.entrySet())          
-            {
-    			BlockPos blockpos = entry.getKey();
-            	
-               IBlockState iblockstate = this.world.getBlockState(blockpos);
-               Block block = iblockstate.getBlock();
-               
-                if (iblockstate.getMaterial() != Material.AIR)
-                {
-                	if (entry.getValue() > this.primaryRadius && Math.random()<(blockDropChance * (entry.getValue()-this.primaryRadius) / r))  {
-	                    if (block.canDropFromExplosion(explosionDummy))
-	                    {
-	                        block.dropBlockAsItemWithChance(this.world, blockpos, this.world.getBlockState(blockpos), 1.0f, 0);
-	                    }
-                	}
+        if (this.damagesTerrain) {
+            double r = (this.secondaryRadius - this.primaryRadius);
+
+            for (Map.Entry<BlockPos, Double> entry : this.affectedBlockPositions.entrySet()) {
+                BlockPos blockpos = entry.getKey();
+
+                IBlockState iblockstate = this.world.getBlockState(blockpos);
+                Block block = iblockstate.getBlock();
+
+                if (iblockstate.getMaterial() != Material.AIR) {
+                    if (entry.getValue() > this.primaryRadius && Math.random() < (blockDropChance * (entry.getValue() - this.primaryRadius) / r)) {
+                        if (block.canDropFromExplosion(explosionDummy)) {
+                            block.dropBlockAsItemWithChance(this.world, blockpos, this.world.getBlockState(blockpos), 1.0f, 0);
+                        }
+                    }
                     block.onBlockExploded(this.world, blockpos, this.explosionDummy);
                 }
             }

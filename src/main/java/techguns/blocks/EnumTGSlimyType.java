@@ -4,10 +4,10 @@ import net.minecraft.util.IStringSerializable;
 import org.jetbrains.annotations.NotNull;
 
 public enum EnumTGSlimyType implements IStringSerializable {
-	BUGNEST_EGGS;
+    BUGNEST_EGGS;
 
-	@Override
-	public @NotNull String getName() {
-		return name().toLowerCase();
-	}
+    @Override
+    public @NotNull String getName() {
+        return name().toLowerCase();
+    }
 }

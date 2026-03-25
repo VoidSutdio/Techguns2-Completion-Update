@@ -19,7 +19,7 @@ import net.minecraftforge.event.world.BlockEvent;
 import techguns.TGConfig;
 import techguns.TGPackets;
 import techguns.TGSounds;
-import techguns.*;
+import techguns.Tags;
 import techguns.blocks.machines.BlockExplosiveCharge;
 import techguns.packets.PacketSpawnParticle;
 
@@ -35,6 +35,7 @@ public class ExplosiveChargeTileEnt extends BasicOwnedTileEnt implements ITickab
     protected short blastlength = 3;
     protected short fusetime = 100;
     protected boolean armed = false;
+
     public ExplosiveChargeTileEnt() {
         super(0, false);
     }
@@ -186,10 +187,21 @@ public class ExplosiveChargeTileEnt extends BasicOwnedTileEnt implements ITickab
         return new TextComponentString(Tags.MOD_ID + ".inventory.explosivecharge");
     }
 
-    public short getBlastradius() { return blastradius; }
-    public short getBlastlength() { return blastlength; }
-    public short getFusetime() { return fusetime; }
-    public boolean isArmed() { return armed; }
+    public short getBlastradius() {
+        return blastradius;
+    }
+
+    public short getBlastlength() {
+        return blastlength;
+    }
+
+    public short getFusetime() {
+        return fusetime;
+    }
+
+    public boolean isArmed() {
+        return armed;
+    }
 
     @Override
     public void buttonClicked(int id, EntityPlayer ply, String data) {

@@ -135,10 +135,14 @@ public class AmmoPressBuildPlans {
             ArrayList<ItemStack> output = new ArrayList<>();
 
             ItemStack stack = switch (plan) {
-                case 0 -> new ItemStack(TGItems.PISTOL_ROUNDS.getItem(), AMMOUNT_PISTOL, TGItems.PISTOL_ROUNDS.getItemDamage());
-                case 1 -> new ItemStack(TGItems.SHOTGUN_ROUNDS.getItem(), AMMOUNT_SHOTGUN, TGItems.SHOTGUN_ROUNDS.getItemDamage());
-                case 2 -> new ItemStack(TGItems.RIFLE_ROUNDS.getItem(), AMMOUNT_RIFLE, TGItems.RIFLE_ROUNDS.getItemDamage());
-                case 3 -> new ItemStack(TGItems.SNIPER_ROUNDS.getItem(), AMMOUNT_SNIPER, TGItems.SNIPER_ROUNDS.getItemDamage());
+                case 0 ->
+                        new ItemStack(TGItems.PISTOL_ROUNDS.getItem(), AMMOUNT_PISTOL, TGItems.PISTOL_ROUNDS.getItemDamage());
+                case 1 ->
+                        new ItemStack(TGItems.SHOTGUN_ROUNDS.getItem(), AMMOUNT_SHOTGUN, TGItems.SHOTGUN_ROUNDS.getItemDamage());
+                case 2 ->
+                        new ItemStack(TGItems.RIFLE_ROUNDS.getItem(), AMMOUNT_RIFLE, TGItems.RIFLE_ROUNDS.getItemDamage());
+                case 3 ->
+                        new ItemStack(TGItems.SNIPER_ROUNDS.getItem(), AMMOUNT_SNIPER, TGItems.SNIPER_ROUNDS.getItemDamage());
                 default -> ItemStack.EMPTY;
             };
             output.add(stack);

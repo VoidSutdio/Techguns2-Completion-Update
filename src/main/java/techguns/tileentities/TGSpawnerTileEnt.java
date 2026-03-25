@@ -19,7 +19,11 @@ import org.jetbrains.annotations.NotNull;
 import techguns.capabilities.TGSpawnerNPCData;
 import techguns.entities.npcs.ITGSpawnerNPC;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.Objects;
+import java.util.Random;
 
 public class TGSpawnerTileEnt extends BasicTGTileEntity implements ITickable {
 

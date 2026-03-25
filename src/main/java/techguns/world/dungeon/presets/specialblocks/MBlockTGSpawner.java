@@ -1,7 +1,5 @@
 package techguns.world.dungeon.presets.specialblocks;
 
-import java.util.ArrayList;
-
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -13,6 +11,8 @@ import techguns.entities.npcs.SkeletonSoldier;
 import techguns.entities.npcs.ZombieSoldier;
 import techguns.tileentities.TGSpawnerTileEnt;
 import techguns.util.MBlock;
+
+import java.util.ArrayList;
 
 public class MBlockTGSpawner extends MBlock {
 

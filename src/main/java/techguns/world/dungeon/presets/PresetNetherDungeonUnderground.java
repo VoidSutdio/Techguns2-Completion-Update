@@ -1,10 +1,7 @@
 package techguns.world.dungeon.presets;
 
-import java.util.ArrayList;
-import java.util.Random;
-
 import net.minecraft.util.ResourceLocation;
-import techguns.*;
+import techguns.Tags;
 import techguns.entities.npcs.SkeletonSoldier;
 import techguns.entities.npcs.ZombieSoldier;
 import techguns.tileentities.TGSpawnerTileEnt;
@@ -13,6 +10,9 @@ import techguns.world.dungeon.DungeonTemplate;
 import techguns.world.dungeon.IDungeonPath;
 import techguns.world.dungeon.MazeDungeonPath;
 import techguns.world.dungeon.TemplateSegment.SegmentType;
+
+import java.util.ArrayList;
+import java.util.Random;
 
 public class PresetNetherDungeonUnderground implements IDungeonPreset {
 

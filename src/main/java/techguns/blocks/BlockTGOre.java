@@ -19,84 +19,84 @@ import techguns.util.BlockUtils;
 
 public class BlockTGOre extends GenericBlock {
 
-	public static PropertyEnum<EnumOreType> ORE_TYPE = PropertyEnum.create("type",EnumOreType.class);
-	protected GenericItemBlockMeta itemblock;
-	
-	public BlockTGOre(String name) {
-		super(name, Material.ROCK);
-		this.setDefaultState(this.blockState.getBaseState().withProperty(ORE_TYPE, EnumOreType.ORE_COPPER));
-	}
-	
-	public ItemStack getStackFor(EnumOreType type) {
-		return new ItemStack(this,1,this.getMetaFromState(this.getDefaultState().withProperty(ORE_TYPE, type)));
-	}
-	
-	@Override
-	public ItemBlock createItemBlock() {
-		GenericItemBlockMeta itemblock =  new GenericItemBlockMeta(this);
-		this.itemblock=itemblock;
-		return itemblock;
-	}
-	
-	@Override
-	public int getMetaFromState(IBlockState state) {
-		return state.getValue(ORE_TYPE).ordinal();
-	}
+    public static PropertyEnum<EnumOreType> ORE_TYPE = PropertyEnum.create("type", EnumOreType.class);
+    protected GenericItemBlockMeta itemblock;
 
-	@Override
-	public @NotNull IBlockState getStateFromMeta(int meta) {
-		return this.getDefaultState()
-	    .withProperty(ORE_TYPE, EnumOreType.class.getEnumConstants()[meta]);
+    public BlockTGOre(String name) {
+        super(name, Material.ROCK);
+        this.setDefaultState(this.blockState.getBaseState().withProperty(ORE_TYPE, EnumOreType.ORE_COPPER));
     }
-	
-	@Override
-	public int damageDropped(IBlockState state) {
-		return this.getMetaFromState(getDefaultState().withProperty(ORE_TYPE, state.getValue(ORE_TYPE)));
-	}
-	
-	@Override
-	public int getLightValue(IBlockState state) {
-		EnumOreType type = state.getValue(ORE_TYPE);
-		return type.getLightlevel();
-	}
 
-	@Override
-	public float getBlockHardness(IBlockState blockState, @NotNull World worldIn, @NotNull BlockPos pos) {
-		EnumOreType type = blockState.getValue(ORE_TYPE);
-		return type.getHardness();
-	}
+    public ItemStack getStackFor(EnumOreType type) {
+        return new ItemStack(this, 1, this.getMetaFromState(this.getDefaultState().withProperty(ORE_TYPE, type)));
+    }
 
-	@Override
-	public String getHarvestTool(@NotNull IBlockState state) {
-		return "pickaxe";
-	}
+    @Override
+    public ItemBlock createItemBlock() {
+        GenericItemBlockMeta itemblock = new GenericItemBlockMeta(this);
+        this.itemblock = itemblock;
+        return itemblock;
+    }
 
-	@Override
-	public int getHarvestLevel(IBlockState state) {
-		EnumOreType type = state.getValue(ORE_TYPE);
-		return type.getMininglevel();
-	}
+    @Override
+    public int getMetaFromState(IBlockState state) {
+        return state.getValue(ORE_TYPE).ordinal();
+    }
 
-	@SideOnly(Side.CLIENT)
-	@Override
-	public void registerItemBlockModels() {
-		for(int i = 0; i< EnumOreType.class.getEnumConstants().length;i++) {
-			IBlockState state = getDefaultState().withProperty(ORE_TYPE, EnumOreType.class.getEnumConstants()[i]);
-			ModelLoader.setCustomModelResourceLocation(this.itemblock, this.getMetaFromState(state), new ModelResourceLocation(getRegistryName(),BlockUtils.getBlockStateVariantString(state)));
-		}
-	}
+    @Override
+    public @NotNull IBlockState getStateFromMeta(int meta) {
+        return this.getDefaultState()
+                .withProperty(ORE_TYPE, EnumOreType.class.getEnumConstants()[meta]);
+    }
 
-	@Override
-	public void getSubBlocks(@NotNull CreativeTabs tab, @NotNull NonNullList<ItemStack> items) {
-		for (EnumOreType t : EnumOreType.class.getEnumConstants()) {
-			if (t.isEnabled()) {
-				items.add(new ItemStack(this,1,this.getMetaFromState(getDefaultState().withProperty(ORE_TYPE, t))));
-			}
-		}
-	}
-	
-	@Override
-	protected @NotNull BlockStateContainer createBlockState() {
-		return new BlockStateContainer(this, ORE_TYPE);
-	}
+    @Override
+    public int damageDropped(IBlockState state) {
+        return this.getMetaFromState(getDefaultState().withProperty(ORE_TYPE, state.getValue(ORE_TYPE)));
+    }
+
+    @Override
+    public int getLightValue(IBlockState state) {
+        EnumOreType type = state.getValue(ORE_TYPE);
+        return type.getLightlevel();
+    }
+
+    @Override
+    public float getBlockHardness(IBlockState blockState, @NotNull World worldIn, @NotNull BlockPos pos) {
+        EnumOreType type = blockState.getValue(ORE_TYPE);
+        return type.getHardness();
+    }
+
+    @Override
+    public String getHarvestTool(@NotNull IBlockState state) {
+        return "pickaxe";
+    }
+
+    @Override
+    public int getHarvestLevel(IBlockState state) {
+        EnumOreType type = state.getValue(ORE_TYPE);
+        return type.getMininglevel();
+    }
+
+    @SideOnly(Side.CLIENT)
+    @Override
+    public void registerItemBlockModels() {
+        for (int i = 0; i < EnumOreType.class.getEnumConstants().length; i++) {
+            IBlockState state = getDefaultState().withProperty(ORE_TYPE, EnumOreType.class.getEnumConstants()[i]);
+            ModelLoader.setCustomModelResourceLocation(this.itemblock, this.getMetaFromState(state), new ModelResourceLocation(getRegistryName(), BlockUtils.getBlockStateVariantString(state)));
+        }
+    }
+
+    @Override
+    public void getSubBlocks(@NotNull CreativeTabs tab, @NotNull NonNullList<ItemStack> items) {
+        for (EnumOreType t : EnumOreType.class.getEnumConstants()) {
+            if (t.isEnabled()) {
+                items.add(new ItemStack(this, 1, this.getMetaFromState(getDefaultState().withProperty(ORE_TYPE, t))));
+            }
+        }
+    }
+
+    @Override
+    protected @NotNull BlockStateContainer createBlockState() {
+        return new BlockStateContainer(this, ORE_TYPE);
+    }
 }

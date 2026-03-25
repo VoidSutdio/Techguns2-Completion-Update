@@ -14,7 +14,7 @@ import org.jetbrains.annotations.NotNull;
 import techguns.TGBlocks;
 import techguns.TGItems;
 import techguns.TGSounds;
-import techguns.*;
+import techguns.Tags;
 import techguns.blocks.machines.EnumMultiBlockMachineType;
 import techguns.blocks.machines.MultiBlockMachine;
 import techguns.tileentities.operation.FabricatorRecipe;

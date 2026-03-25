@@ -1,7 +1,5 @@
 package techguns.blocks.machines.multiblocks;
 
-import java.util.ArrayList;
-
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -16,86 +14,89 @@ import techguns.packets.PacketSpawnParticle;
 import techguns.tileentities.MultiBlockMachineTileEntMaster;
 import techguns.tileentities.MultiBlockMachineTileEntSlave;
 
+import java.util.ArrayList;
+
 public abstract class MultiBlockMachineSchematic {
 
-	protected Class<? extends MultiBlockMachineTileEntMaster> mastertileClazz;
-	
-	public MultiBlockMachineSchematic(Class<? extends MultiBlockMachineTileEntMaster> mastertileClazz) {
-		super();
-		this.mastertileClazz = mastertileClazz;
-	}
+    protected Class<? extends MultiBlockMachineTileEntMaster> mastertileClazz;
 
-	public abstract boolean checkForm(World w, EntityPlayer player, BlockPos masterPos, EnumFacing direction);
-	
-	public abstract boolean form(World w, EntityPlayer player, BlockPos masterPos, EnumFacing direction);
-	
-	public abstract void unform(World w, MultiBlockMachineTileEntMaster master);
-	
-	public abstract boolean canFormFromSide(EnumFacing side);
-	
-	protected static boolean allBlocksMatch(World w, EntityPlayer player, ArrayList<BlockPos> positions, IBlockState blockstate) {
-		return allBlocksMatch(w, player, positions, blockstate, false);
-	}
-	
-	protected static boolean allBlocksMatch(World w, EntityPlayer player, ArrayList<BlockPos> positions, IBlockState blockstate, boolean message) {
-		boolean valid=true;
-		for (BlockPos p : positions) {
-			if (w.getBlockState(p) != blockstate) {
-				sendErrorPing(w, p, player, message);
-				valid = false;
-			}
-		}
-		return valid;
-	}
-	
-	protected static void sendErrorPing(World w, BlockPos p, EntityPlayer player, boolean message) {
-		if(!w.isRemote) {
-			TGPackets.wrapper.sendTo(new PacketSpawnParticle("MultiblockInvalidPing", p.getX()+0.5d, p.getY()+0.5d, p.getZ()+0.5d), (EntityPlayerMP) player);
-			if(message)TGPackets.wrapper.sendTo(new PacketMultiBlockFormInvalidBlockMessage(p, 0), (EntityPlayerMP) player);
-		}
-	}
-	
-	public static void sendErrorMSG(World w, BlockPos p, EntityPlayer player, int msgID) {
-		if(!w.isRemote) {
-			//TGPackets.network.sendTo(new PacketSpawnParticle("MultiblockInvalidPing", p.getX()+0.5d, p.getY()+0.5d, p.getZ()+0.5d), (EntityPlayerMP) player);
-			TGPackets.wrapper.sendTo(new PacketMultiBlockFormInvalidBlockMessage(p,msgID), (EntityPlayerMP) player);
-		}
-	}
-	
-	protected void linkSlave(World w, BlockPos pos, int type, BlockPos masterPos) {
-		TileEntity tile = w.getTileEntity(pos);
-		if(tile instanceof MultiBlockMachineTileEntSlave) {
-			MultiBlockMachineTileEntSlave slave = (MultiBlockMachineTileEntSlave) tile;
-			slave.form(masterPos, (byte) type);
-			
-			if(!w.isRemote) {
-				updateBlockStateForm(w, pos,type);
-				slave.needUpdate();
-			}
-		}
-	}
-	
-	protected void updateBlockStateForm(World w, BlockPos pos, int type) {
-		w.setBlockState(pos, w.getBlockState(pos).withProperty(MultiBlockMachine.FORMED, true), 3);
-	}
-	
-	protected void updateBlockStateUnform(World w, BlockPos pos, IBlockState bs, int type) {
-		w.setBlockState(pos, bs.withProperty(MultiBlockMachine.FORMED, false), 3);
-	}
-	
-	protected void unlinkSlave(World w, BlockPos pos) {
-		TileEntity tile = w.getTileEntity(pos);
-		if(tile instanceof MultiBlockMachineTileEntSlave) {
-			MultiBlockMachineTileEntSlave slave = (MultiBlockMachineTileEntSlave) tile;
-			int type = slave.getSlaveType();
-			slave.unform();
-			if(!w.isRemote) {
-				IBlockState bs = w.getBlockState(pos);
-				if (bs.getBlock() == slave.getMachineBlockType()) {
-					updateBlockStateUnform(w, pos, bs, type);
-					slave.needUpdate();
-				}
-			}
-		} 
-	}
+    public MultiBlockMachineSchematic(Class<? extends MultiBlockMachineTileEntMaster> mastertileClazz) {
+        super();
+        this.mastertileClazz = mastertileClazz;
+    }
+
+    public abstract boolean checkForm(World w, EntityPlayer player, BlockPos masterPos, EnumFacing direction);
+
+    public abstract boolean form(World w, EntityPlayer player, BlockPos masterPos, EnumFacing direction);
+
+    public abstract void unform(World w, MultiBlockMachineTileEntMaster master);
+
+    public abstract boolean canFormFromSide(EnumFacing side);
+
+    protected static boolean allBlocksMatch(World w, EntityPlayer player, ArrayList<BlockPos> positions, IBlockState blockstate) {
+        return allBlocksMatch(w, player, positions, blockstate, false);
+    }
+
+    protected static boolean allBlocksMatch(World w, EntityPlayer player, ArrayList<BlockPos> positions, IBlockState blockstate, boolean message) {
+        boolean valid = true;
+        for (BlockPos p : positions) {
+            if (w.getBlockState(p) != blockstate) {
+                sendErrorPing(w, p, player, message);
+                valid = false;
+            }
+        }
+        return valid;
+    }
+
+    protected static void sendErrorPing(World w, BlockPos p, EntityPlayer player, boolean message) {
+        if (!w.isRemote) {
+            TGPackets.wrapper.sendTo(new PacketSpawnParticle("MultiblockInvalidPing", p.getX() + 0.5d, p.getY() + 0.5d, p.getZ() + 0.5d), (EntityPlayerMP) player);
+            if (message)
+                TGPackets.wrapper.sendTo(new PacketMultiBlockFormInvalidBlockMessage(p, 0), (EntityPlayerMP) player);
+        }
+    }
+
+    public static void sendErrorMSG(World w, BlockPos p, EntityPlayer player, int msgID) {
+        if (!w.isRemote) {
+            //TGPackets.network.sendTo(new PacketSpawnParticle("MultiblockInvalidPing", p.getX()+0.5d, p.getY()+0.5d, p.getZ()+0.5d), (EntityPlayerMP) player);
+            TGPackets.wrapper.sendTo(new PacketMultiBlockFormInvalidBlockMessage(p, msgID), (EntityPlayerMP) player);
+        }
+    }
+
+    protected void linkSlave(World w, BlockPos pos, int type, BlockPos masterPos) {
+        TileEntity tile = w.getTileEntity(pos);
+        if (tile instanceof MultiBlockMachineTileEntSlave) {
+            MultiBlockMachineTileEntSlave slave = (MultiBlockMachineTileEntSlave) tile;
+            slave.form(masterPos, (byte) type);
+
+            if (!w.isRemote) {
+                updateBlockStateForm(w, pos, type);
+                slave.needUpdate();
+            }
+        }
+    }
+
+    protected void updateBlockStateForm(World w, BlockPos pos, int type) {
+        w.setBlockState(pos, w.getBlockState(pos).withProperty(MultiBlockMachine.FORMED, true), 3);
+    }
+
+    protected void updateBlockStateUnform(World w, BlockPos pos, IBlockState bs, int type) {
+        w.setBlockState(pos, bs.withProperty(MultiBlockMachine.FORMED, false), 3);
+    }
+
+    protected void unlinkSlave(World w, BlockPos pos) {
+        TileEntity tile = w.getTileEntity(pos);
+        if (tile instanceof MultiBlockMachineTileEntSlave) {
+            MultiBlockMachineTileEntSlave slave = (MultiBlockMachineTileEntSlave) tile;
+            int type = slave.getSlaveType();
+            slave.unform();
+            if (!w.isRemote) {
+                IBlockState bs = w.getBlockState(pos);
+                if (bs.getBlock() == slave.getMachineBlockType()) {
+                    updateBlockStateUnform(w, pos, bs, type);
+                    slave.needUpdate();
+                }
+            }
+        }
+    }
 }

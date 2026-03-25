@@ -1,8 +1,5 @@
 package techguns.entities.npcs;
 
-import java.util.List;
-import java.util.Random;
-
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.player.EntityPlayer;
@@ -14,75 +11,78 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.world.World;
 import techguns.TGArmors;
 import techguns.TGuns;
-import techguns.*;
+import techguns.Tags;
 import techguns.items.armors.GenericArmorMultiCamo;
+
+import java.util.List;
+import java.util.Random;
 
 public class Outcast extends GenericNPCGearSpecificStats implements ILivingSoldier {
 
-	public static final ResourceLocation LOOT = new ResourceLocation(Tags.MOD_ID, "entities/outcast");
+    public static final ResourceLocation LOOT = new ResourceLocation(Tags.MOD_ID, "entities/outcast");
 
     private int soundAggroCooldown = 0;
 
-	public Outcast(World world) {
-		super(world);
-	}
+    public Outcast(World world) {
+        super(world);
+    }
 
-	@Override
-	protected void applyEntityAttributes() {
-		super.applyEntityAttributes();
-		this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.2D);
-		this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(30);
-		this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(8);
-		this.getEntityAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(60.0D);
-	}
+    @Override
+    protected void applyEntityAttributes() {
+        super.applyEntityAttributes();
+        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.2D);
+        this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(30);
+        this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(8);
+        this.getEntityAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(60.0D);
+    }
 
-	@Override
-	protected void addRandomArmor(int difficulty) {
+    @Override
+    protected void addRandomArmor(int difficulty) {
 
-		Random r = new Random();
-		// Armors
+        Random r = new Random();
+        // Armors
 
-		int camo=r.nextInt(2);
-		this.setItemStackToSlot(EntityEquipmentSlot.HEAD, GenericArmorMultiCamo.getNewWithCamo(TGArmors.t3_power_Helmet,camo+1));
-		camo=r.nextInt(2);
-		this.setItemStackToSlot(EntityEquipmentSlot.CHEST, GenericArmorMultiCamo.getNewWithCamo(TGArmors.t3_power_Chestplate,camo+1));
-		camo=r.nextInt(2);
-		this.setItemStackToSlot(EntityEquipmentSlot.LEGS, GenericArmorMultiCamo.getNewWithCamo(TGArmors.t3_power_Leggings,camo+1));
-		camo=r.nextInt(2);
-		this.setItemStackToSlot(EntityEquipmentSlot.FEET, GenericArmorMultiCamo.getNewWithCamo(TGArmors.t3_power_Boots,camo+1));
-		
+        int camo = r.nextInt(2);
+        this.setItemStackToSlot(EntityEquipmentSlot.HEAD, GenericArmorMultiCamo.getNewWithCamo(TGArmors.t3_power_Helmet, camo + 1));
+        camo = r.nextInt(2);
+        this.setItemStackToSlot(EntityEquipmentSlot.CHEST, GenericArmorMultiCamo.getNewWithCamo(TGArmors.t3_power_Chestplate, camo + 1));
+        camo = r.nextInt(2);
+        this.setItemStackToSlot(EntityEquipmentSlot.LEGS, GenericArmorMultiCamo.getNewWithCamo(TGArmors.t3_power_Leggings, camo + 1));
+        camo = r.nextInt(2);
+        this.setItemStackToSlot(EntityEquipmentSlot.FEET, GenericArmorMultiCamo.getNewWithCamo(TGArmors.t3_power_Boots, camo + 1));
 
-		// Weapons
 
-		Item weapon = null;
-		switch (r.nextInt(7)) {
-		case 0:
-			weapon = TGuns.lasergun;
-			break;
-		case 1:
-			weapon = TGuns.grimreaper;
-			break;
-		case 2:
-			weapon = TGuns.minigun;
-			break;
-		case 3:
-			weapon = TGuns.biogun;
-			break;
-		case 4:
-			weapon = TGuns.flamethrower;
-			break;
-		case 5:
-			weapon = TGuns.teslagun;
-			break;
-		case 6:
-			weapon = TGuns.lmg;
-			break;
-		default:
-			weapon = TGuns.lasergun;
-			break;
-		}
-		if (weapon != null) this.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, new ItemStack(weapon));
-	}
+        // Weapons
+
+        Item weapon = null;
+        switch (r.nextInt(7)) {
+            case 0:
+                weapon = TGuns.lasergun;
+                break;
+            case 1:
+                weapon = TGuns.grimreaper;
+                break;
+            case 2:
+                weapon = TGuns.minigun;
+                break;
+            case 3:
+                weapon = TGuns.biogun;
+                break;
+            case 4:
+                weapon = TGuns.flamethrower;
+                break;
+            case 5:
+                weapon = TGuns.teslagun;
+                break;
+            case 6:
+                weapon = TGuns.lmg;
+                break;
+            default:
+                weapon = TGuns.lasergun;
+                break;
+        }
+        if (weapon != null) this.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, new ItemStack(weapon));
+    }
 
     @Override
     public void onLivingUpdate() {
@@ -91,6 +91,7 @@ public class Outcast extends GenericNPCGearSpecificStats implements ILivingSoldi
             this.tickHearingAI();
         }
     }
+
     @Override
     public void tickHearingAI() {
         if ((this.ticksExisted & 3) != 0) {
@@ -143,8 +144,8 @@ public class Outcast extends GenericNPCGearSpecificStats implements ILivingSoldi
         return this.isValidPlayerTarget(player);
     }
 
-	@Override
-	protected ResourceLocation getLootTable() {
-		return LOOT;
-	}
+    @Override
+    protected ResourceLocation getLootTable() {
+        return LOOT;
+    }
 }

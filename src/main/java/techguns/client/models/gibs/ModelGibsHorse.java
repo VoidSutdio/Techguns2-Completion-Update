@@ -22,8 +22,7 @@ public class ModelGibsHorse extends ModelGibs {
 
     protected ModelRenderer[] gibs;
 
-    public ModelGibsHorse()
-    {
+    public ModelGibsHorse() {
         this.textureWidth = 128;
         this.textureHeight = 128;
         this.body = new ModelRenderer(this, 0, 34);
@@ -62,36 +61,36 @@ public class ModelGibsHorse extends ModelGibs {
         this.upperMouth.addBox(-2.0F, -10.0F, -7.0F, 4, 3, 6);
         //this.upperMouth.setRotationPoint(0.0F, 3.95F, -10.0F);
         //this.upperMouth.rotateAngleX = 0.5235988F;
- 
+
         //this.head.addChild(this.upperMouth);
-       
+
         this.neck = new ModelRenderer(this, 0, 12);
         this.neck.addBox(-2.05F, -9.8F, -2.0F, 4, 14, 8);
         //this.neck.setRotationPoint(0.0F, 4.0F, -10.0F);
         //this.neck.rotateAngleX = 0.5235988F;
-	
-        this.gibs = new ModelRenderer[] {
-        		this.body,
-        		this.tailBase,
-        		this.tailMiddle,
-        		this.backLeftLeg,
-        		this.backRightLeg,
-        		this.frontLeftLeg,
-        		this.frontRightLeg,
-        		this.head,
-        		this.upperMouth,
-        		this.neck
+
+        this.gibs = new ModelRenderer[]{
+                this.body,
+                this.tailBase,
+                this.tailMiddle,
+                this.backLeftLeg,
+                this.backRightLeg,
+                this.frontLeftLeg,
+                this.frontRightLeg,
+                this.head,
+                this.upperMouth,
+                this.neck
         };
     }
-	
-	@Override
-	public void render(Entity entityIn, float scale, int part) {
-		this.gibs[part].render(scale);
-	}
 
-	@Override
-	public int getNumGibs() {
-		return this.gibs.length;
-	}
+    @Override
+    public void render(Entity entityIn, float scale, int part) {
+        this.gibs[part].render(scale);
+    }
+
+    @Override
+    public int getNumGibs() {
+        return this.gibs.length;
+    }
 
 }

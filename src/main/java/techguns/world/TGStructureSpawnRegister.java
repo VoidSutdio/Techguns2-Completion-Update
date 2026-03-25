@@ -1,13 +1,43 @@
 package techguns.world;
 
-import java.util.ArrayList;
-import java.util.Random;
-
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.common.BiomeDictionary;
 import techguns.TGConfig;
 import techguns.TGFluids;
-import techguns.world.structures.*;
+import techguns.world.structures.AircraftCarrier;
+import techguns.world.structures.AlienBugNestStructure;
+import techguns.world.structures.CastleStructure;
+import techguns.world.structures.DesertOilCluster;
+import techguns.world.structures.EndBuilding;
+import techguns.world.structures.EndCluster;
+import techguns.world.structures.EndFloatingShip;
+import techguns.world.structures.FactoryBig;
+import techguns.world.structures.FactoryHouseBig;
+import techguns.world.structures.FactoryHouseSmall;
+import techguns.world.structures.GasStation;
+import techguns.world.structures.MilitaryBaseStructure;
+import techguns.world.structures.NetherAcidHole;
+import techguns.world.structures.NetherAltarMedium;
+import techguns.world.structures.NetherAltarSmall;
+import techguns.world.structures.NetherBuilding;
+import techguns.world.structures.NetherGhastSpawner;
+import techguns.world.structures.NetherLoot01;
+import techguns.world.structures.NetherOreClusterCastle;
+import techguns.world.structures.NetherOreClusterMedium;
+import techguns.world.structures.NetherOreClusterSmall;
+import techguns.world.structures.NetherSoulPlatform;
+import techguns.world.structures.NetherSubmarine;
+import techguns.world.structures.OreClusterMeteorBasis;
+import techguns.world.structures.OreClusterSpike;
+import techguns.world.structures.PoliceStation;
+import techguns.world.structures.SmallMine;
+import techguns.world.structures.SmallTrainstation;
+import techguns.world.structures.SurvivorHideout;
+import techguns.world.structures.Train;
+import techguns.world.structures.WorldgenStructure;
+
+import java.util.ArrayList;
+import java.util.Random;
 
 public class TGStructureSpawnRegister {
     protected static ArrayList<TGStructureSpawn> spawns_small = new ArrayList<>();

@@ -1,8 +1,8 @@
 package techguns.client.audio;
 
-import java.util.ArrayList;
-
 import net.minecraft.util.SoundCategory;
+
+import java.util.ArrayList;
 
 public class TGSoundCategory {
 

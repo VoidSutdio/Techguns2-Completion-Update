@@ -13,71 +13,95 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import net.minecraftforge.fml.relauncher.Side;
 import techguns.init.ITGInitializer;
-import techguns.packets.*;
+import techguns.packets.GunFiredMessage;
+import techguns.packets.PacketDoorStateChange;
+import techguns.packets.PacketEntityDeathType;
+import techguns.packets.PacketGuiButtonClick;
+import techguns.packets.PacketGunImpactFX;
+import techguns.packets.PacketMultiBlockFormInvalidBlockMessage;
+import techguns.packets.PacketNBTControl;
+import techguns.packets.PacketNotifyAmbientEffectChange;
+import techguns.packets.PacketNotifyAmbientEffectHandler;
+import techguns.packets.PacketOpenPlayerGUI;
+import techguns.packets.PacketPlaySound;
+import techguns.packets.PacketRequestTGPlayerSync;
+import techguns.packets.PacketRequestTileEntitySync;
+import techguns.packets.PacketSetStructure;
+import techguns.packets.PacketShootGun;
+import techguns.packets.PacketShootGunTarget;
+import techguns.packets.PacketShowKeybindConfirmMessage;
+import techguns.packets.PacketSpawnParticle;
+import techguns.packets.PacketSpawnParticleOnEntity;
+import techguns.packets.PacketSwapWeapon;
+import techguns.packets.PacketTGExtendedPlayerSync;
+import techguns.packets.PacketTGKeybindPress;
+import techguns.packets.PacketTGPlayerFieldSync;
+import techguns.packets.PacketUpdateTileEntTanks;
+import techguns.packets.ReloadStartedMessage;
 
 /**
  * Class for dealing with packets
-*
-*/
+ *
+ */
 public class TGPackets implements ITGInitializer {
-	public static SimpleNetworkWrapper wrapper;
-	
-	public static EntityPlayer getPlayerFromContext(MessageContext ctx){
+    public static SimpleNetworkWrapper wrapper;
+
+    public static EntityPlayer getPlayerFromContext(MessageContext ctx) {
         return (ctx.side.isClient() ? Techguns.proxy.getPlayerClient() : ctx.getServerHandler().player);
-	}
+    }
 
-	public static TargetPoint targetPointAroundBlockPos(int dimension, BlockPos pos, double distance){
-		return new TargetPoint(dimension, pos.getX()+0.5d, pos.getY()+0.5d, pos.getZ()+0.5d, distance);
-	}
-	
-	public static TargetPoint targetPointAroundEnt(Entity ent, double distance){
-		return new TargetPoint(ent.dimension, ent.posX, ent.posY, ent.posZ, distance);
-	}
-	
-	public static TargetPoint targetPointAroundEnt(TileEntity ent, double distance){
-		return new TargetPoint(ent.getWorld().provider.getDimension(), ent.getPos().getX(), ent.getPos().getY(), ent.getPos().getZ(), distance);
-	}
-	
-	@Override
-	public void preInit(FMLPreInitializationEvent event) {
-		
-	}
+    public static TargetPoint targetPointAroundBlockPos(int dimension, BlockPos pos, double distance) {
+        return new TargetPoint(dimension, pos.getX() + 0.5d, pos.getY() + 0.5d, pos.getZ() + 0.5d, distance);
+    }
 
-	@Override
-	public void init(FMLInitializationEvent event) {
+    public static TargetPoint targetPointAroundEnt(Entity ent, double distance) {
+        return new TargetPoint(ent.dimension, ent.posX, ent.posY, ent.posZ, distance);
+    }
 
-		wrapper = NetworkRegistry.INSTANCE.newSimpleChannel(Tags.MOD_ID);
-		int packetid=0;
-		
-		wrapper.registerMessage(PacketShootGun.Handler.class, PacketShootGun.class, packetid++, Side.SERVER);
-		wrapper.registerMessage(PacketShootGunTarget.Handler.class, PacketShootGunTarget.class, packetid++, Side.SERVER);
-		wrapper.registerMessage(GunFiredMessage.Handler.class, GunFiredMessage.class, packetid++, Side.CLIENT);
-		wrapper.registerMessage(ReloadStartedMessage.Handler.class, ReloadStartedMessage.class, packetid++, Side.CLIENT);
-		wrapper.registerMessage(PacketPlaySound.Handler.class, PacketPlaySound.class, packetid++, Side.CLIENT);
-		wrapper.registerMessage(PacketSpawnParticle.Handler.class, PacketSpawnParticle.class, packetid++, Side.CLIENT);
-		wrapper.registerMessage(PacketSpawnParticleOnEntity.Handler.class, PacketSpawnParticleOnEntity.class, packetid++, Side.CLIENT);
-		wrapper.registerMessage(PacketSwapWeapon.Handler.class, PacketSwapWeapon.class, packetid++, Side.CLIENT);
-		wrapper.registerMessage(PacketEntityDeathType.Handler.class, PacketEntityDeathType.class,  packetid++, Side.CLIENT);
-		wrapper.registerMessage(PacketOpenPlayerGUI.Handler.class, PacketOpenPlayerGUI.class,  packetid++, Side.SERVER);
-		wrapper.registerMessage(PacketTGKeybindPress.Handler.class, PacketTGKeybindPress.class, packetid++, Side.SERVER);
-		wrapper.registerMessage(PacketTGExtendedPlayerSync.Handler.class, PacketTGExtendedPlayerSync.class, packetid++, Side.CLIENT);
-		wrapper.registerMessage(PacketTGPlayerFieldSync.Handler.class, PacketTGPlayerFieldSync.class, packetid++, Side.CLIENT);
-		wrapper.registerMessage(PacketRequestTGPlayerSync.Handler.class, PacketRequestTGPlayerSync.class, packetid++, Side.SERVER);
-		wrapper.registerMessage(PacketGuiButtonClick.Handler.class, PacketGuiButtonClick.class, packetid++, Side.SERVER);
-		wrapper.registerMessage(PacketUpdateTileEntTanks.Handler.class, PacketUpdateTileEntTanks.class, packetid++, Side.CLIENT);
-		wrapper.registerMessage(PacketRequestTileEntitySync.Handler.class, PacketRequestTileEntitySync.class, packetid++, Side.SERVER);
-		wrapper.registerMessage(PacketMultiBlockFormInvalidBlockMessage.Handler.class, PacketMultiBlockFormInvalidBlockMessage.class, packetid++, Side.CLIENT);
-		wrapper.registerMessage(PacketShowKeybindConfirmMessage.Handler.class, PacketShowKeybindConfirmMessage.class, packetid++, Side.CLIENT);
-		wrapper.registerMessage(PacketDoorStateChange.Handler.class, PacketDoorStateChange.class, packetid++, Side.CLIENT);
-		wrapper.registerMessage(PacketNotifyAmbientEffectHandler.class, PacketNotifyAmbientEffectChange.class, packetid++, Side.CLIENT);
-		wrapper.registerMessage(PacketGunImpactFX.Handler.class, PacketGunImpactFX.class, packetid++, Side.CLIENT);
-		wrapper.registerMessage(PacketGunImpactFX.Handler.class, PacketGunImpactFX.class, packetid++, Side.CLIENT);
-		wrapper.registerMessage(PacketNBTControl.Handler.class, PacketNBTControl.class, packetid++, Side.SERVER);
-		wrapper.registerMessage(PacketSetStructure.Handler.class, PacketSetStructure.class, packetid++, Side.SERVER);
-	}
+    public static TargetPoint targetPointAroundEnt(TileEntity ent, double distance) {
+        return new TargetPoint(ent.getWorld().provider.getDimension(), ent.getPos().getX(), ent.getPos().getY(), ent.getPos().getZ(), distance);
+    }
 
-	@Override
-	public void postInit(FMLPostInitializationEvent event) {
-		
-	}
+    @Override
+    public void preInit(FMLPreInitializationEvent event) {
+
+    }
+
+    @Override
+    public void init(FMLInitializationEvent event) {
+
+        wrapper = NetworkRegistry.INSTANCE.newSimpleChannel(Tags.MOD_ID);
+        int packetid = 0;
+
+        wrapper.registerMessage(PacketShootGun.Handler.class, PacketShootGun.class, packetid++, Side.SERVER);
+        wrapper.registerMessage(PacketShootGunTarget.Handler.class, PacketShootGunTarget.class, packetid++, Side.SERVER);
+        wrapper.registerMessage(GunFiredMessage.Handler.class, GunFiredMessage.class, packetid++, Side.CLIENT);
+        wrapper.registerMessage(ReloadStartedMessage.Handler.class, ReloadStartedMessage.class, packetid++, Side.CLIENT);
+        wrapper.registerMessage(PacketPlaySound.Handler.class, PacketPlaySound.class, packetid++, Side.CLIENT);
+        wrapper.registerMessage(PacketSpawnParticle.Handler.class, PacketSpawnParticle.class, packetid++, Side.CLIENT);
+        wrapper.registerMessage(PacketSpawnParticleOnEntity.Handler.class, PacketSpawnParticleOnEntity.class, packetid++, Side.CLIENT);
+        wrapper.registerMessage(PacketSwapWeapon.Handler.class, PacketSwapWeapon.class, packetid++, Side.CLIENT);
+        wrapper.registerMessage(PacketEntityDeathType.Handler.class, PacketEntityDeathType.class, packetid++, Side.CLIENT);
+        wrapper.registerMessage(PacketOpenPlayerGUI.Handler.class, PacketOpenPlayerGUI.class, packetid++, Side.SERVER);
+        wrapper.registerMessage(PacketTGKeybindPress.Handler.class, PacketTGKeybindPress.class, packetid++, Side.SERVER);
+        wrapper.registerMessage(PacketTGExtendedPlayerSync.Handler.class, PacketTGExtendedPlayerSync.class, packetid++, Side.CLIENT);
+        wrapper.registerMessage(PacketTGPlayerFieldSync.Handler.class, PacketTGPlayerFieldSync.class, packetid++, Side.CLIENT);
+        wrapper.registerMessage(PacketRequestTGPlayerSync.Handler.class, PacketRequestTGPlayerSync.class, packetid++, Side.SERVER);
+        wrapper.registerMessage(PacketGuiButtonClick.Handler.class, PacketGuiButtonClick.class, packetid++, Side.SERVER);
+        wrapper.registerMessage(PacketUpdateTileEntTanks.Handler.class, PacketUpdateTileEntTanks.class, packetid++, Side.CLIENT);
+        wrapper.registerMessage(PacketRequestTileEntitySync.Handler.class, PacketRequestTileEntitySync.class, packetid++, Side.SERVER);
+        wrapper.registerMessage(PacketMultiBlockFormInvalidBlockMessage.Handler.class, PacketMultiBlockFormInvalidBlockMessage.class, packetid++, Side.CLIENT);
+        wrapper.registerMessage(PacketShowKeybindConfirmMessage.Handler.class, PacketShowKeybindConfirmMessage.class, packetid++, Side.CLIENT);
+        wrapper.registerMessage(PacketDoorStateChange.Handler.class, PacketDoorStateChange.class, packetid++, Side.CLIENT);
+        wrapper.registerMessage(PacketNotifyAmbientEffectHandler.class, PacketNotifyAmbientEffectChange.class, packetid++, Side.CLIENT);
+        wrapper.registerMessage(PacketGunImpactFX.Handler.class, PacketGunImpactFX.class, packetid++, Side.CLIENT);
+        wrapper.registerMessage(PacketGunImpactFX.Handler.class, PacketGunImpactFX.class, packetid++, Side.CLIENT);
+        wrapper.registerMessage(PacketNBTControl.Handler.class, PacketNBTControl.class, packetid++, Side.SERVER);
+        wrapper.registerMessage(PacketSetStructure.Handler.class, PacketSetStructure.class, packetid++, Side.SERVER);
+    }
+
+    @Override
+    public void postInit(FMLPostInitializationEvent event) {
+
+    }
 }

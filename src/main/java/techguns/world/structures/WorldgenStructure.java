@@ -1,7 +1,5 @@
 package techguns.world.structures;
 
-import java.util.Random;
-
 import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
@@ -9,6 +7,8 @@ import net.minecraftforge.common.BiomeDictionary;
 import techguns.util.BlockUtils;
 import techguns.world.EnumLootType;
 import techguns.world.WorldGenTGStructureSpawn;
+
+import java.util.Random;
 
 public abstract class WorldgenStructure {
     public int minX; //Minimum size

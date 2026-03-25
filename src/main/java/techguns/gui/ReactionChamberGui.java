@@ -19,7 +19,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static techguns.tileentities.ReactionChamberTileEntMaster.*;
+import static techguns.tileentities.ReactionChamberTileEntMaster.BUTTON_ID_DUMPTANK;
+import static techguns.tileentities.ReactionChamberTileEntMaster.BUTTON_ID_INTENSITY_DEC;
+import static techguns.tileentities.ReactionChamberTileEntMaster.BUTTON_ID_INTENSITY_INC;
 
 public class ReactionChamberGui extends PoweredTileEntGui {
     public static final ResourceLocation texture = new ResourceLocation(Tags.MOD_ID, "textures/gui/reaction_chamber_gui.png");

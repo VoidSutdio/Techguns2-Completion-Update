@@ -30,6 +30,7 @@ public class AmmoPressTileEnt extends BasicMachineTileEnt {
     public MachineSlotItem inputMetal2;
     public MachineSlotItem inputPowder;
     public byte buildPlan = 0;
+
     public AmmoPressTileEnt() {
         super(5, true, 20000);
         inputMetal1 = new MachineSlotItem(this, SLOT_METAL1);

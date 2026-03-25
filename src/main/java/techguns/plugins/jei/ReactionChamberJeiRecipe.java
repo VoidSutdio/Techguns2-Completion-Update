@@ -1,9 +1,5 @@
 package techguns.plugins.jei;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.ingredients.VanillaTypes;
 import net.minecraft.client.Minecraft;
@@ -16,6 +12,10 @@ import techguns.gui.TGBaseGui;
 import techguns.tileentities.operation.ReactionChamberOperation;
 import techguns.tileentities.operation.ReactionChamberRecipe;
 import techguns.util.TextUtil;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class ReactionChamberJeiRecipe extends BasicRecipeWrapper {
 

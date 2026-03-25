@@ -140,9 +140,9 @@ public class ModelVector extends ModelMultipart {
         this.setRotation(Trigger02, -0.17453292519943295F, -0.0F, 0.0F);
     }
 
-	@Override
-	public void render(Entity entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scale, int ammoLeft,
-			float reloadProgress, TransformType transformType, int part, float fireProgress, float chargeProgress) {
+    @Override
+    public void render(Entity entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scale, int ammoLeft,
+                       float reloadProgress, TransformType transformType, int part, float fireProgress, float chargeProgress) {
 
         this.stock03.render(scale);
         this.Receiver04.render(scale);

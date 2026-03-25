@@ -1,16 +1,6 @@
 package techguns.items.armors;
 
-import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-
-import org.jetbrains.annotations.NotNull;
-import org.lwjgl.input.Keyboard;
-
 import com.mojang.realmsclient.gui.ChatFormatting;
-
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.EntityLivingBase;
@@ -23,12 +13,21 @@ import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import org.jetbrains.annotations.NotNull;
+import org.lwjgl.input.Keyboard;
 import techguns.TGArmors;
-import techguns.*;
+import techguns.Tags;
+import techguns.Techguns;
 import techguns.api.damagesystem.DamageType;
 import techguns.damagesystem.ShieldStats;
 import techguns.util.ItemStackOreDict;
 import techguns.util.TextUtil;
+
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 
 public class GenericShield extends ItemShield implements ICamoChangeable {
 

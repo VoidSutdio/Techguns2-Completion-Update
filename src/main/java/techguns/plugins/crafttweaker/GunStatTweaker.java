@@ -7,57 +7,57 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import stanhebben.zenscript.annotations.ZenClass;
 import stanhebben.zenscript.annotations.ZenMethod;
-import techguns.*;
+import techguns.Tags;
 import techguns.items.guns.GenericGun;
 
 @ZenClass("mods.techguns.GunStats")
 public class GunStatTweaker {
 
-	@ZenMethod
-	public static void setWeaponStat(String weaponname, String fieldname, float value) {
-		CraftTweakerAPI.apply(new setGunStatAction(weaponname, fieldname, value));
-	}
-	
-	private static class setGunStatAction implements IAction {
+    @ZenMethod
+    public static void setWeaponStat(String weaponname, String fieldname, float value) {
+        CraftTweakerAPI.apply(new setGunStatAction(weaponname, fieldname, value));
+    }
 
-		protected String weaponname;
-		protected String fieldname;
-		
-		protected GenericGun gun;
-		protected EnumGunStat field;
-		protected float value;
-		
-		protected boolean gunOk;
-		
-		public setGunStatAction(String weaponname, String fieldname, float value) {
-			this.fieldname=fieldname;
-			this.weaponname=weaponname;
-			Item item = GameRegistry.findRegistry(Item.class).getValue(new ResourceLocation(Tags.MOD_ID, weaponname));
-			this.field = EnumGunStat.parseFromString(fieldname);
-			this.value = value;
+    private static class setGunStatAction implements IAction {
 
-			this.gunOk = item instanceof GenericGun;
-			this.gun = (GenericGun) item;
-		}
+        protected String weaponname;
+        protected String fieldname;
 
-		@Override
-		public void apply() {
-			if(this.field!=null && this.gunOk) {
-				this.gun.setGunStat(field, value);
-			}
-		}
+        protected GenericGun gun;
+        protected EnumGunStat field;
+        protected float value;
 
-		@Override
-		public String describe() {
-			if(!gunOk) {
-				return "Failed setting ["+fieldname+"] for Weapon: ["+weaponname+"]: ITEM IS NOT A GUN";
-			}
-			if (field==null) {
-				return "Failed setting ["+fieldname+"] for Weapon: ["+weaponname+"]: UNKNOWN FIELD";
-			}
+        protected boolean gunOk;
 
-			return "Set ["+fieldname+"] for Weapon: ["+weaponname+"] to: "+value;
-		}
-		
-	}
+        public setGunStatAction(String weaponname, String fieldname, float value) {
+            this.fieldname = fieldname;
+            this.weaponname = weaponname;
+            Item item = GameRegistry.findRegistry(Item.class).getValue(new ResourceLocation(Tags.MOD_ID, weaponname));
+            this.field = EnumGunStat.parseFromString(fieldname);
+            this.value = value;
+
+            this.gunOk = item instanceof GenericGun;
+            this.gun = (GenericGun) item;
+        }
+
+        @Override
+        public void apply() {
+            if (this.field != null && this.gunOk) {
+                this.gun.setGunStat(field, value);
+            }
+        }
+
+        @Override
+        public String describe() {
+            if (!gunOk) {
+                return "Failed setting [" + fieldname + "] for Weapon: [" + weaponname + "]: ITEM IS NOT A GUN";
+            }
+            if (field == null) {
+                return "Failed setting [" + fieldname + "] for Weapon: [" + weaponname + "]: UNKNOWN FIELD";
+            }
+
+            return "Set [" + fieldname + "] for Weapon: [" + weaponname + "] to: " + value;
+        }
+
+    }
 }

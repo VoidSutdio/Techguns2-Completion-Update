@@ -1,7 +1,5 @@
 package techguns.packets;
 
-import java.util.BitSet;
-
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -17,6 +15,8 @@ import techguns.TGPackets;
 import techguns.capabilities.TGExtendedPlayer;
 import techguns.gui.player.TGPlayerInventory;
 import techguns.util.DataUtil;
+
+import java.util.BitSet;
 
 public class PacketTGExtendedPlayerSync implements IMessage {
     public int entityId;

@@ -9,13 +9,13 @@ import techguns.api.capabilities.ITGShooterValues;
 
 public class TGShooterValuesStorage implements IStorage<ITGShooterValues> {
 
-	@Override
-	public NBTBase writeNBT(Capability<ITGShooterValues> capability, ITGShooterValues instance, EnumFacing side) {
-		return new NBTTagCompound();
-	}
+    @Override
+    public NBTBase writeNBT(Capability<ITGShooterValues> capability, ITGShooterValues instance, EnumFacing side) {
+        return new NBTTagCompound();
+    }
 
-	@Override
-	public void readNBT(Capability<ITGShooterValues> capability, ITGShooterValues instance, EnumFacing side, NBTBase nbt) {
-	}
+    @Override
+    public void readNBT(Capability<ITGShooterValues> capability, ITGShooterValues instance, EnumFacing side, NBTBase nbt) {
+    }
 
 }

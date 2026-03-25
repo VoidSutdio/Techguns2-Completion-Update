@@ -1,9 +1,6 @@
 package techguns.items.additionalslots;
 
-import java.util.List;
-
 import com.mojang.realmsclient.gui.ChatFormatting;
-
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -14,7 +11,7 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
-import techguns.*;
+import techguns.Tags;
 import techguns.api.tginventory.ITGSpecialSlot;
 import techguns.api.tginventory.TGSlotType;
 import techguns.capabilities.TGExtendedPlayer;
@@ -22,6 +19,8 @@ import techguns.gui.player.TGPlayerInventory;
 import techguns.items.GenericItem;
 import techguns.items.armors.ICamoChangeable;
 import techguns.util.TextUtil;
+
+import java.util.List;
 
 public abstract class ItemTGSpecialSlot extends GenericItem implements ITGSpecialSlot, ICamoChangeable {
     protected ResourceLocation texture;

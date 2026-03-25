@@ -8,11 +8,9 @@ import net.minecraft.util.SoundEvent;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import techguns.TGPackets;
-import techguns.*;
+import techguns.Techguns;
 import techguns.client.audio.TGSoundCategory;
 import techguns.util.EntityCondition;
-
-import java.util.Objects;
 
 public class PacketPlaySound implements IMessage {
 
@@ -126,8 +124,7 @@ public class PacketPlaySound implements IMessage {
 
         if (condition == null) {
             buf.writeByte(EntityCondition.NONE.id);
-        }
-        else {
+        } else {
             buf.writeByte(condition.id);
         }
 

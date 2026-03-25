@@ -7,44 +7,44 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 import org.jetbrains.annotations.NotNull;
-import techguns.*;
+import techguns.Tags;
 
 public class TGSpawnerNPCDataCapProvider implements ICapabilitySerializable<NBTBase> {
 
-	@CapabilityInject(TGSpawnerNPCData.class)
-	public static final Capability<TGSpawnerNPCData> TG_GENERICNPC_DATA = null;
-	
-	/**
-	 * The ID of this capability.
-	 */
-	public static final ResourceLocation ID = new ResourceLocation(Tags.MOD_ID, "genericNPCData");
-	
-	public static final EnumFacing DEFAULT_FACING = null;
-	
-	private final TGSpawnerNPCData instance; // = TG_SHOOTER_VALUES.getDefaultInstance();
-		
-	public TGSpawnerNPCDataCapProvider(TGSpawnerNPCData caps) {
-		this.instance = caps;
-	}
-	
-	@Override
-	public boolean hasCapability(@NotNull Capability<?> capability, EnumFacing facing) {
-		return false;
-	}
+    @CapabilityInject(TGSpawnerNPCData.class)
+    public static final Capability<TGSpawnerNPCData> TG_GENERICNPC_DATA = null;
 
-	@Override
-	public <T> T getCapability(@NotNull Capability<T> capability, EnumFacing facing) {
-		return capability == TG_GENERICNPC_DATA ? TG_GENERICNPC_DATA.cast(this.instance) : null;
-	}
+    /**
+     * The ID of this capability.
+     */
+    public static final ResourceLocation ID = new ResourceLocation(Tags.MOD_ID, "genericNPCData");
 
-	@Override
-	public NBTBase serializeNBT() {
-		 return TG_GENERICNPC_DATA.getStorage().writeNBT(TG_GENERICNPC_DATA, this.instance, DEFAULT_FACING);
-	}
+    public static final EnumFacing DEFAULT_FACING = null;
 
-	@Override
-	public void deserializeNBT(NBTBase nbt) {
-		TG_GENERICNPC_DATA.getStorage().readNBT(TG_GENERICNPC_DATA, this.instance, DEFAULT_FACING, nbt);
-	}
+    private final TGSpawnerNPCData instance; // = TG_SHOOTER_VALUES.getDefaultInstance();
+
+    public TGSpawnerNPCDataCapProvider(TGSpawnerNPCData caps) {
+        this.instance = caps;
+    }
+
+    @Override
+    public boolean hasCapability(@NotNull Capability<?> capability, EnumFacing facing) {
+        return false;
+    }
+
+    @Override
+    public <T> T getCapability(@NotNull Capability<T> capability, EnumFacing facing) {
+        return capability == TG_GENERICNPC_DATA ? TG_GENERICNPC_DATA.cast(this.instance) : null;
+    }
+
+    @Override
+    public NBTBase serializeNBT() {
+        return TG_GENERICNPC_DATA.getStorage().writeNBT(TG_GENERICNPC_DATA, this.instance, DEFAULT_FACING);
+    }
+
+    @Override
+    public void deserializeNBT(NBTBase nbt) {
+        TG_GENERICNPC_DATA.getStorage().readNBT(TG_GENERICNPC_DATA, this.instance, DEFAULT_FACING, nbt);
+    }
 
 }

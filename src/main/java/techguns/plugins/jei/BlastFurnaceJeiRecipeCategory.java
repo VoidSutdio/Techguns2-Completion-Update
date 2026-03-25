@@ -1,11 +1,5 @@
 package techguns.plugins.jei;
 
-import static techguns.gui.containers.BlastFurnaceContainer.SLOT_INPUT1_X;
-import static techguns.gui.containers.BlastFurnaceContainer.SLOT_INPUT2_X;
-import static techguns.gui.containers.BlastFurnaceContainer.SLOTS_ROW1_Y;
-import static techguns.gui.containers.BlastFurnaceContainer.SLOT_OUTPUT_Y;
-import static techguns.gui.containers.BlastFurnaceContainer.SLOT_OUTPUT_X;
-
 import mezz.jei.api.IGuiHelper;
 import mezz.jei.api.gui.IDrawableAnimated;
 import mezz.jei.api.gui.IDrawableStatic;
@@ -17,6 +11,12 @@ import org.jetbrains.annotations.NotNull;
 import techguns.gui.AmmoPressGui;
 import techguns.gui.BlastFurnaceGui;
 import techguns.tileentities.BlastFurnaceTileEnt;
+
+import static techguns.gui.containers.BlastFurnaceContainer.SLOTS_ROW1_Y;
+import static techguns.gui.containers.BlastFurnaceContainer.SLOT_INPUT1_X;
+import static techguns.gui.containers.BlastFurnaceContainer.SLOT_INPUT2_X;
+import static techguns.gui.containers.BlastFurnaceContainer.SLOT_OUTPUT_X;
+import static techguns.gui.containers.BlastFurnaceContainer.SLOT_OUTPUT_Y;
 
 public class BlastFurnaceJeiRecipeCategory extends BasicRecipeCategory<BlastFurnaceJeiRecipe> {
 

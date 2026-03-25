@@ -1,12 +1,5 @@
 package techguns.items;
 
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
 import net.minecraft.block.Block;
@@ -42,6 +35,13 @@ import techguns.world.dungeon.presets.specialblocks.MBlockItemFrame;
 import techguns.world.dungeon.presets.specialblocks.MBlockSkull;
 import techguns.world.dungeon.presets.specialentities.MEntityEndCrystal;
 import techguns.world.dungeon.presets.specialentities.MEntityShulker;
+
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 public class BuildingScanTool extends GenericItem {
 

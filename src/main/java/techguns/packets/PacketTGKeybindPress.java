@@ -13,7 +13,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import techguns.TGPackets;
 import techguns.TGSounds;
-import techguns.*;
+import techguns.Techguns;
 import techguns.capabilities.TGExtendedPlayer;
 import techguns.items.armors.GenericArmor;
 import techguns.items.armors.TGArmorBonus;

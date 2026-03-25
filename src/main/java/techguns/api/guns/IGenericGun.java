@@ -11,24 +11,26 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public interface IGenericGun {
 
-	boolean isShootWithLeftClick();
+    boolean isShootWithLeftClick();
 
-	boolean isSemiAuto();
+    boolean isSemiAuto();
 
-	@SideOnly(Side.CLIENT)
-	boolean isZooming();
+    @SideOnly(Side.CLIENT)
+    boolean isZooming();
 
-	void shootGunPrimary(ItemStack stack, World world, EntityPlayer player, boolean zooming, EnumHand hand, Entity target);
+    void shootGunPrimary(ItemStack stack, World world, EntityPlayer player, boolean zooming, EnumHand hand, Entity target);
 
-	int getAmmoLeft(ItemStack stack);
-	
-	GunHandType getGunHandType();
+    int getAmmoLeft(ItemStack stack);
 
-	boolean isHoldZoom();
+    GunHandType getGunHandType();
 
-	float getZoomMult();
+    boolean isHoldZoom();
 
-	default boolean canCharge() {return false;}
+    float getZoomMult();
 
-	ResourceLocation getCurrentTexture(ItemStack stack);
+    default boolean canCharge() {
+        return false;
+    }
+
+    ResourceLocation getCurrentTexture(ItemStack stack);
 }

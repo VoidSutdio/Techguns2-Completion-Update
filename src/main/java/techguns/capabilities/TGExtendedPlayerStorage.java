@@ -9,17 +9,17 @@ import techguns.api.capabilities.ITGExtendedPlayer;
 
 public class TGExtendedPlayerStorage implements IStorage<ITGExtendedPlayer> {
 
-	@Override
-	public NBTBase writeNBT(Capability<ITGExtendedPlayer> capability, ITGExtendedPlayer instance, EnumFacing side) {
-		final NBTTagCompound tags = new NBTTagCompound();
-		instance.saveToNBT(tags);
-		return tags;
-	}
+    @Override
+    public NBTBase writeNBT(Capability<ITGExtendedPlayer> capability, ITGExtendedPlayer instance, EnumFacing side) {
+        final NBTTagCompound tags = new NBTTagCompound();
+        instance.saveToNBT(tags);
+        return tags;
+    }
 
-	@Override
-	public void readNBT(Capability<ITGExtendedPlayer> capability, ITGExtendedPlayer instance, EnumFacing side, NBTBase nbt) {
-		final NBTTagCompound tags = (NBTTagCompound) nbt;
-		instance.loadFromNBT(tags);
-	}
+    @Override
+    public void readNBT(Capability<ITGExtendedPlayer> capability, ITGExtendedPlayer instance, EnumFacing side, NBTBase nbt) {
+        final NBTTagCompound tags = (NBTTagCompound) nbt;
+        instance.loadFromNBT(tags);
+    }
 
 }

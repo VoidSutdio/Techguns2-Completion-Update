@@ -9,29 +9,27 @@ import techguns.entities.npcs.SkeletonSoldier;
 
 public class RenderSkeletonSoldier extends RenderGenericNPC<SkeletonSoldier> {
 
-	
-	private static final ResourceLocation TEXTURE = new ResourceLocation("textures/entity/skeleton/skeleton.png");
 
-	
-	public RenderSkeletonSoldier(RenderManager renderManagerIn) {
-		super(renderManagerIn, new ModelSkeletonSoldier(), 0.5f);
-		
-		this.layerRenderers.remove(this.layerRenderers.size()-1);
-		this.addLayer(new LayerHeldItemTranslateGun(this));
-		
-		LayerBipedArmor layerbipedarmor = new LayerBipedArmor(this)
-        {
-            protected void initArmor()
-            {
+    private static final ResourceLocation TEXTURE = new ResourceLocation("textures/entity/skeleton/skeleton.png");
+
+
+    public RenderSkeletonSoldier(RenderManager renderManagerIn) {
+        super(renderManagerIn, new ModelSkeletonSoldier(), 0.5f);
+
+        this.layerRenderers.remove(this.layerRenderers.size() - 1);
+        this.addLayer(new LayerHeldItemTranslateGun(this));
+
+        LayerBipedArmor layerbipedarmor = new LayerBipedArmor(this) {
+            protected void initArmor() {
                 this.modelLeggings = new ModelSkeletonSoldier(0.5F);
                 this.modelArmor = new ModelSkeletonSoldier(1.0F);
             }
         };
         this.addLayer(layerbipedarmor);
-	}
-	
-	   @Override
-	protected ResourceLocation getEntityTexture(SkeletonSoldier entity) {
-		return TEXTURE;
-	}
+    }
+
+    @Override
+    protected ResourceLocation getEntityTexture(SkeletonSoldier entity) {
+        return TEXTURE;
+    }
 }

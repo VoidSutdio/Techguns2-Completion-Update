@@ -8,7 +8,6 @@ import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.IRangedAttackMob;
 import net.minecraft.entity.ai.EntityAIBase;
-import net.minecraft.entity.ai.EntityAIOpenDoor;
 import net.minecraft.pathfinding.Path;
 import net.minecraft.pathfinding.PathNavigateGround;
 import net.minecraft.pathfinding.PathPoint;
@@ -17,18 +16,20 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
-import techguns.TGBlocks;
 import techguns.blocks.BlockTGDoor2x1;
 import techguns.blocks.BlockTGDoor3x3;
 import techguns.tileentities.Door3x3TileEntity;
 
 import static net.minecraft.block.BlockDoor.OPEN;
 
-public class EntityAIRangedAttack extends EntityAIBase
-{
-    /** The entity the AI instance has been applied to */
+public class EntityAIRangedAttack extends EntityAIBase {
+    /**
+     * The entity the AI instance has been applied to
+     */
     private final EntityLiving entityHost;
-    /** The entity (as a RangedAttackMob) the AI instance has been applied to. */
+    /**
+     * The entity (as a RangedAttackMob) the AI instance has been applied to.
+     */
     private final IRangedAttackMob rangedAttackEntityHost;
     private EntityLivingBase attackTarget;
     /**
@@ -39,42 +40,40 @@ public class EntityAIRangedAttack extends EntityAIBase
     private double entityMoveSpeed;
     private int ticksTargetSeen;
     private int attackTimeVariance;
-    /** The maximum time the AI has to wait before peforming another ranged attack. */
+    /**
+     * The maximum time the AI has to wait before peforming another ranged attack.
+     */
     private int maxRangedAttackTime;
     private float attackRange;
     private float attackRange_2;
     private final EntityAIOpenTGDoor doorOpenAI;
-    
+
     //GUN HANDLING:
     private int maxBurstCount; //Total number of shots in burst.
     private int burstCount; //shots left in current burst.
     private int shotDelay; //delay between shots in burst.
-    
+
 
 //    public EntityAIRangedAttack(IRangedAttackMob p_i1649_1_, double p_i1649_2_, int p_i1649_4_, float p_i1649_5_)
 //    {
 //        this(p_i1649_1_, p_i1649_2_, p_i1649_4_, p_i1649_4_, p_i1649_5_);
 //    }
 
-    public EntityAIRangedAttack(IRangedAttackMob shooter, double moveSpeed, int attackTimeVariance, int attackTime, float attackRange, int maxBurstCount, int shotDelay)
-    {
+    public EntityAIRangedAttack(IRangedAttackMob shooter, double moveSpeed, int attackTimeVariance, int attackTime, float attackRange, int maxBurstCount, int shotDelay) {
         this.rangedAttackTime = -1;
 
-        if (!(shooter instanceof EntityLivingBase))
-        {
+        if (!(shooter instanceof EntityLivingBase)) {
             throw new IllegalArgumentException("ArrowAttackGoal requires Mob implements RangedAttackMob");
-        }
-        else
-        {
+        } else {
             this.rangedAttackEntityHost = shooter;
-            this.entityHost = (EntityLiving)shooter;
+            this.entityHost = (EntityLiving) shooter;
             this.entityMoveSpeed = moveSpeed;
             this.attackTimeVariance = attackTimeVariance;
             this.maxRangedAttackTime = attackTime;
             this.attackRange = attackRange;
             this.attackRange_2 = attackRange * attackRange;
             this.setMutexBits(3);
-            
+
             this.maxBurstCount = maxBurstCount;
             this.burstCount = maxBurstCount;
             this.shotDelay = shotDelay;
@@ -91,16 +90,12 @@ public class EntityAIRangedAttack extends EntityAIBase
     /**
      * Returns whether the EntityAIBase should begin execution.
      */
-    public boolean shouldExecute()
-    {
+    public boolean shouldExecute() {
         EntityLivingBase entitylivingbase = this.entityHost.getAttackTarget();
 
-        if (entitylivingbase == null)
-        {
+        if (entitylivingbase == null) {
             return false;
-        }
-        else
-        {
+        } else {
             this.attackTarget = entitylivingbase;
             return true;
         }
@@ -109,16 +104,14 @@ public class EntityAIRangedAttack extends EntityAIBase
     /**
      * Returns whether an in-progress EntityAIBase should continue executing
      */
-    public boolean continueExecuting()
-    {
+    public boolean continueExecuting() {
         return this.shouldExecute() || !this.entityHost.getNavigator().noPath();
     }
 
     /**
      * Resets the task
      */
-    public void resetTask()
-    {
+    public void resetTask() {
         this.attackTarget = null;
         this.ticksTargetSeen = 0;
         this.rangedAttackTime = -1;
@@ -127,67 +120,54 @@ public class EntityAIRangedAttack extends EntityAIBase
     /**
      * Updates the task
      */
-    public void updateTask()
-    {
+    public void updateTask() {
         double d0 = this.entityHost.getDistanceSq(this.attackTarget.posX, this.attackTarget.posY/*this.attackTarget.boundingBox.minY TODO??*/, this.attackTarget.posZ);
         boolean targetInSight = this.entityHost.getEntitySenses().canSee(this.attackTarget);
 
-        if (targetInSight)
-        {
+        if (targetInSight) {
             ++this.ticksTargetSeen;
-        }
-        else
-        {
+        } else {
             this.ticksTargetSeen = 0;
         }
 
-        if (d0 <= (double)this.attackRange_2 && this.ticksTargetSeen >= 20)
-        {
+        if (d0 <= (double) this.attackRange_2 && this.ticksTargetSeen >= 20) {
             this.entityHost.getNavigator().clearPath();
-        }
-        else
-        {
+        } else {
             this.entityHost.getNavigator().tryMoveToEntityLiving(this.attackTarget, this.entityMoveSpeed);
         }
 
         this.entityHost.getLookHelper().setLookPositionWithEntity(this.attackTarget, 30.0F, 55.0F);
         float f;
 
-        if (--this.rangedAttackTime == 0)
-        {
-            if (d0 > (double)this.attackRange_2 || !targetInSight)
-            {
+        if (--this.rangedAttackTime == 0) {
+            if (d0 > (double) this.attackRange_2 || !targetInSight) {
                 return;
             }
 
             f = MathHelper.sqrt(d0) / this.attackRange;
-            
+
             float f1 = f;
 
-            if (f < 0.1F)
-            {
+            if (f < 0.1F) {
                 f1 = 0.1F;
             }
 
-            if (f1 > 1.0F)
-            {
+            if (f1 > 1.0F) {
                 f1 = 1.0F;
             }
 
             this.rangedAttackEntityHost.attackEntityWithRangedAttack(this.attackTarget, f1);
-            
+
             if (maxBurstCount > 0) burstCount--;
             if (burstCount > 0) {
-            	this.rangedAttackTime = shotDelay;
-            }else {
-            	burstCount = maxBurstCount;
-            	this.rangedAttackTime = MathHelper.floor(f * (float)(this.maxRangedAttackTime - this.attackTimeVariance) + (float)this.attackTimeVariance);
+                this.rangedAttackTime = shotDelay;
+            } else {
+                burstCount = maxBurstCount;
+                this.rangedAttackTime = MathHelper.floor(f * (float) (this.maxRangedAttackTime - this.attackTimeVariance) + (float) this.attackTimeVariance);
             }
-        }
-        else if (this.rangedAttackTime < 0)
-        {
+        } else if (this.rangedAttackTime < 0) {
             f = MathHelper.sqrt(d0) / this.attackRange;
-            this.rangedAttackTime = MathHelper.floor(f * (float)(this.maxRangedAttackTime - this.attackTimeVariance) + (float)this.attackTimeVariance);
+            this.rangedAttackTime = MathHelper.floor(f * (float) (this.maxRangedAttackTime - this.attackTimeVariance) + (float) this.attackTimeVariance);
         }
 
         if (this.entityHost.getNavigator().getPath() != null) {
@@ -195,8 +175,7 @@ public class EntityAIRangedAttack extends EntityAIBase
         }
     }
 
-    private class EntityAIOpenTGDoor extends EntityAIBase
-    {
+    private class EntityAIOpenTGDoor extends EntityAIBase {
         private final EntityLiving entity;
         private BlockPos doorPosition;
         private boolean hasStoppedDoorInteraction;
@@ -205,38 +184,29 @@ public class EntityAIRangedAttack extends EntityAIBase
         private static final int DOOR_COOLDOWN_TICKS = 20;
         private int doorCooldownTicks;
 
-        public EntityAIOpenTGDoor(EntityLiving entityIn, boolean shouldClose)
-        {
+        public EntityAIOpenTGDoor(EntityLiving entityIn, boolean shouldClose) {
             this.entity = entityIn;
             this.setMutexBits(3);
             this.doorCooldownTicks = 0;
         }
 
         @Override
-        public boolean shouldExecute()
-        {
-            if (!this.entity.collidedHorizontally)
-            {
+        public boolean shouldExecute() {
+            if (!this.entity.collidedHorizontally) {
                 return false;
-            }
-            else
-            {
-                PathNavigateGround pathnavigateground = (PathNavigateGround)this.entity.getNavigator();
+            } else {
+                PathNavigateGround pathnavigateground = (PathNavigateGround) this.entity.getNavigator();
                 Path path = pathnavigateground.getPath();
 
-                if (path != null && !path.isFinished() && pathnavigateground.getEnterDoors())
-                {
-                    for (int i = 0; i < Math.min(path.getCurrentPathIndex() + 2, path.getCurrentPathLength()); ++i)
-                    {
+                if (path != null && !path.isFinished() && pathnavigateground.getEnterDoors()) {
+                    for (int i = 0; i < Math.min(path.getCurrentPathIndex() + 2, path.getCurrentPathLength()); ++i) {
                         PathPoint pathpoint = path.getPathPointFromIndex(i);
                         BlockPos pos = new BlockPos(pathpoint.x, pathpoint.y, pathpoint.z);
 
-                        if (this.entity.getDistanceSq(pos.getX(), this.entity.posY, pos.getZ()) <= 2.25D)
-                        {
+                        if (this.entity.getDistanceSq(pos.getX(), this.entity.posY, pos.getZ()) <= 2.25D) {
                             this.doorPosition = this.getDoorPosition(pos);
 
-                            if (this.doorPosition != null)
-                            {
+                            if (this.doorPosition != null) {
                                 return true;
                             }
                         }
@@ -244,36 +214,29 @@ public class EntityAIRangedAttack extends EntityAIBase
 
                     this.doorPosition = this.getDoorPosition(new BlockPos(this.entity).up());
                     return this.doorPosition != null;
-                }
-                else
-                {
+                } else {
                     return false;
                 }
             }
         }
 
         @Override
-        public void startExecuting()
-        {
+        public void startExecuting() {
             this.hasStoppedDoorInteraction = false;
             this.doorCooldownTicks = 0;
-            this.entityPositionX = (float)((double)this.doorPosition.getX() + 0.5D - this.entity.posX);
-            this.entityPositionZ = (float)((double)this.doorPosition.getZ() + 0.5D - this.entity.posZ);
+            this.entityPositionX = (float) ((double) this.doorPosition.getX() + 0.5D - this.entity.posX);
+            this.entityPositionZ = (float) ((double) this.doorPosition.getZ() + 0.5D - this.entity.posZ);
         }
 
         @Override
-        public boolean shouldContinueExecuting()
-        {
+        public boolean shouldContinueExecuting() {
             return !this.hasStoppedDoorInteraction;
         }
 
         @Override
-        public void updateTask()
-        {
-            if (this.doorPosition != null)
-            {
-                if (this.doorCooldownTicks > 0)
-                {
+        public void updateTask() {
+            if (this.doorPosition != null) {
+                if (this.doorCooldownTicks > 0) {
                     --this.doorCooldownTicks;
                 }
 
@@ -285,67 +248,52 @@ public class EntityAIRangedAttack extends EntityAIBase
 
                 boolean nearDoor = distanceSq < 2.25D;
 
-                if (nearDoor && this.doorCooldownTicks == 0)
-                {
+                if (nearDoor && this.doorCooldownTicks == 0) {
                     boolean openedDoor = this.interactWithDoor(this.doorPosition, true);
 
-                    if (openedDoor)
-                    {
+                    if (openedDoor) {
                         this.doorCooldownTicks = DOOR_COOLDOWN_TICKS;
                         this.hasStoppedDoorInteraction = true;
                     }
                 }
 
-                float f = (float)((double)this.doorPosition.getX() + 0.5D - this.entity.posX);
-                float f1 = (float)((double)this.doorPosition.getZ() + 0.5D - this.entity.posZ);
+                float f = (float) ((double) this.doorPosition.getX() + 0.5D - this.entity.posX);
+                float f1 = (float) ((double) this.doorPosition.getZ() + 0.5D - this.entity.posZ);
                 float f2 = this.entityPositionX * f + this.entityPositionZ * f1;
 
-                if (f2 < 0.0F || !nearDoor)
-                {
+                if (f2 < 0.0F || !nearDoor) {
                     this.hasStoppedDoorInteraction = true;
                 }
-            }
-            else
-            {
+            } else {
                 this.hasStoppedDoorInteraction = true;
             }
         }
 
-        private BlockPos getDoorPosition(BlockPos pos)
-        {
+        private BlockPos getDoorPosition(BlockPos pos) {
             IBlockState iblockstate = this.entity.world.getBlockState(pos);
             Block block = iblockstate.getBlock();
 
-            if (block instanceof BlockTGDoor3x3)
-            {
+            if (block instanceof BlockTGDoor3x3) {
                 return pos;
-            }
-            else if (block instanceof BlockTGDoor2x1)
-            {
+            } else if (block instanceof BlockTGDoor2x1) {
                 return pos;
-            }
-            else if (block instanceof BlockDoor && iblockstate.getMaterial() == Material.WOOD)
-            {
+            } else if (block instanceof BlockDoor && iblockstate.getMaterial() == Material.WOOD) {
                 return pos;
             }
 
             return null;
         }
 
-        private boolean interactWithDoor(BlockPos pos, boolean open)
-        {
+        private boolean interactWithDoor(BlockPos pos, boolean open) {
             IBlockState state = this.entity.world.getBlockState(pos);
             Block block = state.getBlock();
 
-            if (block instanceof BlockTGDoor3x3)
-            {
-                return this.openTechgunsDoor3x3((BlockTGDoor3x3<?>)block, pos, state);
+            if (block instanceof BlockTGDoor3x3) {
+                return this.openTechgunsDoor3x3((BlockTGDoor3x3<?>) block, pos, state);
             }
 
-            if (block instanceof BlockTGDoor2x1 || block instanceof BlockDoor)
-            {
-                if (((Boolean)state.getValue(OPEN)).booleanValue())
-                {
+            if (block instanceof BlockTGDoor2x1 || block instanceof BlockDoor) {
+                if (((Boolean) state.getValue(OPEN)).booleanValue()) {
                     return false;
                 }
 
@@ -357,19 +305,16 @@ public class EntityAIRangedAttack extends EntityAIBase
             return false;
         }
 
-        private boolean openTechgunsDoor3x3(BlockTGDoor3x3<?> door, BlockPos pos, IBlockState state)
-        {
+        private boolean openTechgunsDoor3x3(BlockTGDoor3x3<?> door, BlockPos pos, IBlockState state) {
             BlockPos masterPos = state.getValue(BlockTGDoor3x3.MASTER) ? pos : this.findDoor3x3Master(door, pos);
 
-            if (masterPos == null)
-            {
+            if (masterPos == null) {
                 return false;
             }
 
             IBlockState masterState = this.entity.world.getBlockState(masterPos);
 
-            if (door.isStateOpen(masterState))
-            {
+            if (door.isStateOpen(masterState)) {
                 return false;
             }
 
@@ -377,32 +322,25 @@ public class EntityAIRangedAttack extends EntityAIBase
             return true;
         }
 
-        private BlockPos findDoor3x3Master(BlockTGDoor3x3<?> door, BlockPos pos)
-        {
+        private BlockPos findDoor3x3Master(BlockTGDoor3x3<?> door, BlockPos pos) {
             TileEntity tile = this.entity.world.getTileEntity(pos);
 
-            if (tile instanceof Door3x3TileEntity)
-            {
+            if (tile instanceof Door3x3TileEntity) {
                 return pos;
             }
 
             BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos();
 
-            for (int dx = -1; dx <= 1; ++dx)
-            {
-                for (int dy = -1; dy <= 1; ++dy)
-                {
-                    for (int dz = -1; dz <= 1; ++dz)
-                    {
+            for (int dx = -1; dx <= 1; ++dx) {
+                for (int dy = -1; dy <= 1; ++dy) {
+                    for (int dz = -1; dz <= 1; ++dz) {
                         mutable.setPos(pos.getX() + dx, pos.getY() + dy, pos.getZ() + dz);
                         TileEntity neighborTile = this.entity.world.getTileEntity(mutable);
 
-                        if (neighborTile instanceof Door3x3TileEntity)
-                        {
+                        if (neighborTile instanceof Door3x3TileEntity) {
                             IBlockState neighborState = this.entity.world.getBlockState(mutable);
 
-                            if (neighborState.getBlock() == door && neighborState.getValue(BlockTGDoor3x3.MASTER))
-                            {
+                            if (neighborState.getBlock() == door && neighborState.getValue(BlockTGDoor3x3.MASTER)) {
                                 return mutable.toImmutable();
                             }
                         }

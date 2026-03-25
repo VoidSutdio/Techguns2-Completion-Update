@@ -7,7 +7,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
 import org.jetbrains.annotations.NotNull;
-import techguns.*;
+import techguns.Tags;
 import techguns.gui.ButtonConstants;
 import techguns.world.dungeon.Dungeon;
 import techguns.world.dungeon.DungeonTemplate;

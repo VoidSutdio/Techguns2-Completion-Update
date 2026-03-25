@@ -1,7 +1,5 @@
 package techguns.packets;
 
-import java.nio.charset.StandardCharsets;
-
 import io.netty.buffer.ByteBuf;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
@@ -9,6 +7,8 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import techguns.TGPackets;
 import techguns.client.ClientProxy;
+
+import java.nio.charset.StandardCharsets;
 
 public class PacketSpawnParticle implements IMessage {
 

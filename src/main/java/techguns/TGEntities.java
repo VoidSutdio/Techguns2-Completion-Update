@@ -1,7 +1,5 @@
 package techguns;
 
-import java.util.ArrayList;
-
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.biome.Biome;
@@ -67,152 +65,152 @@ import techguns.entities.spawn.TGSpawnManager;
 import techguns.entities.special.EntityRadiation;
 import techguns.init.ITGInitializer;
 
+import java.util.ArrayList;
+
 public class TGEntities implements ITGInitializer {
 
-	public static final int bulletTrackRange = 128;
-	
-	@Override
-	public void preInit(FMLPreInitializationEvent event) {
-		
-		/**
-		 * PROJECTILES
-		 */
-		//int bulletTrackRange = 128;
-		
-		EntityRegistry.registerModEntity(new ResourceLocation(Tags.MOD_ID,"GenericProjectile"),GenericProjectile.class, "GenericProjectile", ++Techguns.modEntityID, Tags.MOD_ID, bulletTrackRange, 1, true);
-		EntityRegistry.registerModEntity(new ResourceLocation(Tags.MOD_ID,"GenericProjectileIncendiary"),GenericProjectileIncendiary.class, "GenericProjectileIncendiary", ++Techguns.modEntityID, Tags.MOD_ID, bulletTrackRange, 1, true);
-		EntityRegistry.registerModEntity(new ResourceLocation(Tags.MOD_ID,"RocketProjectile"),RocketProjectile.class, "RocketProjectile", ++Techguns.modEntityID, Tags.MOD_ID, bulletTrackRange, 1, true);
-		EntityRegistry.registerModEntity(new ResourceLocation(Tags.MOD_ID,"StoneBulletProjectile"),StoneBulletProjectile.class, "StoneBulletProjectile", ++Techguns.modEntityID, Tags.MOD_ID, bulletTrackRange, 1, true);
-		EntityRegistry.registerModEntity(new ResourceLocation(Tags.MOD_ID,"BioGunProjectile"),BioGunProjectile.class, "BioGunProjectile", ++Techguns.modEntityID, Tags.MOD_ID, bulletTrackRange, 1, true);
-		EntityRegistry.registerModEntity(new ResourceLocation(Tags.MOD_ID,"FlamethrowerProjectile"),FlamethrowerProjectile.class, "FlamethrowerProjectile", ++Techguns.modEntityID, Tags.MOD_ID, bulletTrackRange, 1, true);
-		EntityRegistry.registerModEntity(new ResourceLocation(Tags.MOD_ID,"GrenadeProjectile"),GrenadeProjectile.class, "GrenadeProjectile", ++Techguns.modEntityID, Tags.MOD_ID, bulletTrackRange, 1, true);
-		EntityRegistry.registerModEntity(new ResourceLocation(Tags.MOD_ID,"Grenade40mmProjectile"),Grenade40mmProjectile.class, "Grenade40mmProjectile", ++Techguns.modEntityID, Tags.MOD_ID, bulletTrackRange, 1, true);
-		EntityRegistry.registerModEntity(new ResourceLocation(Tags.MOD_ID,"LaserProjectile"),LaserProjectile.class, "LaserProjectile", ++Techguns.modEntityID, Tags.MOD_ID, bulletTrackRange, 1, true);
-		EntityRegistry.registerModEntity(new ResourceLocation(Tags.MOD_ID,"TeslaProjectile"),TeslaProjectile.class, "TeslaProjectile", ++Techguns.modEntityID, Tags.MOD_ID, bulletTrackRange, 1, true);
-		EntityRegistry.registerModEntity(new ResourceLocation(Tags.MOD_ID,"NDRProjectile"),NDRProjectile.class, "NDRProjectile", ++Techguns.modEntityID, Tags.MOD_ID, bulletTrackRange, 1, true);
-		EntityRegistry.registerModEntity(new ResourceLocation(Tags.MOD_ID,"BlasterProjectile"),BlasterProjectile.class, "BlasterProjectile", ++Techguns.modEntityID, Tags.MOD_ID, bulletTrackRange, 1, true);
-		EntityRegistry.registerModEntity(new ResourceLocation(Tags.MOD_ID,"GaussProjectile"),GaussProjectile.class, "GaussProjectile", ++Techguns.modEntityID, Tags.MOD_ID, bulletTrackRange, 1, true);
-		EntityRegistry.registerModEntity(new ResourceLocation(Tags.MOD_ID,"AdvancedBulletProjectile"),AdvancedBulletProjectile.class, "AdvancedBulletProjectile", ++Techguns.modEntityID, Tags.MOD_ID, bulletTrackRange, 1, true);
-		EntityRegistry.registerModEntity(new ResourceLocation(Tags.MOD_ID,"GuidedMissileProjectile"),GuidedMissileProjectile.class, "GuidedMissileProjectile", ++Techguns.modEntityID, Tags.MOD_ID, bulletTrackRange, 1, true);
-		EntityRegistry.registerModEntity(new ResourceLocation(Tags.MOD_ID,"DeatomizerProjectile"),DeatomizerProjectile.class, "DeatomizerProjectile", ++Techguns.modEntityID, Tags.MOD_ID, bulletTrackRange, 1, true);
-		EntityRegistry.registerModEntity(new ResourceLocation(Tags.MOD_ID,"SonicShotgunProjectile"),SonicShotgunProjectile.class, "SonicShotgunProjectile", ++Techguns.modEntityID, Tags.MOD_ID, bulletTrackRange, 1, true);
-		EntityRegistry.registerModEntity(new ResourceLocation(Tags.MOD_ID,"CyberdemonBlasterProjectile"),CyberdemonBlasterProjectile.class, "CyberdemonBlasterProjectile", ++Techguns.modEntityID, Tags.MOD_ID, bulletTrackRange, 1, true);
-		EntityRegistry.registerModEntity(new ResourceLocation(Tags.MOD_ID,"PowerHammerProjectile"),PowerHammerProjectile.class, "PowerHammerProjectile", ++Techguns.modEntityID, Tags.MOD_ID, bulletTrackRange, 1, true);
-		EntityRegistry.registerModEntity(new ResourceLocation(Tags.MOD_ID,"ChainsawProjectile"),ChainsawProjectile.class, "ChainsawProjectile", ++Techguns.modEntityID, Tags.MOD_ID, bulletTrackRange, 1, true);
-		EntityRegistry.registerModEntity(new ResourceLocation(Tags.MOD_ID,"FragGrenadeProjectile"),FragGrenadeProjectile.class, "FragGrenadeProjectile", ++Techguns.modEntityID, Tags.MOD_ID, bulletTrackRange, 1, true);
-		EntityRegistry.registerModEntity(new ResourceLocation(Tags.MOD_ID,"RocketProjectileNuke"),RocketProjectileNuke.class, "RocketProjectileNuke", ++Techguns.modEntityID, Tags.MOD_ID, bulletTrackRange, 1, true);
-		EntityRegistry.registerModEntity(new ResourceLocation(Tags.MOD_ID,"TFGProjectile"),TFGProjectile.class, "TFGProjectile", ++Techguns.modEntityID, Tags.MOD_ID, bulletTrackRange, 1, true);
-		EntityRegistry.registerModEntity(new ResourceLocation(Tags.MOD_ID,"GenericProjectileExplosive"),GenericProjectileExplosive.class, "GenericProjectileExplosive", ++Techguns.modEntityID, Tags.MOD_ID, bulletTrackRange, 1, true);
-		EntityRegistry.registerModEntity(new ResourceLocation(Tags.MOD_ID,"RocketProjectileHV"),RocketProjectileHV.class, "RocketProjectileHV", ++Techguns.modEntityID, Tags.MOD_ID, bulletTrackRange, 1, true);
-		EntityRegistry.registerModEntity(new ResourceLocation(Tags.MOD_ID,"RadiationEntity"), EntityRadiation.class, "RadiationEntity", ++Techguns.modEntityID, Tags.MOD_ID, bulletTrackRange, 1, false);
-		EntityRegistry.registerModEntity(new ResourceLocation(Tags.MOD_ID,"GuidedMissileProjectileHV"),GuidedMissileProjectileHV.class, "GuidedMissileProjectileHV", ++Techguns.modEntityID, Tags.MOD_ID, bulletTrackRange, 1, true);
-		
-		
-		/**
-		 * NPCS
-		 */
-		EntityRegistry.registerModEntity(new ResourceLocation(Tags.MOD_ID,"turret"),NPCTurret.class,  Tags.MOD_ID+".Turret", ++Techguns.modEntityID, Tags.MOD_ID, 80, 3, false);
-		EntityRegistry.registerModEntity(new ResourceLocation(Tags.MOD_ID,"TGDummySpawn"),TGDummySpawn.class,  Tags.MOD_ID+".DummySpawn", ++Techguns.modEntityID, Tags.MOD_ID, 80, 3, false);
-		registerModEntityWithEgg(ZombieSoldier.class, "ZombieSoldier",0x757468, 0x38B038);
-		registerModEntityWithEgg(ZombieFarmer.class, "ZombieFarmer",0x757468, 0x38B038);
-		registerModEntityWithEgg(ZombieMiner.class, "ZombieMiner",0x757468, 0x38B038);
-		registerModEntityWithEgg(ArmySoldier.class, "ArmySoldier",0x74806e, 0x191512);
-		registerModEntityWithEgg(Bandit.class, "Bandit",0x8f9d59, 0x2c3117);
-		registerModEntityWithEgg(Commando.class, "Commando",0x191512, 0x74806e);
-		registerModEntityWithEgg(DictatorDave.class, "DictatorDave",0x8f9d59, 0xA0A000);
-		registerModEntityWithEgg(CyberDemon.class, "CyberDemon",0xFF1111, 0x777777);
-		registerModEntityWithEgg(SkeletonSoldier.class, "SkeletonSoldier",0x404040,0xF0F0F0);
-		registerModEntityWithEgg(PsychoSteve.class, "PsychoSteve", 0x757468,0xF0F0F0);
-		registerModEntityWithEgg(StormTrooper.class, "StormTrooper", 0xF0F0F0, 0x404040);
-		registerModEntityWithEgg(Outcast.class, "Outcast", 0x101010,0xFF0000);
-		registerModEntityWithEgg(ZombiePigmanSoldier.class, "ZombiePigmanSoldier", 0xFF1111, 0x770000);
-		registerModEntityWithEgg(SuperMutantBasic.class, "SuperMutantBasic", 0xc6a96b, 0x71552e);
-		registerModEntityWithEgg(SuperMutantElite.class, "SuperMutantElite", 0xc6a96b, 0x61451e);
-		registerModEntityWithEgg(SuperMutantHeavy.class, "SuperMutantHeavy", 0xc6a96b, 0x51350e);
-		registerModEntityWithEgg(AttackHelicopter.class, "AttackHelicopter", 0x373d23, 0x8ec0d7,200);
-		registerModEntityWithEgg(AlienBug.class, "AlienBug", 0xc6a96b, 0x71552e);
-		registerModEntityWithEgg(Ghastling.class, "Ghastling", 0xaeaeae, 0xce81ff);
-		registerModEntityWithEgg(ZombiePoliceman.class, "ZombiePoliceman", 0x303030, 0x0000FF);
-		
-	}
+    public static final int bulletTrackRange = 128;
+
+    @Override
+    public void preInit(FMLPreInitializationEvent event) {
+
+        /**
+         * PROJECTILES
+         */
+        //int bulletTrackRange = 128;
+
+        EntityRegistry.registerModEntity(new ResourceLocation(Tags.MOD_ID, "GenericProjectile"), GenericProjectile.class, "GenericProjectile", ++Techguns.modEntityID, Tags.MOD_ID, bulletTrackRange, 1, true);
+        EntityRegistry.registerModEntity(new ResourceLocation(Tags.MOD_ID, "GenericProjectileIncendiary"), GenericProjectileIncendiary.class, "GenericProjectileIncendiary", ++Techguns.modEntityID, Tags.MOD_ID, bulletTrackRange, 1, true);
+        EntityRegistry.registerModEntity(new ResourceLocation(Tags.MOD_ID, "RocketProjectile"), RocketProjectile.class, "RocketProjectile", ++Techguns.modEntityID, Tags.MOD_ID, bulletTrackRange, 1, true);
+        EntityRegistry.registerModEntity(new ResourceLocation(Tags.MOD_ID, "StoneBulletProjectile"), StoneBulletProjectile.class, "StoneBulletProjectile", ++Techguns.modEntityID, Tags.MOD_ID, bulletTrackRange, 1, true);
+        EntityRegistry.registerModEntity(new ResourceLocation(Tags.MOD_ID, "BioGunProjectile"), BioGunProjectile.class, "BioGunProjectile", ++Techguns.modEntityID, Tags.MOD_ID, bulletTrackRange, 1, true);
+        EntityRegistry.registerModEntity(new ResourceLocation(Tags.MOD_ID, "FlamethrowerProjectile"), FlamethrowerProjectile.class, "FlamethrowerProjectile", ++Techguns.modEntityID, Tags.MOD_ID, bulletTrackRange, 1, true);
+        EntityRegistry.registerModEntity(new ResourceLocation(Tags.MOD_ID, "GrenadeProjectile"), GrenadeProjectile.class, "GrenadeProjectile", ++Techguns.modEntityID, Tags.MOD_ID, bulletTrackRange, 1, true);
+        EntityRegistry.registerModEntity(new ResourceLocation(Tags.MOD_ID, "Grenade40mmProjectile"), Grenade40mmProjectile.class, "Grenade40mmProjectile", ++Techguns.modEntityID, Tags.MOD_ID, bulletTrackRange, 1, true);
+        EntityRegistry.registerModEntity(new ResourceLocation(Tags.MOD_ID, "LaserProjectile"), LaserProjectile.class, "LaserProjectile", ++Techguns.modEntityID, Tags.MOD_ID, bulletTrackRange, 1, true);
+        EntityRegistry.registerModEntity(new ResourceLocation(Tags.MOD_ID, "TeslaProjectile"), TeslaProjectile.class, "TeslaProjectile", ++Techguns.modEntityID, Tags.MOD_ID, bulletTrackRange, 1, true);
+        EntityRegistry.registerModEntity(new ResourceLocation(Tags.MOD_ID, "NDRProjectile"), NDRProjectile.class, "NDRProjectile", ++Techguns.modEntityID, Tags.MOD_ID, bulletTrackRange, 1, true);
+        EntityRegistry.registerModEntity(new ResourceLocation(Tags.MOD_ID, "BlasterProjectile"), BlasterProjectile.class, "BlasterProjectile", ++Techguns.modEntityID, Tags.MOD_ID, bulletTrackRange, 1, true);
+        EntityRegistry.registerModEntity(new ResourceLocation(Tags.MOD_ID, "GaussProjectile"), GaussProjectile.class, "GaussProjectile", ++Techguns.modEntityID, Tags.MOD_ID, bulletTrackRange, 1, true);
+        EntityRegistry.registerModEntity(new ResourceLocation(Tags.MOD_ID, "AdvancedBulletProjectile"), AdvancedBulletProjectile.class, "AdvancedBulletProjectile", ++Techguns.modEntityID, Tags.MOD_ID, bulletTrackRange, 1, true);
+        EntityRegistry.registerModEntity(new ResourceLocation(Tags.MOD_ID, "GuidedMissileProjectile"), GuidedMissileProjectile.class, "GuidedMissileProjectile", ++Techguns.modEntityID, Tags.MOD_ID, bulletTrackRange, 1, true);
+        EntityRegistry.registerModEntity(new ResourceLocation(Tags.MOD_ID, "DeatomizerProjectile"), DeatomizerProjectile.class, "DeatomizerProjectile", ++Techguns.modEntityID, Tags.MOD_ID, bulletTrackRange, 1, true);
+        EntityRegistry.registerModEntity(new ResourceLocation(Tags.MOD_ID, "SonicShotgunProjectile"), SonicShotgunProjectile.class, "SonicShotgunProjectile", ++Techguns.modEntityID, Tags.MOD_ID, bulletTrackRange, 1, true);
+        EntityRegistry.registerModEntity(new ResourceLocation(Tags.MOD_ID, "CyberdemonBlasterProjectile"), CyberdemonBlasterProjectile.class, "CyberdemonBlasterProjectile", ++Techguns.modEntityID, Tags.MOD_ID, bulletTrackRange, 1, true);
+        EntityRegistry.registerModEntity(new ResourceLocation(Tags.MOD_ID, "PowerHammerProjectile"), PowerHammerProjectile.class, "PowerHammerProjectile", ++Techguns.modEntityID, Tags.MOD_ID, bulletTrackRange, 1, true);
+        EntityRegistry.registerModEntity(new ResourceLocation(Tags.MOD_ID, "ChainsawProjectile"), ChainsawProjectile.class, "ChainsawProjectile", ++Techguns.modEntityID, Tags.MOD_ID, bulletTrackRange, 1, true);
+        EntityRegistry.registerModEntity(new ResourceLocation(Tags.MOD_ID, "FragGrenadeProjectile"), FragGrenadeProjectile.class, "FragGrenadeProjectile", ++Techguns.modEntityID, Tags.MOD_ID, bulletTrackRange, 1, true);
+        EntityRegistry.registerModEntity(new ResourceLocation(Tags.MOD_ID, "RocketProjectileNuke"), RocketProjectileNuke.class, "RocketProjectileNuke", ++Techguns.modEntityID, Tags.MOD_ID, bulletTrackRange, 1, true);
+        EntityRegistry.registerModEntity(new ResourceLocation(Tags.MOD_ID, "TFGProjectile"), TFGProjectile.class, "TFGProjectile", ++Techguns.modEntityID, Tags.MOD_ID, bulletTrackRange, 1, true);
+        EntityRegistry.registerModEntity(new ResourceLocation(Tags.MOD_ID, "GenericProjectileExplosive"), GenericProjectileExplosive.class, "GenericProjectileExplosive", ++Techguns.modEntityID, Tags.MOD_ID, bulletTrackRange, 1, true);
+        EntityRegistry.registerModEntity(new ResourceLocation(Tags.MOD_ID, "RocketProjectileHV"), RocketProjectileHV.class, "RocketProjectileHV", ++Techguns.modEntityID, Tags.MOD_ID, bulletTrackRange, 1, true);
+        EntityRegistry.registerModEntity(new ResourceLocation(Tags.MOD_ID, "RadiationEntity"), EntityRadiation.class, "RadiationEntity", ++Techguns.modEntityID, Tags.MOD_ID, bulletTrackRange, 1, false);
+        EntityRegistry.registerModEntity(new ResourceLocation(Tags.MOD_ID, "GuidedMissileProjectileHV"), GuidedMissileProjectileHV.class, "GuidedMissileProjectileHV", ++Techguns.modEntityID, Tags.MOD_ID, bulletTrackRange, 1, true);
 
 
-	static void registerModEntityWithEgg(Class parEntityClass, String parEntityName, 
-		      int parEggColor, int parEggSpotsColor)
-	{
-		registerModEntityWithEgg(parEntityClass, parEntityName, parEggColor, parEggSpotsColor,80);
-	}
-	
-	static void registerModEntityWithEgg(Class parEntityClass, String parEntityName, 
-		      int parEggColor, int parEggSpotsColor, int trackingrange)
-	{
-	    EntityRegistry.registerModEntity(new ResourceLocation(Tags.MOD_ID,parEntityName),parEntityClass, Tags.MOD_ID+"."+parEntityName, ++Techguns.modEntityID, Techguns.instance, trackingrange, 3, false, parEggColor, parEggSpotsColor);
-	}
-	
-	@Override
-	public void init(FMLInitializationEvent event) {
+        /**
+         * NPCS
+         */
+        EntityRegistry.registerModEntity(new ResourceLocation(Tags.MOD_ID, "turret"), NPCTurret.class, Tags.MOD_ID + ".Turret", ++Techguns.modEntityID, Tags.MOD_ID, 80, 3, false);
+        EntityRegistry.registerModEntity(new ResourceLocation(Tags.MOD_ID, "TGDummySpawn"), TGDummySpawn.class, Tags.MOD_ID + ".DummySpawn", ++Techguns.modEntityID, Tags.MOD_ID, 80, 3, false);
+        registerModEntityWithEgg(ZombieSoldier.class, "ZombieSoldier", 0x757468, 0x38B038);
+        registerModEntityWithEgg(ZombieFarmer.class, "ZombieFarmer", 0x757468, 0x38B038);
+        registerModEntityWithEgg(ZombieMiner.class, "ZombieMiner", 0x757468, 0x38B038);
+        registerModEntityWithEgg(ArmySoldier.class, "ArmySoldier", 0x74806e, 0x191512);
+        registerModEntityWithEgg(Bandit.class, "Bandit", 0x8f9d59, 0x2c3117);
+        registerModEntityWithEgg(Commando.class, "Commando", 0x191512, 0x74806e);
+        registerModEntityWithEgg(DictatorDave.class, "DictatorDave", 0x8f9d59, 0xA0A000);
+        registerModEntityWithEgg(CyberDemon.class, "CyberDemon", 0xFF1111, 0x777777);
+        registerModEntityWithEgg(SkeletonSoldier.class, "SkeletonSoldier", 0x404040, 0xF0F0F0);
+        registerModEntityWithEgg(PsychoSteve.class, "PsychoSteve", 0x757468, 0xF0F0F0);
+        registerModEntityWithEgg(StormTrooper.class, "StormTrooper", 0xF0F0F0, 0x404040);
+        registerModEntityWithEgg(Outcast.class, "Outcast", 0x101010, 0xFF0000);
+        registerModEntityWithEgg(ZombiePigmanSoldier.class, "ZombiePigmanSoldier", 0xFF1111, 0x770000);
+        registerModEntityWithEgg(SuperMutantBasic.class, "SuperMutantBasic", 0xc6a96b, 0x71552e);
+        registerModEntityWithEgg(SuperMutantElite.class, "SuperMutantElite", 0xc6a96b, 0x61451e);
+        registerModEntityWithEgg(SuperMutantHeavy.class, "SuperMutantHeavy", 0xc6a96b, 0x51350e);
+        registerModEntityWithEgg(AttackHelicopter.class, "AttackHelicopter", 0x373d23, 0x8ec0d7, 200);
+        registerModEntityWithEgg(AlienBug.class, "AlienBug", 0xc6a96b, 0x71552e);
+        registerModEntityWithEgg(Ghastling.class, "Ghastling", 0xaeaeae, 0xce81ff);
+        registerModEntityWithEgg(ZombiePoliceman.class, "ZombiePoliceman", 0x303030, 0x0000FF);
 
-		//registerSpawn does not add the spawn if the spawnweight is <=0
-		TGSpawnManager.spawnTableOverworld.registerSpawn(new TGNpcSpawn(ZombieSoldier.class, TGConfig.spawnWeightZombieSoldier), 1);
-		TGSpawnManager.spawnTableOverworld.registerSpawn(new TGNpcSpawn(ZombieFarmer.class, TGConfig.spawnWeightZombieFarmer), 0);
-		TGSpawnManager.spawnTableOverworld.registerSpawn(new TGNpcSpawn(ZombieMiner.class, TGConfig.spawnWeightZombieMiner), 0);
-		TGSpawnManager.spawnTableOverworld.registerSpawn(new TGNpcSpawn(SkeletonSoldier.class, TGConfig.spawnWeightSkeletonSoldier), 1);
-		
-		TGSpawnManager.spawnTableOverworld.registerSpawn(new TGNpcSpawn(PsychoSteve.class, TGConfig.spawnWeightPsychoSteve), 1);
-		
-		TGSpawnManager.spawnTableOverworld.registerSpawn(new TGNpcSpawn(Bandit.class, TGConfig.spawnWeightBandit), 2);
-		
-		
-		TGSpawnManager.spawnTableNether.registerSpawn(new TGNpcSpawn(ZombiePigmanSoldier.class, TGConfig.spawnWeightZombiePigmanSoldier), 0);
-		TGSpawnManager.spawnTableNether.registerSpawn(new TGNpcSpawn(CyberDemon.class, TGConfig.spawnWeightCyberDemon), 0);
-		TGSpawnManager.spawnTableNether.registerSpawn(new TGNpcSpawn(Ghastling.class, TGConfig.spawnWeightGhastling, true), 0);
+    }
 
-		TGSpawnManager.spawnTableEnd.registerSpawn(new TGNpcSpawn(SuperMutantBasic.class, TGConfig.spawnWeightSuperMutantBasic), 0);
-		TGSpawnManager.spawnTableEnd.registerSpawn(new TGNpcSpawn(SuperMutantElite.class, TGConfig.spawnWeightSuperMutantElite), 0);
-		TGSpawnManager.spawnTableEnd.registerSpawn(new TGNpcSpawn(SuperMutantHeavy.class, TGConfig.spawnWeightSuperMutantHeavy), 0);
-		
-	}
 
-	@Override
-	public void postInit(FMLPostInitializationEvent event) {
-		ArrayList<Biome> overworldBiomes = new ArrayList<>();
-		ArrayList<Biome> netherBiomes = new ArrayList<>();
-		ArrayList<Biome> endBiomes = new ArrayList<>();
-		ForgeRegistries.BIOMES.forEach(b -> {
-			
-			if (!isBlacklisted(b.getRegistryName().toString())) {
-			
-				if (!BiomeDictionary.hasType(b, BiomeDictionary.Type.NETHER) && !BiomeDictionary.hasType(b, BiomeDictionary.Type.END)){
-					overworldBiomes.add(b);
-				} else if (BiomeDictionary.hasType(b, Type.NETHER)) {
-					netherBiomes.add(b);
-				} else if (BiomeDictionary.hasType(b, Type.END)) {
-					endBiomes.add(b);
-				}
-			}
-		});
+    static void registerModEntityWithEgg(Class parEntityClass, String parEntityName,
+                                         int parEggColor, int parEggSpotsColor) {
+        registerModEntityWithEgg(parEntityClass, parEntityName, parEggColor, parEggSpotsColor, 80);
+    }
 
-		if(TGConfig.spawnWeightTGOverworld > 0) {
-			EntityRegistry.addSpawn(TGDummySpawn.class, TGConfig.spawnWeightTGOverworld, 1, 3, EnumCreatureType.MONSTER,overworldBiomes.toArray(new Biome[overworldBiomes.size()]));
-		}
-		if(TGConfig.spawnWeightTGNether > 0) {
-			EntityRegistry.addSpawn(TGDummySpawn.class, TGConfig.spawnWeightTGNether, 1, 3, EnumCreatureType.MONSTER,netherBiomes.toArray(new Biome[netherBiomes.size()]));
-		}
-		if(TGConfig.spawnWeightTGEnd > 0) {
-			EntityRegistry.addSpawn(TGDummySpawn.class, TGConfig.spawnWeightTGEnd, 1, 3, EnumCreatureType.MONSTER,endBiomes.toArray(new Biome[endBiomes.size()]));
-		}
-	}
+    static void registerModEntityWithEgg(Class parEntityClass, String parEntityName,
+                                         int parEggColor, int parEggSpotsColor, int trackingrange) {
+        EntityRegistry.registerModEntity(new ResourceLocation(Tags.MOD_ID, parEntityName), parEntityClass, Tags.MOD_ID + "." + parEntityName, ++Techguns.modEntityID, Techguns.instance, trackingrange, 3, false, parEggColor, parEggSpotsColor);
+    }
 
-	protected static boolean isBlacklisted(String registryName) {
-		for (String s: TGConfig.biomeBlacklist) {
-			if(registryName.equals(s)) {
-				return true;
-			}
-		}
-		return false;
-	}
-	
-	@SideOnly(Side.CLIENT)
+    @Override
+    public void init(FMLInitializationEvent event) {
+
+        //registerSpawn does not add the spawn if the spawnweight is <=0
+        TGSpawnManager.spawnTableOverworld.registerSpawn(new TGNpcSpawn(ZombieSoldier.class, TGConfig.spawnWeightZombieSoldier), 1);
+        TGSpawnManager.spawnTableOverworld.registerSpawn(new TGNpcSpawn(ZombieFarmer.class, TGConfig.spawnWeightZombieFarmer), 0);
+        TGSpawnManager.spawnTableOverworld.registerSpawn(new TGNpcSpawn(ZombieMiner.class, TGConfig.spawnWeightZombieMiner), 0);
+        TGSpawnManager.spawnTableOverworld.registerSpawn(new TGNpcSpawn(SkeletonSoldier.class, TGConfig.spawnWeightSkeletonSoldier), 1);
+
+        TGSpawnManager.spawnTableOverworld.registerSpawn(new TGNpcSpawn(PsychoSteve.class, TGConfig.spawnWeightPsychoSteve), 1);
+
+        TGSpawnManager.spawnTableOverworld.registerSpawn(new TGNpcSpawn(Bandit.class, TGConfig.spawnWeightBandit), 2);
+
+
+        TGSpawnManager.spawnTableNether.registerSpawn(new TGNpcSpawn(ZombiePigmanSoldier.class, TGConfig.spawnWeightZombiePigmanSoldier), 0);
+        TGSpawnManager.spawnTableNether.registerSpawn(new TGNpcSpawn(CyberDemon.class, TGConfig.spawnWeightCyberDemon), 0);
+        TGSpawnManager.spawnTableNether.registerSpawn(new TGNpcSpawn(Ghastling.class, TGConfig.spawnWeightGhastling, true), 0);
+
+        TGSpawnManager.spawnTableEnd.registerSpawn(new TGNpcSpawn(SuperMutantBasic.class, TGConfig.spawnWeightSuperMutantBasic), 0);
+        TGSpawnManager.spawnTableEnd.registerSpawn(new TGNpcSpawn(SuperMutantElite.class, TGConfig.spawnWeightSuperMutantElite), 0);
+        TGSpawnManager.spawnTableEnd.registerSpawn(new TGNpcSpawn(SuperMutantHeavy.class, TGConfig.spawnWeightSuperMutantHeavy), 0);
+
+    }
+
+    @Override
+    public void postInit(FMLPostInitializationEvent event) {
+        ArrayList<Biome> overworldBiomes = new ArrayList<>();
+        ArrayList<Biome> netherBiomes = new ArrayList<>();
+        ArrayList<Biome> endBiomes = new ArrayList<>();
+        ForgeRegistries.BIOMES.forEach(b -> {
+
+            if (!isBlacklisted(b.getRegistryName().toString())) {
+
+                if (!BiomeDictionary.hasType(b, BiomeDictionary.Type.NETHER) && !BiomeDictionary.hasType(b, BiomeDictionary.Type.END)) {
+                    overworldBiomes.add(b);
+                } else if (BiomeDictionary.hasType(b, Type.NETHER)) {
+                    netherBiomes.add(b);
+                } else if (BiomeDictionary.hasType(b, Type.END)) {
+                    endBiomes.add(b);
+                }
+            }
+        });
+
+        if (TGConfig.spawnWeightTGOverworld > 0) {
+            EntityRegistry.addSpawn(TGDummySpawn.class, TGConfig.spawnWeightTGOverworld, 1, 3, EnumCreatureType.MONSTER, overworldBiomes.toArray(new Biome[overworldBiomes.size()]));
+        }
+        if (TGConfig.spawnWeightTGNether > 0) {
+            EntityRegistry.addSpawn(TGDummySpawn.class, TGConfig.spawnWeightTGNether, 1, 3, EnumCreatureType.MONSTER, netherBiomes.toArray(new Biome[netherBiomes.size()]));
+        }
+        if (TGConfig.spawnWeightTGEnd > 0) {
+            EntityRegistry.addSpawn(TGDummySpawn.class, TGConfig.spawnWeightTGEnd, 1, 3, EnumCreatureType.MONSTER, endBiomes.toArray(new Biome[endBiomes.size()]));
+        }
+    }
+
+    protected static boolean isBlacklisted(String registryName) {
+        for (String s : TGConfig.biomeBlacklist) {
+            if (registryName.equals(s)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @SideOnly(Side.CLIENT)
     public static void initModels() {
     }
 }

@@ -7,7 +7,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import techguns.TGPackets;
-import techguns.*;
+import techguns.Techguns;
 
 public class PacketOpenPlayerGUI implements IMessage {
     private short guiID;

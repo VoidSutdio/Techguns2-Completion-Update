@@ -1,9 +1,9 @@
 package techguns.client.render.item;
 
+import net.minecraft.client.renderer.GlStateManager;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import net.minecraft.client.renderer.GlStateManager;
 
 public class GunAnimation {
 

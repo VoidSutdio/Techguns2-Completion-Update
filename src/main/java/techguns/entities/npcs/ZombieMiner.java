@@ -1,7 +1,5 @@
 package techguns.entities.npcs;
 
-import java.util.Random;
-
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.SharedMonsterAttributes;
@@ -19,95 +17,96 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import techguns.TGArmors;
 import techguns.TGuns;
-import techguns.*;
+import techguns.Tags;
 import techguns.api.npc.factions.ITGNpcTeam;
 import techguns.items.armors.GenericArmorMultiCamo;
 
+import java.util.Random;
+
 public class ZombieMiner extends GenericNPCUndead {
-	public static final ResourceLocation LOOT = new ResourceLocation(Tags.MOD_ID, "entities/zombieminer");
-	
-	public ZombieMiner(World world) {
-		super(world);
-		setTGArmorStats(0f, 0f);
-	}
-	
-	@Override
-	protected void applyEntityAttributes() {
-		super.applyEntityAttributes();
-		this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.20D);
-		this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(20);
-		this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(4);
-		this.getEntityAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(50.0D);
-	}
+    public static final ResourceLocation LOOT = new ResourceLocation(Tags.MOD_ID, "entities/zombieminer");
 
-	@Override
-	protected void addRandomArmor(int difficulty) {
+    public ZombieMiner(World world) {
+        super(world);
+        setTGArmorStats(0f, 0f);
+    }
 
-		// Armors
-		double chance = 0.5;
-		
-		int camo = GenericArmorMultiCamo.getRandomCamoIndexFor((GenericArmorMultiCamo) TGArmors.t1_miner_Chestplate);
-		
-		this.setItemStackToSlot(EntityEquipmentSlot.HEAD, GenericArmorMultiCamo.getNewWithCamo(
-				TGArmors.t1_miner_Helmet,camo));
-		if(Math.random() <= chance)
-			this.setItemStackToSlot(EntityEquipmentSlot.CHEST, GenericArmorMultiCamo.getNewWithCamo(
-					TGArmors.t1_miner_Chestplate,camo));
-		if (Math.random() <= chance)
-			this.setItemStackToSlot(EntityEquipmentSlot.LEGS, GenericArmorMultiCamo.getNewWithCamo(
-					TGArmors.t1_miner_Leggings,camo));
-		if (Math.random() <= chance)
-			this.setItemStackToSlot(EntityEquipmentSlot.FEET, GenericArmorMultiCamo.getNewWithCamo(
-					TGArmors.t1_miner_Boots,camo));
-		
+    @Override
+    protected void applyEntityAttributes() {
+        super.applyEntityAttributes();
+        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.20D);
+        this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(20);
+        this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(4);
+        this.getEntityAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(50.0D);
+    }
 
-		// Weapons
-		Random r = new Random();
-		Item weapon = null;
-		switch (r.nextInt(3)) {
-		case 0:
-			weapon = Items.STONE_PICKAXE;
-			break;
-		case 1:
-			weapon = Items.IRON_PICKAXE;
-			break;
-		case 3:
-		default:
-			weapon = TGuns.handcannon;
-			break;
-		}
-		if (weapon != null) this.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, new ItemStack(weapon));
-	}
-	
-	@Override
-	public SoundEvent getAmbientSound() {
-		return SoundEvents.ENTITY_ZOMBIE_AMBIENT;
-	}
+    @Override
+    protected void addRandomArmor(int difficulty) {
 
-	@Override
-	public @NotNull SoundEvent getHurtSound(@NotNull DamageSource damageSourceIn) {
-		return SoundEvents.ENTITY_ZOMBIE_HURT;
-	}
+        // Armors
+        double chance = 0.5;
 
-	@Override
-	public @NotNull SoundEvent getDeathSound() {
-		return SoundEvents.ENTITY_ZOMBIE_DEATH;
-	}
+        int camo = GenericArmorMultiCamo.getRandomCamoIndexFor((GenericArmorMultiCamo) TGArmors.t1_miner_Chestplate);
 
-	public SoundEvent getStepSound() {
-		return SoundEvents.ENTITY_ZOMBIE_STEP;
-	}
-	
-	@Override
-    protected void playStepSound(BlockPos pos, Block blockIn)
-    {
+        this.setItemStackToSlot(EntityEquipmentSlot.HEAD, GenericArmorMultiCamo.getNewWithCamo(
+                TGArmors.t1_miner_Helmet, camo));
+        if (Math.random() <= chance)
+            this.setItemStackToSlot(EntityEquipmentSlot.CHEST, GenericArmorMultiCamo.getNewWithCamo(
+                    TGArmors.t1_miner_Chestplate, camo));
+        if (Math.random() <= chance)
+            this.setItemStackToSlot(EntityEquipmentSlot.LEGS, GenericArmorMultiCamo.getNewWithCamo(
+                    TGArmors.t1_miner_Leggings, camo));
+        if (Math.random() <= chance)
+            this.setItemStackToSlot(EntityEquipmentSlot.FEET, GenericArmorMultiCamo.getNewWithCamo(
+                    TGArmors.t1_miner_Boots, camo));
+
+
+        // Weapons
+        Random r = new Random();
+        Item weapon = null;
+        switch (r.nextInt(3)) {
+            case 0:
+                weapon = Items.STONE_PICKAXE;
+                break;
+            case 1:
+                weapon = Items.IRON_PICKAXE;
+                break;
+            case 3:
+            default:
+                weapon = TGuns.handcannon;
+                break;
+        }
+        if (weapon != null) this.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, new ItemStack(weapon));
+    }
+
+    @Override
+    public SoundEvent getAmbientSound() {
+        return SoundEvents.ENTITY_ZOMBIE_AMBIENT;
+    }
+
+    @Override
+    public @NotNull SoundEvent getHurtSound(@NotNull DamageSource damageSourceIn) {
+        return SoundEvents.ENTITY_ZOMBIE_HURT;
+    }
+
+    @Override
+    public @NotNull SoundEvent getDeathSound() {
+        return SoundEvents.ENTITY_ZOMBIE_DEATH;
+    }
+
+    public SoundEvent getStepSound() {
+        return SoundEvents.ENTITY_ZOMBIE_STEP;
+    }
+
+    @Override
+    protected void playStepSound(BlockPos pos, Block blockIn) {
         this.playSound(this.getStepSound(), 0.15F, 1.0F);
     }
-	
-	@Override
-	protected ResourceLocation getLootTable() {
-		return LOOT;
-	}
+
+    @Override
+    protected ResourceLocation getLootTable() {
+        return LOOT;
+    }
 
     @Override
     public boolean attackEntityFrom(@NotNull DamageSource source, float amount) {

@@ -8,17 +8,17 @@ import techguns.world.dungeon.presets.IDungeonPreset;
 
 public interface IDungeonPath {
 
-	int getNumSegments();
+    int getNumSegments();
 
-	void generatePath();
+    void generatePath();
 
-	void generateSegment(int x, int y, int z, int dir, PathSegment prev);
+    void generateSegment(int x, int y, int z, int dir, PathSegment prev);
 
-	void generateDungeon(World world, int posX, int posY, int posZ, IDungeonPreset preset);
+    void generateDungeon(World world, int posX, int posY, int posZ, IDungeonPreset preset);
 
-	void generateNPCSpawners(World world, int posX, int posY, int posZ, IDungeonPreset preset);
+    void generateNPCSpawners(World world, int posX, int posY, int posZ, IDungeonPreset preset);
 
-	EnumFacing getEntranceRotation();
+    EnumFacing getEntranceRotation();
 
-	BlockPos getStartPos();
+    BlockPos getStartPos();
 }

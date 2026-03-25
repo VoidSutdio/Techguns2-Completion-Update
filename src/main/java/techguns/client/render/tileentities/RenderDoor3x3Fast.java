@@ -1,7 +1,5 @@
 package techguns.client.render.tileentities;
 
-import javax.vecmath.Matrix4f;
-
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BlockRendererDispatcher;
@@ -21,11 +19,13 @@ import net.minecraftforge.common.model.IModelState;
 import net.minecraftforge.common.model.TRSRTransformation;
 import org.jetbrains.annotations.NotNull;
 import techguns.TGBlocks;
-import techguns.*;
+import techguns.Tags;
 import techguns.blocks.BlockTGDoor3x3;
 import techguns.blocks.EnumDoorState;
 import techguns.tileentities.Door3x3TileEntity;
 import techguns.util.MathUtil;
+
+import javax.vecmath.Matrix4f;
 
 public class RenderDoor3x3Fast extends FastTESR<Door3x3TileEntity> {
 

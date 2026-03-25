@@ -1,44 +1,44 @@
 package techguns.plugins.jei;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 import mezz.jei.api.IJeiHelpers;
 import mezz.jei.api.recipe.IStackHelper;
 import org.jetbrains.annotations.NotNull;
 import techguns.tileentities.operation.CamoBenchRecipes;
 import techguns.tileentities.operation.CamoBenchRecipes.CamoBenchRecipe;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 public class CamoBenchJeiRecipe extends BasicRecipeWrapper {
 
-	CamoBenchRecipe rec;
-	
-	public CamoBenchJeiRecipe(CamoBenchRecipe recipe) {
-		super(recipe);
-		this.rec=recipe;
-	}
+    CamoBenchRecipe rec;
 
-	@Override
-	protected int getRFperTick() {
-		return 0;
-	}
+    public CamoBenchJeiRecipe(CamoBenchRecipe recipe) {
+        super(recipe);
+        this.rec = recipe;
+    }
 
-	public static List<CamoBenchJeiRecipe> getRecipes(IJeiHelpers helpers) {
-		IStackHelper stackHelper = helpers.getStackHelper();
-	
-		List<CamoBenchJeiRecipe> recipes = new ArrayList<>();
-		
-		ArrayList<CamoBenchRecipe> m_recipes = CamoBenchRecipes.getRecipes();
-		m_recipes.forEach(r -> recipes.add(new CamoBenchJeiRecipe(r)));
-		
-		return recipes;
-	}
+    @Override
+    protected int getRFperTick() {
+        return 0;
+    }
 
-	@Override
-	public @NotNull List<String> getTooltipStrings(int mouseX, int mouseY) {
-		return Collections.EMPTY_LIST;
-	}
-	
-	
+    public static List<CamoBenchJeiRecipe> getRecipes(IJeiHelpers helpers) {
+        IStackHelper stackHelper = helpers.getStackHelper();
+
+        List<CamoBenchJeiRecipe> recipes = new ArrayList<>();
+
+        ArrayList<CamoBenchRecipe> m_recipes = CamoBenchRecipes.getRecipes();
+        m_recipes.forEach(r -> recipes.add(new CamoBenchJeiRecipe(r)));
+
+        return recipes;
+    }
+
+    @Override
+    public @NotNull List<String> getTooltipStrings(int mouseX, int mouseY) {
+        return Collections.EMPTY_LIST;
+    }
+
+
 }

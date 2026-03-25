@@ -12,23 +12,20 @@ import techguns.api.npc.INPCTechgunsShooter;
 
 public class LayerHeldItemTranslateGun extends LayerHeldItem {
 
-	public LayerHeldItemTranslateGun(RenderLivingBase<?> livingEntityRendererIn) {
-		super(livingEntityRendererIn);
-	}
-	
-	@Override
-	public void doRenderLayer(EntityLivingBase entitylivingbaseIn, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch, float scale)
-    {
+    public LayerHeldItemTranslateGun(RenderLivingBase<?> livingEntityRendererIn) {
+        super(livingEntityRendererIn);
+    }
+
+    @Override
+    public void doRenderLayer(EntityLivingBase entitylivingbaseIn, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch, float scale) {
         boolean flag = entitylivingbaseIn.getPrimaryHand() == EnumHandSide.RIGHT;
         ItemStack itemstack = flag ? entitylivingbaseIn.getHeldItemOffhand() : entitylivingbaseIn.getHeldItemMainhand();
         ItemStack itemstack1 = flag ? entitylivingbaseIn.getHeldItemMainhand() : entitylivingbaseIn.getHeldItemOffhand();
 
-        if (!itemstack.isEmpty() || !itemstack1.isEmpty())
-        {
+        if (!itemstack.isEmpty() || !itemstack1.isEmpty()) {
             GlStateManager.pushMatrix();
 
-            if (this.livingEntityRenderer.getMainModel().isChild)
-            {
+            if (this.livingEntityRenderer.getMainModel().isChild) {
                 float f = 0.5F;
                 GlStateManager.translate(0.0F, 0.75F, 0.0F);
                 GlStateManager.scale(0.5F, 0.5F, 0.5F);
@@ -40,38 +37,34 @@ public class LayerHeldItemTranslateGun extends LayerHeldItem {
         }
     }
 
-    protected void renderHeldItemTranslateGun(EntityLivingBase ent, ItemStack stack, ItemCameraTransforms.TransformType transformType, EnumHandSide handSide)
-    {
-        if (!stack.isEmpty())
-        {
+    protected void renderHeldItemTranslateGun(EntityLivingBase ent, ItemStack stack, ItemCameraTransforms.TransformType transformType, EnumHandSide handSide) {
+        if (!stack.isEmpty()) {
             GlStateManager.pushMatrix();
-           
-          
-            
-            if (ent.isSneaking())
-            {
+
+
+            if (ent.isSneaking()) {
                 GlStateManager.translate(0.0F, 0.2F, 0.0F);
             }
             // Forge: moved this call down, fixes incorrect offset while sneaking.
             this.translateToHand(handSide);
-            
+
             GlStateManager.rotate(-90.0F, 1.0F, 0.0F, 0.0F);
             GlStateManager.rotate(180.0F, 0.0F, 1.0F, 0.0F);
             boolean flag = handSide == EnumHandSide.LEFT;
-            GlStateManager.translate((float)(flag ? -1 : 1) / 16.0F, 0.125F, -0.625F);
-            
-            this.setEntityTranslation(ent,flag);
+            GlStateManager.translate((float) (flag ? -1 : 1) / 16.0F, 0.125F, -0.625F);
+
+            this.setEntityTranslation(ent, flag);
             Minecraft.getMinecraft().getItemRenderer().renderItemSide(ent, stack, transformType, flag);
-            
+
             GlStateManager.popMatrix();
         }
     }
-    
+
     protected void setEntityTranslation(EntityLivingBase ent, boolean lefthand) {
-    	if (ent instanceof INPCTechgunsShooter) {
-    		INPCTechgunsShooter shooter = (INPCTechgunsShooter) ent;
-    		
-    		GlStateManager.translate(lefthand ? -shooter.getWeaponPosX() : shooter.getWeaponPosX(), shooter.getWeaponPosY(), shooter.getWeaponPosZ());   		
-    	}
+        if (ent instanceof INPCTechgunsShooter) {
+            INPCTechgunsShooter shooter = (INPCTechgunsShooter) ent;
+
+            GlStateManager.translate(lefthand ? -shooter.getWeaponPosX() : shooter.getWeaponPosX(), shooter.getWeaponPosY(), shooter.getWeaponPosZ());
+        }
     }
 }

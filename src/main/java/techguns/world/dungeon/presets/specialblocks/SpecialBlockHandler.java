@@ -1,15 +1,15 @@
 package techguns.world.dungeon.presets.specialblocks;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.ResourceLocation;
 import techguns.TGBlocks;
 import techguns.blocks.EnumMilitaryCrateType;
 import techguns.util.MBlock;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class SpecialBlockHandler {
 
@@ -32,6 +32,7 @@ public class SpecialBlockHandler {
         }
 
     }
+
     // Th3_Sl1ze: mojank...
     public static boolean isShulkerBox(Block block) {
         List<Block> shulkerBoxes = new ArrayList<>(Arrays.asList(

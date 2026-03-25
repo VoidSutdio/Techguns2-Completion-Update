@@ -1,12 +1,5 @@
 package techguns.client.particle;
 
-import java.net.URL;
-import java.util.HashMap;
-import java.util.InputMismatchException;
-import java.util.List;
-import java.util.Locale;
-import java.util.Scanner;
-
 import net.minecraft.entity.Entity;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
@@ -15,6 +8,13 @@ import net.minecraft.world.World;
 import techguns.client.particle.TGParticleSystemType.AlphaEntry;
 import techguns.client.particle.TGParticleSystemType.ColorEntry;
 import techguns.client.render.TGRenderHelper.RenderType;
+
+import java.net.URL;
+import java.util.HashMap;
+import java.util.InputMismatchException;
+import java.util.List;
+import java.util.Locale;
+import java.util.Scanner;
 
 /**
  * Handles the loading and storage of all ParticleSystem types

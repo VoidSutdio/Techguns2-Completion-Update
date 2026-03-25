@@ -1,9 +1,9 @@
 package techguns.plugins.jei;
 
+import techguns.tileentities.operation.AmmoPressBuildPlans;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import techguns.tileentities.operation.AmmoPressBuildPlans;
 
 public class AmmoPressJeiRecipe extends BasicRecipeWrapper {
 

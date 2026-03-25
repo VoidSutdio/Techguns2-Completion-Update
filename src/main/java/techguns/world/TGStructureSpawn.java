@@ -1,10 +1,10 @@
 package techguns.world;
 
-import java.util.ArrayList;
-
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.common.BiomeDictionary;
 import techguns.world.structures.WorldgenStructure;
+
+import java.util.ArrayList;
 
 public class TGStructureSpawn {
     WorldgenStructure structure;

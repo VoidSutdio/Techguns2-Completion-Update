@@ -39,180 +39,191 @@ import techguns.util.EntityCondition;
 @Mod.EventBusSubscriber
 public abstract class CommonProxy implements ITGInitializer {
 
-	@Override
-	public void preInit(FMLPreInitializationEvent event) {
-		this.registerEntityRenderers();
-		this.registerCapabilities();
-	}
+    @Override
+    public void preInit(FMLPreInitializationEvent event) {
+        this.registerEntityRenderers();
+        this.registerCapabilities();
+    }
 
-	@Override
-	public void init(FMLInitializationEvent event) {
-		this.registerItemRenderers();
-		NetworkRegistry.INSTANCE.registerGuiHandler(Tags.MOD_ID, new TechgunsGuiHandler());
-	}
+    @Override
+    public void init(FMLInitializationEvent event) {
+        this.registerItemRenderers();
+        NetworkRegistry.INSTANCE.registerGuiHandler(Tags.MOD_ID, new TechgunsGuiHandler());
+    }
 
-	@Override
-	public void postInit(FMLPostInitializationEvent event) {
-		
-	}
+    @Override
+    public void postInit(FMLPostInitializationEvent event) {
 
-	@SubscribeEvent
-	public static void RecipeRegistryEvent(RegistryEvent.Register<IRecipe> event) {
-		TGFluids.recipeInit();
-		TGMachineRecipes.addRecipes();
-		Techguns.orecluster.RecipeInit();
-	}
-	
-	@SubscribeEvent
-	public static void registerBlocks(RegistryEvent.Register<Block> event) {
-		Techguns.instance.blocks.registerBlocks(event);
-		Techguns.instance.fluids.registerBlocks(event);
-	}
+    }
 
-	@SubscribeEvent
-	public static void registerItems(RegistryEvent.Register<Item> event) {
-		Techguns.instance.blocks.registerItems(event);
-		Techguns.instance.fluids.registerItems(event);
-		TGItems.registerItems(event);
-		TGArmors.registerItems(event);
-		TGuns.registerItems(event);
-	}
-	
-	@SubscribeEvent
-	public static void registerPotions(RegistryEvent.Register<Potion> event) {
-		Techguns.rad.registerPotions(event);
-	}
-	
-	@SubscribeEvent
-    public static void registerPotionTypes(RegistryEvent.Register<PotionType> event)
-    {
+    @SubscribeEvent
+    public static void RecipeRegistryEvent(RegistryEvent.Register<IRecipe> event) {
+        TGFluids.recipeInit();
+        TGMachineRecipes.addRecipes();
+        Techguns.orecluster.RecipeInit();
+    }
 
-		TGRadiationSystem.RAD_POTION = new PotionType(new PotionEffect(TGRadiationSystem.radiation_effect, 300, 4))
+    @SubscribeEvent
+    public static void registerBlocks(RegistryEvent.Register<Block> event) {
+        Techguns.instance.blocks.registerBlocks(event);
+        Techguns.instance.fluids.registerBlocks(event);
+    }
+
+    @SubscribeEvent
+    public static void registerItems(RegistryEvent.Register<Item> event) {
+        Techguns.instance.blocks.registerItems(event);
+        Techguns.instance.fluids.registerItems(event);
+        TGItems.registerItems(event);
+        TGArmors.registerItems(event);
+        TGuns.registerItems(event);
+    }
+
+    @SubscribeEvent
+    public static void registerPotions(RegistryEvent.Register<Potion> event) {
+        Techguns.rad.registerPotions(event);
+    }
+
+    @SubscribeEvent
+    public static void registerPotionTypes(RegistryEvent.Register<PotionType> event) {
+
+        TGRadiationSystem.RAD_POTION = new PotionType(new PotionEffect(TGRadiationSystem.radiation_effect, 300, 4))
                 .setRegistryName(Tags.MOD_ID, "radpotion");
-		
-		TGRadiationSystem.RAD_POTION_SEVERE = new PotionType(new PotionEffect(TGRadiationSystem.radiation_effect, 300, 24))
+
+        TGRadiationSystem.RAD_POTION_SEVERE = new PotionType(new PotionEffect(TGRadiationSystem.radiation_effect, 300, 24))
                 .setRegistryName(Tags.MOD_ID, "radpotion_severe");
 
-		TGRadiationSystem.RAD_REGENERATION_POTION = new PotionType(new PotionEffect(TGRadiationSystem.radregen_effect, 400, 9))
+        TGRadiationSystem.RAD_REGENERATION_POTION = new PotionType(new PotionEffect(TGRadiationSystem.radregen_effect, 400, 9))
                 .setRegistryName(Tags.MOD_ID, "radregenerationpotion");
-		
-		TGRadiationSystem.RAD_RESISTANCE_POTION = new PotionType(new PotionEffect(TGRadiationSystem.radresistance_effect, 900, 1))
-                .setRegistryName(Tags.MOD_ID, "radresistancepotion");
-		
 
-		
+        TGRadiationSystem.RAD_RESISTANCE_POTION = new PotionType(new PotionEffect(TGRadiationSystem.radresistance_effect, 900, 1))
+                .setRegistryName(Tags.MOD_ID, "radresistancepotion");
+
+
         event.getRegistry().register(TGRadiationSystem.RAD_POTION);
-        
+
         event.getRegistry().register(TGRadiationSystem.RAD_POTION_SEVERE);
-        
+
         event.getRegistry().register(TGRadiationSystem.RAD_REGENERATION_POTION);
-        
+
         event.getRegistry().register(TGRadiationSystem.RAD_RESISTANCE_POTION);
 
     }
-	
-	
-	@SubscribeEvent
-	public static void registerSounds(RegistryEvent.Register<SoundEvent> event) {
-		TGSounds.registerSounds(event);
-	}
 
-	protected void registerItemRenderers(){}
 
-    protected void registerEntityRenderers(){}
-
-    public void registerCapabilities(){
-		CapabilityManager.INSTANCE.register(ITGExtendedPlayer.class, new TGExtendedPlayerStorage(), () -> new TGExtendedPlayer(null));
-		CapabilityManager.INSTANCE.register(ITGShooterValues.class, new TGShooterValuesStorage(), TGShooterValues::new);
-		CapabilityManager.INSTANCE.register(TGSpawnerNPCData.class, new TGSpawnerNPCDataStorage(), TGSpawnerNPCData::new);
-	}
-
-	/**
-	 * Return player on client, null on server
-	 * @return
-	 */
-	public EntityPlayer getPlayerClient() {
-		return null;
-	}
-	
-	public void setGunTextures(GenericGun gun, String path, int variations){
-		
-	}
-	
-	public void setGunTextures(GenericGun gun, ResourceLocation path, int variations){
-		
-	}
-	
-	public void handleSoundEvent(EntityPlayer ply, int entityId, SoundEvent soundname, float volume, float pitch, boolean repeat, boolean moving, boolean gunPosition, boolean playOnOwnPlayer, TGSoundCategory soundCategory, EntityCondition condition){
-    	
+    @SubscribeEvent
+    public static void registerSounds(RegistryEvent.Register<SoundEvent> event) {
+        TGSounds.registerSounds(event);
     }
-    public void playSoundOnEntity(Entity ent, SoundEvent soundname, float volume, float pitch, boolean repeat, boolean moving, boolean gunPosition, TGSoundCategory category){
+
+    protected void registerItemRenderers() {
     }
-    
-    public void playSoundOnEntity(Entity ent, SoundEvent soundname, float volume, float pitch, boolean repeat, boolean moving, boolean gunPosition, TGSoundCategory category, EntityCondition condition) {}
-    
-    public void playSoundOnEntity(Entity ent, SoundEvent soundname, float volume, float pitch, boolean repeat, boolean moving, boolean gunPosition, boolean playForOwnPlayer, TGSoundCategory category){
+
+    protected void registerEntityRenderers() {
     }
-    
+
+    public void registerCapabilities() {
+        CapabilityManager.INSTANCE.register(ITGExtendedPlayer.class, new TGExtendedPlayerStorage(), () -> new TGExtendedPlayer(null));
+        CapabilityManager.INSTANCE.register(ITGShooterValues.class, new TGShooterValuesStorage(), TGShooterValues::new);
+        CapabilityManager.INSTANCE.register(TGSpawnerNPCData.class, new TGSpawnerNPCDataStorage(), TGSpawnerNPCData::new);
+    }
+
+    /**
+     * Return player on client, null on server
+     *
+     * @return
+     */
+    public EntityPlayer getPlayerClient() {
+        return null;
+    }
+
+    public void setGunTextures(GenericGun gun, String path, int variations) {
+
+    }
+
+    public void setGunTextures(GenericGun gun, ResourceLocation path, int variations) {
+
+    }
+
+    public void handleSoundEvent(EntityPlayer ply, int entityId, SoundEvent soundname, float volume, float pitch, boolean repeat, boolean moving, boolean gunPosition, boolean playOnOwnPlayer, TGSoundCategory soundCategory, EntityCondition condition) {
+
+    }
+
+    public void playSoundOnEntity(Entity ent, SoundEvent soundname, float volume, float pitch, boolean repeat, boolean moving, boolean gunPosition, TGSoundCategory category) {
+    }
+
+    public void playSoundOnEntity(Entity ent, SoundEvent soundname, float volume, float pitch, boolean repeat, boolean moving, boolean gunPosition, TGSoundCategory category, EntityCondition condition) {
+    }
+
+    public void playSoundOnEntity(Entity ent, SoundEvent soundname, float volume, float pitch, boolean repeat, boolean moving, boolean gunPosition, boolean playForOwnPlayer, TGSoundCategory category) {
+    }
+
     public void playSoundOnEntity(Entity ent, SoundEvent soundname, float volume, float pitch, boolean repeat,
-			boolean moving, boolean gunPosition, boolean playForOwnPlayer, TGSoundCategory category, EntityCondition condition) {}
-    
-    public void playSoundOnPosition(SoundEvent soundname, float posx, float posy, float posz, float volume, float pitch, boolean repeat, TGSoundCategory soundCategory) {
-	}
-
-	public void createFX(String name, World world, double posX, double posY, double posZ, double motionX, double motionY, double motionZ) {
-		
-	}
-	
-	public void createFX(String name, World world, double posX, double posY, double posZ, double motionX, double motionY, double motionZ, float pitch, float yaw) {
-		
-	}
-	
-	public void createFX(String name, World world, double posX, double posY, double posZ, double motionX, double motionY, double motionZ, float scale) {
-		
-	}
-
-	public void createFXOnEntity(String name, Entity ent) {
-
-	}
-	
-	public void createFXOnEntity(String name, Entity ent, float scale) {
-
-	}
-	
-	public void createFXOnEntityWithOffset(String name, Entity ent, float offsetX, float offsetY, float offsetZ, boolean attachToHead, EntityCondition condition) {}
-
-    public void createLightPulse(double x, double y, double z, int lifetime, float rad_start, float rad_end, float r, float g, float b) {}
-
-    public void createLightPulse(double x, double y, double z, int fadeIn, int fadeOut, float rad_large, float rad_small, float r, float g, float b) {}
-
-    public void setHasStepassist(boolean value){}
-
-    public void setHasNightvision(boolean value){}
-
-    public void setFlySpeed(float value){}
-
-    public boolean getHasStepassist(){
-    	return false;
+                                  boolean moving, boolean gunPosition, boolean playForOwnPlayer, TGSoundCategory category, EntityCondition condition) {
     }
 
-    public boolean getHasNightvision(){
-    	return false;
+    public void playSoundOnPosition(SoundEvent soundname, float posx, float posy, float posz, float volume, float pitch, boolean repeat, TGSoundCategory soundCategory) {
+    }
+
+    public void createFX(String name, World world, double posX, double posY, double posZ, double motionX, double motionY, double motionZ) {
+
+    }
+
+    public void createFX(String name, World world, double posX, double posY, double posZ, double motionX, double motionY, double motionZ, float pitch, float yaw) {
+
+    }
+
+    public void createFX(String name, World world, double posX, double posY, double posZ, double motionX, double motionY, double motionZ, float scale) {
+
+    }
+
+    public void createFXOnEntity(String name, Entity ent) {
+
+    }
+
+    public void createFXOnEntity(String name, Entity ent, float scale) {
+
+    }
+
+    public void createFXOnEntityWithOffset(String name, Entity ent, float offsetX, float offsetY, float offsetZ, boolean attachToHead, EntityCondition condition) {
+    }
+
+    public void createLightPulse(double x, double y, double z, int lifetime, float rad_start, float rad_end, float r, float g, float b) {
+    }
+
+    public void createLightPulse(double x, double y, double z, int fadeIn, int fadeOut, float rad_large, float rad_small, float r, float g, float b) {
+    }
+
+    public void setHasStepassist(boolean value) {
+    }
+
+    public void setHasNightvision(boolean value) {
+    }
+
+    public void setFlySpeed(float value) {
+    }
+
+    public boolean getHasStepassist() {
+        return false;
+    }
+
+    public boolean getHasNightvision() {
+        return false;
     }
 
     public boolean isClientPlayerAndIn1stPerson(EntityLivingBase ent) {
-		return false;
-	}
+        return false;
+    }
 
-    public void registerFluidModelsForFluidBlock(Block b) {}
+    public void registerFluidModelsForFluidBlock(Block b) {
+    }
 
     public abstract GuiHandlerRegister getGuihandlers();
-    
-    public void clearItemParticleSystemsHand(EntityLivingBase entity, EnumHand hand) {
-	}
 
-	public void handlePlayerGliding(EntityPlayer player) {
-		//do nothing on server
-	}
-	
+    public void clearItemParticleSystemsHand(EntityLivingBase entity, EnumHand hand) {
+    }
+
+    public void handlePlayerGliding(EntityPlayer player) {
+        //do nothing on server
+    }
+
 }

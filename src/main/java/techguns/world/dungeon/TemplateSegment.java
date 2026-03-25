@@ -1,9 +1,9 @@
 package techguns.world.dungeon;
 
-import java.util.HashMap;
-
 import net.minecraft.util.math.Vec3i;
 import techguns.tileentities.DungeonScannerTileEnt;
+
+import java.util.HashMap;
 
 public class TemplateSegment {
 

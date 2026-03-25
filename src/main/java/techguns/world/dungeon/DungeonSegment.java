@@ -1,11 +1,14 @@
 package techguns.world.dungeon;
 
-import java.io.*;
-
 import net.minecraft.world.World;
 import techguns.tileentities.DungeonScannerTileEnt;
 import techguns.world.Structure;
 import techguns.world.dungeon.TemplateSegment.SegmentType;
+
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 
 /**
  * An 'instance' of a TemplateSegment for a specific DungeonTemplate

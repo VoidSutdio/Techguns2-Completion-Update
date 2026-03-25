@@ -1,10 +1,5 @@
 package techguns.client.render.entities.projectiles;
 
-import java.io.IOException;
-
-import org.jetbrains.annotations.NotNull;
-import org.lwjgl.opengl.GL11;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
@@ -22,66 +17,70 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.IModel;
 import net.minecraftforge.client.model.ModelLoaderRegistry;
 import net.minecraftforge.common.model.TRSRTransformation;
-import techguns.*;
+import org.jetbrains.annotations.NotNull;
+import org.lwjgl.opengl.GL11;
+import techguns.Tags;
 import techguns.entities.projectiles.Grenade40mmProjectile;
 
-public class RenderGrenade40mmProjectile extends Render<Grenade40mmProjectile>{
+import java.io.IOException;
 
-	private static final ResourceLocation texture = new ResourceLocation(Tags.MOD_ID, "textures/entity/launchergrenade.png");
-	private static final ModelResourceLocation modelLoc = new ModelResourceLocation(new ResourceLocation(Tags.MOD_ID,"grenade40mm"), "inventory");
-	private static IBakedModel bakedModel;
+public class RenderGrenade40mmProjectile extends Render<Grenade40mmProjectile> {
 
-	public static void initModel() {
-		 IModel model = ModelLoaderRegistry.getModelOrLogError(modelLoc,"Could not load grenande launcher projectile model");
-	     bakedModel = model.bake(TRSRTransformation.identity(), DefaultVertexFormats.ITEM, r -> {
-	    	    TextureAtlasSprite sprite = new TextureAtlasSprite(texture.getPath()) {};
-	    	    try {
-	    	    	PngSizeInfo png = PngSizeInfo.makeFromResource(Minecraft.getMinecraft().getResourceManager().getResource(texture));
-	    	        sprite.loadSprite(png, false);
-	    	        sprite.initSprite(png.pngWidth, png.pngHeight, 0, 0, false);
-	    	    } catch (IOException e) {
-	    	        throw new RuntimeException(e);
-	    	    }
-	    	    return sprite;
-	    	});
-	}
+    private static final ResourceLocation texture = new ResourceLocation(Tags.MOD_ID, "textures/entity/launchergrenade.png");
+    private static final ModelResourceLocation modelLoc = new ModelResourceLocation(new ResourceLocation(Tags.MOD_ID, "grenade40mm"), "inventory");
+    private static IBakedModel bakedModel;
 
-	public RenderGrenade40mmProjectile(RenderManager renderManager) {
-		super(renderManager);
-	}
+    public static void initModel() {
+        IModel model = ModelLoaderRegistry.getModelOrLogError(modelLoc, "Could not load grenande launcher projectile model");
+        bakedModel = model.bake(TRSRTransformation.identity(), DefaultVertexFormats.ITEM, r -> {
+            TextureAtlasSprite sprite = new TextureAtlasSprite(texture.getPath()) {
+            };
+            try {
+                PngSizeInfo png = PngSizeInfo.makeFromResource(Minecraft.getMinecraft().getResourceManager().getResource(texture));
+                sprite.loadSprite(png, false);
+                sprite.initSprite(png.pngWidth, png.pngHeight, 0, 0, false);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            return sprite;
+        });
+    }
 
-	@Override
-	protected ResourceLocation getEntityTexture(@NotNull Grenade40mmProjectile entity) {
-		return texture;
-	}
+    public RenderGrenade40mmProjectile(RenderManager renderManager) {
+        super(renderManager);
+    }
 
-	@Override
-	public void doRender(Grenade40mmProjectile entity, double x, double y, double z, float entityYaw, float partialTicks) {
-		RenderHelper.disableStandardItemLighting();
-		GlStateManager.pushMatrix();
+    @Override
+    protected ResourceLocation getEntityTexture(@NotNull Grenade40mmProjectile entity) {
+        return texture;
+    }
 
-		GlStateManager.translate((float) x, (float) y, (float) z);
-		GlStateManager.rotate(entity.rotationYaw - 90.0F, 0.0F, 1.0F, 0.0F);
-		GlStateManager.rotate(entity.rotationPitch, 0.0F, 0.0F, 1.0F);
+    @Override
+    public void doRender(Grenade40mmProjectile entity, double x, double y, double z, float entityYaw, float partialTicks) {
+        RenderHelper.disableStandardItemLighting();
+        GlStateManager.pushMatrix();
 
-		GlStateManager.rotate(180.0F, 1.0F, 0.0F, 0.0F);
-		GlStateManager.scale(0.5F, 0.5F, 0.5F);
+        GlStateManager.translate((float) x, (float) y, (float) z);
+        GlStateManager.rotate(entity.rotationYaw - 90.0F, 0.0F, 1.0F, 0.0F);
+        GlStateManager.rotate(entity.rotationPitch, 0.0F, 0.0F, 1.0F);
 
-		this.bindEntityTexture(entity);
+        GlStateManager.rotate(180.0F, 1.0F, 0.0F, 0.0F);
+        GlStateManager.scale(0.5F, 0.5F, 0.5F);
 
-		Tessellator tessellator = Tessellator.getInstance();
-		BufferBuilder builder = tessellator.getBuffer();
-		builder.begin(GL11.GL_QUADS, DefaultVertexFormats.ITEM);
+        this.bindEntityTexture(entity);
 
-		for (BakedQuad quad : bakedModel.getQuads(null, null, 0L)) {
-			builder.addVertexData(quad.getVertexData());
-		}
+        Tessellator tessellator = Tessellator.getInstance();
+        BufferBuilder builder = tessellator.getBuffer();
+        builder.begin(GL11.GL_QUADS, DefaultVertexFormats.ITEM);
 
-		tessellator.draw();
-		GlStateManager.popMatrix();
-		RenderHelper.enableStandardItemLighting();
-	}
+        for (BakedQuad quad : bakedModel.getQuads(null, null, 0L)) {
+            builder.addVertexData(quad.getVertexData());
+        }
 
-	
-	
+        tessellator.draw();
+        GlStateManager.popMatrix();
+        RenderHelper.enableStandardItemLighting();
+    }
+
+
 }

@@ -1,14 +1,13 @@
 package techguns.client.render.tileentities;
 
-import org.jetbrains.annotations.NotNull;
-import org.lwjgl.opengl.GL11;
-
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
-import techguns.*;
+import org.jetbrains.annotations.NotNull;
+import org.lwjgl.opengl.GL11;
+import techguns.Tags;
 import techguns.tileentities.OreDrillTileEntMaster;
 
 public class RenderOreDrill extends TileEntitySpecialRenderer<OreDrillTileEntMaster> {

@@ -1,7 +1,5 @@
 package techguns.entities.npcs;
 
-import javax.annotation.Nullable;
-
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -35,6 +33,8 @@ import techguns.capabilities.TGSpawnerNPCData;
 import techguns.client.audio.TGSoundCategory;
 import techguns.damagesystem.TGDamageSource;
 import techguns.packets.PacketPlaySound;
+
+import javax.annotation.Nullable;
 
 public class AlienBug extends EntitySpider implements ITGNpcTeam, INpcTGDamageSystem, ITGSpawnerNPC {
 

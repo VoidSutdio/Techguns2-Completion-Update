@@ -41,7 +41,8 @@ public class MetalPressTileEnt extends BasicMachineTileEnt {
     public MachineSlotItem input1;
     public MachineSlotItem input2;
     protected int pressureLevel = 0;
-    protected int pressureTickCounter = 0;    protected final FluidTank steamTank = new FluidTank(STEAM_CAPACITY) {
+    protected int pressureTickCounter = 0;
+    protected final FluidTank steamTank = new FluidTank(STEAM_CAPACITY) {
         @Override
         public boolean canFillFluidType(FluidStack fluid) {
             return MetalPressTileEnt.this.canAcceptSteam(fluid);

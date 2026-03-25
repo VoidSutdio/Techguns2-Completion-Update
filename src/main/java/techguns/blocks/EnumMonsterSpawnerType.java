@@ -4,12 +4,12 @@ import net.minecraft.util.IStringSerializable;
 import org.jetbrains.annotations.NotNull;
 
 public enum EnumMonsterSpawnerType implements IStringSerializable {
-	HOLE,
-	SOLDIER_SPAWN;
+    HOLE,
+    SOLDIER_SPAWN;
 
-	@Override
-	public @NotNull String getName() {
-		return name().toLowerCase();
-	}
+    @Override
+    public @NotNull String getName() {
+        return name().toLowerCase();
+    }
 
 }

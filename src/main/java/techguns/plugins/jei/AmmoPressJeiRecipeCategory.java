@@ -9,7 +9,7 @@ import mezz.jei.api.ingredients.IIngredients;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
-import techguns.*;
+import techguns.Tags;
 
 public class AmmoPressJeiRecipeCategory extends BasicRecipeCategory<AmmoPressJeiRecipe> {
 

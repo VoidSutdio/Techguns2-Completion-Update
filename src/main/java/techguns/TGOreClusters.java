@@ -1,8 +1,5 @@
 package techguns;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -20,6 +17,9 @@ import techguns.blocks.EnumOreType;
 import techguns.blocks.IEnumOreClusterType;
 import techguns.init.ITGInitializer;
 import techguns.tileentities.operation.MachineOperation;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class TGOreClusters implements ITGInitializer {
     protected HashMap<EnumOreClusterType, OreCluster> registry = new HashMap<>();

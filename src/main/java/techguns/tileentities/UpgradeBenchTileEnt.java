@@ -3,7 +3,7 @@ package techguns.tileentities;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
-import techguns.*;
+import techguns.Tags;
 
 public class UpgradeBenchTileEnt extends BasicOwnedTileEnt {
 

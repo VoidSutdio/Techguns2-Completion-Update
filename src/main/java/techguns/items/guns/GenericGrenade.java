@@ -1,13 +1,6 @@
 package techguns.items.guns;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.jetbrains.annotations.NotNull;
-import org.lwjgl.input.Keyboard;
-
 import com.mojang.realmsclient.gui.ChatFormatting;
-
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -18,6 +11,8 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.EnumHandSide;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.NotNull;
+import org.lwjgl.input.Keyboard;
 import techguns.TGPackets;
 import techguns.api.damagesystem.DamageType;
 import techguns.api.render.IItemTGRenderer;
@@ -27,6 +22,9 @@ import techguns.entities.projectiles.GrenadeProjectile;
 import techguns.items.GenericItem;
 import techguns.packets.PacketPlaySound;
 import techguns.util.TextUtil;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class GenericGrenade extends GenericItem implements IItemTGRenderer {
 

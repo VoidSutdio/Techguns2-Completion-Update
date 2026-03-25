@@ -14,31 +14,30 @@ import techguns.blocks.machines.BasicMachine;
 
 public class GenericItemBlockMetaMachineBlock extends GenericItemBlockMeta {
 
-	public GenericItemBlockMetaMachineBlock(Block block) {
-		super(block);
-	}
+    public GenericItemBlockMetaMachineBlock(Block block) {
+        super(block);
+    }
 
-	@Override
-	public boolean placeBlockAt(@NotNull ItemStack stack, @NotNull EntityPlayer player, World world, @NotNull BlockPos pos, @NotNull EnumFacing side,
+    @Override
+    public boolean placeBlockAt(@NotNull ItemStack stack, @NotNull EntityPlayer player, World world, @NotNull BlockPos pos, @NotNull EnumFacing side,
                                 float hitX, float hitY, float hitZ, @NotNull IBlockState newState) {
-		if (!world.setBlockState(pos, newState, 11)) return false;
+        if (!world.setBlockState(pos, newState, 11)) return false;
 
         IBlockState state = world.getBlockState(pos);
-        if (state.getBlock() == this.block)
-        {
+        if (state.getBlock() == this.block) {
             setTileEntityNBT(world, player, pos, stack);
-            if(this.block instanceof BasicMachine) {
-            	((BasicMachine)this.block).onBlockPlacedByExtended(world, pos, player, stack, side);
+            if (this.block instanceof BasicMachine) {
+                ((BasicMachine) this.block).onBlockPlacedByExtended(world, pos, player, stack, side);
             } else {
-            	this.block.onBlockPlacedBy(world, pos, state, player, stack);
+                this.block.onBlockPlacedBy(world, pos, state, player, stack);
             }
 
             if (player instanceof EntityPlayerMP)
-                CriteriaTriggers.PLACED_BLOCK.trigger((EntityPlayerMP)player, pos, stack);
+                CriteriaTriggers.PLACED_BLOCK.trigger((EntityPlayerMP) player, pos, stack);
         }
 
         return true;
-	}
+    }
 
-	
+
 }

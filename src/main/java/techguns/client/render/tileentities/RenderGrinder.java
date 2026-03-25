@@ -1,7 +1,5 @@
 package techguns.client.render.tileentities;
 
-import org.lwjgl.opengl.GL11;
-
 import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
@@ -14,8 +12,9 @@ import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
+import org.lwjgl.opengl.GL11;
 import techguns.TGBlocks;
-import techguns.*;
+import techguns.Tags;
 import techguns.api.render.IItemTGRenderer;
 import techguns.items.guns.GenericGun;
 import techguns.tileentities.GrinderTileEnt;

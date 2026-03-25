@@ -10,7 +10,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import techguns.TGItems;
-import techguns.*;
+import techguns.Tags;
 
 public enum EnumAmmoRenderTypes {
     EMPTY(256, 256, 0, 0, ItemStack.EMPTY),
@@ -41,7 +41,7 @@ public enum EnumAmmoRenderTypes {
     public final int width;
     public final int height;
     public final ItemStack stack;
-    public static final ResourceLocation ammoTypesTexture = new ResourceLocation(Tags.MOD_ID,"textures/gui/ammo_types.png");
+    public static final ResourceLocation ammoTypesTexture = new ResourceLocation(Tags.MOD_ID, "textures/gui/ammo_types.png");
 
     EnumAmmoRenderTypes(int x, int y, int width, int height, ItemStack ammo) {
         this.x = x;
@@ -81,10 +81,10 @@ public enum EnumAmmoRenderTypes {
         float v1 = (this.y + this.height) / 256.0F;
 
         buf.begin(7, DefaultVertexFormats.POSITION_TEX);
-        buf.pos(xPos,         yPos + this.height, 0.0D).tex(u0, v1).endVertex();
+        buf.pos(xPos, yPos + this.height, 0.0D).tex(u0, v1).endVertex();
         buf.pos(xPos + this.width, yPos + this.height, 0.0D).tex(u1, v1).endVertex();
-        buf.pos(xPos + this.width, yPos,              0.0D).tex(u1, v0).endVertex();
-        buf.pos(xPos,         yPos,              0.0D).tex(u0, v0).endVertex();
+        buf.pos(xPos + this.width, yPos, 0.0D).tex(u1, v0).endVertex();
+        buf.pos(xPos, yPos, 0.0D).tex(u0, v0).endVertex();
         tess.draw();
 
         GlStateManager.disableBlend();

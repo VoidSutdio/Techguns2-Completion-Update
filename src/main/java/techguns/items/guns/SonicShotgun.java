@@ -1,7 +1,5 @@
 package techguns.items.guns;
 
-import java.util.ArrayList;
-
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
@@ -13,6 +11,8 @@ import techguns.entities.projectiles.EnumBulletFirePos;
 import techguns.entities.projectiles.SonicShotgunProjectile;
 import techguns.packets.PacketSpawnParticleOnEntity;
 import techguns.util.MathUtil;
+
+import java.util.ArrayList;
 
 public class SonicShotgun extends GenericGun {
 

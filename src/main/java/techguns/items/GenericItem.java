@@ -7,29 +7,30 @@ import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import techguns.TGItems;
-import techguns.*;
+import techguns.Tags;
+import techguns.Techguns;
 
 public class GenericItem extends Item {
-	
-	public GenericItem(String name, boolean addToItemList){
-		setMaxStackSize(64);
-		setCreativeTab(Techguns.tabTechgun);
-		setRegistryName(name);
-		setTranslationKey(Tags.MOD_ID+"."+name);
-		if (addToItemList){
-			TGItems.ITEMLIST.add(this);
-		}
-	}
-	
-	public GenericItem(String name) {
-		this(name,true);
-	}
-	
-	public ResourceLocation getModelLocation() {
-		return this.getRegistryName();
-	}
-	
-	@SideOnly(Side.CLIENT)
+
+    public GenericItem(String name, boolean addToItemList) {
+        setMaxStackSize(64);
+        setCreativeTab(Techguns.tabTechgun);
+        setRegistryName(name);
+        setTranslationKey(Tags.MOD_ID + "." + name);
+        if (addToItemList) {
+            TGItems.ITEMLIST.add(this);
+        }
+    }
+
+    public GenericItem(String name) {
+        this(name, true);
+    }
+
+    public ResourceLocation getModelLocation() {
+        return this.getRegistryName();
+    }
+
+    @SideOnly(Side.CLIENT)
     public void initModel() {
         ModelLoader.setCustomModelResourceLocation(this, 0, new ModelResourceLocation(getModelLocation(), "inventory"));
     }

@@ -1,7 +1,5 @@
 package techguns.blocks;
 
-import java.util.Random;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDoor;
 import net.minecraft.block.SoundType;
@@ -28,117 +26,110 @@ import org.jetbrains.annotations.NotNull;
 import techguns.TGSounds;
 import techguns.items.ItemTGDoor2x1;
 
+import java.util.Random;
+
 public class BlockTGDoor2x1 extends BlockDoor implements IGenericBlock {
 
-	ItemTGDoor2x1 placer;
-	
-	public BlockTGDoor2x1(String name, ItemTGDoor2x1 placer) {
-		super(Material.IRON);
-		this.init(this, name, true);
-		this.setSoundType(SoundType.METAL);
-		this.placer=placer;
-		this.placer.setBlock(this);
-	}
-	
+    ItemTGDoor2x1 placer;
+
+    public BlockTGDoor2x1(String name, ItemTGDoor2x1 placer) {
+        super(Material.IRON);
+        this.init(this, name, true);
+        this.setSoundType(SoundType.METAL);
+        this.placer = placer;
+        this.placer.setBlock(this);
+    }
+
     /**
      * Called when the block is right clicked by a player.
      */
-	@Override
-    public boolean onBlockActivated(@NotNull World worldIn, BlockPos pos, IBlockState state, @NotNull EntityPlayer playerIn, @NotNull EnumHand hand, @NotNull EnumFacing facing, float hitX, float hitY, float hitZ)
-    {
-       
+    @Override
+    public boolean onBlockActivated(@NotNull World worldIn, BlockPos pos, IBlockState state, @NotNull EntityPlayer playerIn, @NotNull EnumHand hand, @NotNull EnumFacing facing, float hitX, float hitY, float hitZ) {
+
         BlockPos blockpos = state.getValue(HALF) == BlockDoor.EnumDoorHalf.LOWER ? pos : pos.down();
         IBlockState temp = pos.equals(blockpos) ? state : worldIn.getBlockState(blockpos);
         IBlockState iblockstate = temp.getActualState(worldIn, blockpos);
-        
-        if (iblockstate.getBlock() != this)
-        {
+
+        if (iblockstate.getBlock() != this) {
             return false;
-        }
-        else
-        {
-        	
+        } else {
+
             state = iblockstate.cycleProperty(OPEN);
-        	
-        	//check if double door
-        	EnumFacing doorfacing = iblockstate.getValue(FACING);
-        	EnumFacing offsetfacing;
 
-        	if(iblockstate.getValue(HINGE)==EnumHingePosition.LEFT) {
-        		offsetfacing = doorfacing.rotateY();
-        	} else {
-        		offsetfacing = doorfacing.rotateYCCW();
-        	}
+            //check if double door
+            EnumFacing doorfacing = iblockstate.getValue(FACING);
+            EnumFacing offsetfacing;
 
-        	BlockPos offsetPos = blockpos.offset(offsetfacing);
-        	IBlockState offsetState = worldIn.getBlockState(offsetPos);
-        	if(offsetState.getBlock()==iblockstate.getBlock() && offsetState.getValue(OPEN)==iblockstate.getValue(OPEN)) {
+            if (iblockstate.getValue(HINGE) == EnumHingePosition.LEFT) {
+                offsetfacing = doorfacing.rotateY();
+            } else {
+                offsetfacing = doorfacing.rotateYCCW();
+            }
+
+            BlockPos offsetPos = blockpos.offset(offsetfacing);
+            IBlockState offsetState = worldIn.getBlockState(offsetPos);
+            if (offsetState.getBlock() == iblockstate.getBlock() && offsetState.getValue(OPEN) == iblockstate.getValue(OPEN)) {
                 worldIn.setBlockState(offsetPos, offsetState.withProperty(OPEN, state.getValue(OPEN)), 10);
                 worldIn.markBlockRangeForRenderUpdate(offsetPos, pos.offset(offsetfacing));
-        	}
-        	
+            }
+
             worldIn.setBlockState(blockpos, state, 10);
             worldIn.markBlockRangeForRenderUpdate(blockpos, pos);
             //worldIn.playEvent(playerIn, ((Boolean)state.getValue(OPEN)).booleanValue() ? this.getOpenSound() : this.getCloseSound(), pos, 0);
             worldIn.playSound(pos.getX(), pos.getY(), pos.getZ(), TGSounds.BUNKER_DOOR_OPEN, SoundCategory.BLOCKS, 1.0f, 1.0f, false);
             return true;
         }
-        
-    }
-	
-    @Override
-	public void getSubBlocks(@NotNull CreativeTabs itemIn, @NotNull NonNullList<ItemStack> items) {
-	}
 
-	/**
+    }
+
+    @Override
+    public void getSubBlocks(@NotNull CreativeTabs itemIn, @NotNull NonNullList<ItemStack> items) {
+    }
+
+    /**
      * Gets the localized name of this block. Used for the statistics page.
      */
-	@Override
-    public @NotNull String getLocalizedName()
-    {
+    @Override
+    public @NotNull String getLocalizedName() {
         return I18n.translateToLocal(this.getTranslationKey() + ".name");
     }
 
-    public @NotNull EnumPushReaction getPushReaction(@NotNull IBlockState state)
-    {
+    public @NotNull EnumPushReaction getPushReaction(@NotNull IBlockState state) {
         return EnumPushReaction.BLOCK;
     }
-	
+
     /**
      * Get the Item that this Block should drop when harvested.
      */
     @Override
-    public @NotNull Item getItemDropped(IBlockState state, @NotNull Random rand, int fortune)
-    {
+    public @NotNull Item getItemDropped(IBlockState state, @NotNull Random rand, int fortune) {
         return state.getValue(HALF) == BlockDoor.EnumDoorHalf.UPPER ? Items.AIR : this.getItem();
     }
 
     @Override
-    public @NotNull ItemStack getItem(@NotNull World worldIn, @NotNull BlockPos pos, @NotNull IBlockState state)
-    {
+    public @NotNull ItemStack getItem(@NotNull World worldIn, @NotNull BlockPos pos, @NotNull IBlockState state) {
         return new ItemStack(this.getItem());
     }
 
-    private Item getItem()
-    {
+    private Item getItem() {
         return this.placer;
     }
 
-	@Override
-	public ItemBlock createItemBlock() {
-		return new GenericItemBlock(this);
-	}
+    @Override
+    public ItemBlock createItemBlock() {
+        return new GenericItemBlock(this);
+    }
 
-	@Override
-	public void registerBlock(Register<Block> event) {
-		event.getRegistry().register(this);
-	}
+    @Override
+    public void registerBlock(Register<Block> event) {
+        event.getRegistry().register(this);
+    }
 
-	@SideOnly(Side.CLIENT)
-	@Override
-	public void registerItemBlockModels() {
+    @SideOnly(Side.CLIENT)
+    @Override
+    public void registerItemBlockModels() {
 
-	}
-    
-    
+    }
+
+
 }

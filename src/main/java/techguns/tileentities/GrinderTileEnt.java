@@ -13,7 +13,11 @@ import techguns.TGSounds;
 import techguns.blocks.machines.BasicMachine;
 import techguns.blocks.machines.EnumSimpleMachineType2;
 import techguns.items.guns.GenericGun;
-import techguns.tileentities.operation.*;
+import techguns.tileentities.operation.GrinderRecipes;
+import techguns.tileentities.operation.ItemStackHandlerPlus;
+import techguns.tileentities.operation.MachineOperation;
+import techguns.tileentities.operation.MachineOperationChance;
+import techguns.tileentities.operation.MachineSlotItem;
 
 import java.util.List;
 

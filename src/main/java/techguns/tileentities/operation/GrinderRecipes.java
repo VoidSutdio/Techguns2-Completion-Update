@@ -113,24 +113,24 @@ public class GrinderRecipes {
 
         protected ItemStack[] outputs;
 
-		public GrinderRecipe(ItemStackOreDict input, ItemStack... outputs) {
-			super();
-			this.input = input;
-			this.outputs = outputs;
-		}
+        public GrinderRecipe(ItemStackOreDict input, ItemStack... outputs) {
+            super();
+            this.input = input;
+            this.outputs = outputs;
+        }
 
         public boolean matchesInput(ItemStackOreDict input) {
             return this.input.matches(input);
         }
-		
-		public MachineOperation getOperation(ItemStack input, GrinderTileEnt tile) {
-			
-			ArrayList<ItemStack> inputs = new ArrayList<>(1);
-			ItemStack it = input.copy();
-			it.setCount(1);
-			inputs.add(it);
-			
-			ArrayList<ItemStack> outputs = new ArrayList<>(this.outputs.length);
+
+        public MachineOperation getOperation(ItemStack input, GrinderTileEnt tile) {
+
+            ArrayList<ItemStack> inputs = new ArrayList<>(1);
+            ItemStack it = input.copy();
+            it.setCount(1);
+            inputs.add(it);
+
+            ArrayList<ItemStack> outputs = new ArrayList<>(this.outputs.length);
             outputs.addAll(Arrays.asList(this.outputs));
 
             return new MachineOperation(inputs, outputs, null, null, 1);

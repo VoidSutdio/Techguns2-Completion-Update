@@ -11,7 +11,7 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
 import techguns.TGSounds;
-import techguns.*;
+import techguns.Tags;
 import techguns.util.InventoryUtil;
 import techguns.util.TextUtil;
 
@@ -120,13 +120,13 @@ public class PoweredArmor extends GenericArmorMultiCamo {
         return this;
     }
 
-	public PoweredArmor setHealthBonus(int bonusHearts, int bonusHeartsUnpowered) {
+    public PoweredArmor setHealthBonus(int bonusHearts, int bonusHeartsUnpowered) {
         this.extraHearts = bonusHearts;
         this.extraHeartsUnpowered = bonusHeartsUnpowered;
         return this;
     }
 
-	public PoweredArmor setStepAssist(float stepassist, float stepassist_unpowered) {
+    public PoweredArmor setStepAssist(float stepassist, float stepassist_unpowered) {
         this.stepassist = stepassist;
         this.stepassistUnpowerd = stepassist_unpowered;
         return this;
@@ -217,11 +217,11 @@ public class PoweredArmor extends GenericArmorMultiCamo {
                         int dmg = ((PoweredArmor) armor.getItem()).setPowered(armor, max);
                         consumePower(chest, dmg);
                     }
-				}
-				if (consumeTick) {
-					consumePower(armor, 1);
-				}
-			}
+                }
+                if (consumeTick) {
+                    consumePower(armor, 1);
+                }
+            }
         }
     }
 
@@ -373,6 +373,6 @@ public class PoweredArmor extends GenericArmorMultiCamo {
                 this.waterspeedbonusUnpowered = unpowered;
                 return;
             default:
-		}
+        }
     }
 }

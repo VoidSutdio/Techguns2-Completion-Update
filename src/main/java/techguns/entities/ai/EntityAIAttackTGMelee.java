@@ -20,8 +20,7 @@ import techguns.blocks.BlockTGDoor2x1;
 
 import static net.minecraft.block.BlockDoor.OPEN;
 
-public class EntityAIAttackTGMelee extends EntityAIBase
-{
+public class EntityAIAttackTGMelee extends EntityAIBase {
     World world;
     protected EntityCreature attacker;
     protected int attackTick;
@@ -37,8 +36,7 @@ public class EntityAIAttackTGMelee extends EntityAIBase
     private boolean canPenalize = false;
     private final EntityAIOpenTGDoor doorOpenAI;
 
-    public EntityAIAttackTGMelee(EntityCreature creature, double speedIn, boolean useLongMemory)
-    {
+    public EntityAIAttackTGMelee(EntityCreature creature, double speedIn, boolean useLongMemory) {
         this.attacker = creature;
         this.world = creature.world;
         this.speedTowardsTarget = speedIn;
@@ -53,132 +51,96 @@ public class EntityAIAttackTGMelee extends EntityAIBase
         this.attacker.tasks.addTask(1, this.doorOpenAI);
     }
 
-    public boolean shouldExecute()
-    {
+    public boolean shouldExecute() {
         EntityLivingBase entitylivingbase = this.attacker.getAttackTarget();
 
-        if (entitylivingbase == null)
-        {
+        if (entitylivingbase == null) {
             return false;
-        }
-        else if (!entitylivingbase.isEntityAlive())
-        {
+        } else if (!entitylivingbase.isEntityAlive()) {
             return false;
-        }
-        else
-        {
-            if (canPenalize)
-            {
-                if (--this.delayCounter <= 0)
-                {
+        } else {
+            if (canPenalize) {
+                if (--this.delayCounter <= 0) {
                     this.path = this.attacker.getNavigator().getPathToEntityLiving(entitylivingbase);
                     this.delayCounter = 4 + this.attacker.getRNG().nextInt(7);
                     return this.path != null;
-                }
-                else
-                {
+                } else {
                     return true;
                 }
             }
             this.path = this.attacker.getNavigator().getPathToEntityLiving(entitylivingbase);
 
-            if (this.path != null)
-            {
+            if (this.path != null) {
                 return true;
-            }
-            else
-            {
+            } else {
                 return this.getAttackReachSqr(entitylivingbase) >= this.attacker.getDistanceSq(entitylivingbase.posX, entitylivingbase.getEntityBoundingBox().minY, entitylivingbase.posZ);
             }
         }
     }
 
-    public boolean shouldContinueExecuting()
-    {
+    public boolean shouldContinueExecuting() {
         EntityLivingBase entitylivingbase = this.attacker.getAttackTarget();
 
-        if (entitylivingbase == null)
-        {
+        if (entitylivingbase == null) {
             return false;
-        }
-        else if (!entitylivingbase.isEntityAlive())
-        {
+        } else if (!entitylivingbase.isEntityAlive()) {
             return false;
-        }
-        else if (!this.longMemory)
-        {
+        } else if (!this.longMemory) {
             return !this.attacker.getNavigator().noPath();
-        }
-        else if (!this.attacker.isWithinHomeDistanceFromPosition(new BlockPos(entitylivingbase)))
-        {
+        } else if (!this.attacker.isWithinHomeDistanceFromPosition(new BlockPos(entitylivingbase))) {
             return false;
-        }
-        else
-        {
-            return !(entitylivingbase instanceof EntityPlayer) || !((EntityPlayer)entitylivingbase).isSpectator() && !((EntityPlayer)entitylivingbase).isCreative();
+        } else {
+            return !(entitylivingbase instanceof EntityPlayer) || !((EntityPlayer) entitylivingbase).isSpectator() && !((EntityPlayer) entitylivingbase).isCreative();
         }
     }
 
-    public void startExecuting()
-    {
+    public void startExecuting() {
         this.attacker.getNavigator().setPath(this.path, this.speedTowardsTarget);
         this.delayCounter = 0;
     }
 
-    public void resetTask()
-    {
+    public void resetTask() {
         EntityLivingBase entitylivingbase = this.attacker.getAttackTarget();
 
-        if (entitylivingbase instanceof EntityPlayer && (((EntityPlayer)entitylivingbase).isSpectator() || ((EntityPlayer)entitylivingbase).isCreative()))
-        {
-            this.attacker.setAttackTarget((EntityLivingBase)null);
+        if (entitylivingbase instanceof EntityPlayer && (((EntityPlayer) entitylivingbase).isSpectator() || ((EntityPlayer) entitylivingbase).isCreative())) {
+            this.attacker.setAttackTarget((EntityLivingBase) null);
         }
 
         this.attacker.getNavigator().clearPath();
     }
 
-    public void updateTask()
-    {
+    public void updateTask() {
         EntityLivingBase entitylivingbase = this.attacker.getAttackTarget();
         this.attacker.getLookHelper().setLookPositionWithEntity(entitylivingbase, 30.0F, 30.0F);
         double d0 = this.attacker.getDistanceSq(entitylivingbase.posX, entitylivingbase.getEntityBoundingBox().minY, entitylivingbase.posZ);
         --this.delayCounter;
 
-        if ((this.longMemory || this.attacker.getEntitySenses().canSee(entitylivingbase)) && this.delayCounter <= 0 && (this.targetX == 0.0D && this.targetY == 0.0D && this.targetZ == 0.0D || entitylivingbase.getDistanceSq(this.targetX, this.targetY, this.targetZ) >= 1.0D || this.attacker.getRNG().nextFloat() < 0.05F))
-        {
+        if ((this.longMemory || this.attacker.getEntitySenses().canSee(entitylivingbase)) && this.delayCounter <= 0 && (this.targetX == 0.0D && this.targetY == 0.0D && this.targetZ == 0.0D || entitylivingbase.getDistanceSq(this.targetX, this.targetY, this.targetZ) >= 1.0D || this.attacker.getRNG().nextFloat() < 0.05F)) {
             this.targetX = entitylivingbase.posX;
             this.targetY = entitylivingbase.getEntityBoundingBox().minY;
             this.targetZ = entitylivingbase.posZ;
             this.delayCounter = 4 + this.attacker.getRNG().nextInt(7);
 
-            if (this.canPenalize)
-            {
+            if (this.canPenalize) {
                 this.delayCounter += failedPathFindingPenalty;
-                if (this.attacker.getNavigator().getPath() != null)
-                {
+                if (this.attacker.getNavigator().getPath() != null) {
                     net.minecraft.pathfinding.PathPoint finalPathPoint = this.attacker.getNavigator().getPath().getFinalPathPoint();
                     if (finalPathPoint != null && entitylivingbase.getDistanceSq(finalPathPoint.x, finalPathPoint.y, finalPathPoint.z) < 1)
                         failedPathFindingPenalty = 0;
                     else
                         failedPathFindingPenalty += 10;
-                }
-                else
-                {
+                } else {
                     failedPathFindingPenalty += 10;
                 }
             }
 
-            if (d0 > 1024.0D)
-            {
+            if (d0 > 1024.0D) {
                 this.delayCounter += 10;
-            }
-            else if (d0 > 256.0D)
-            {
+            } else if (d0 > 256.0D) {
                 this.delayCounter += 5;
             }
 
-            if (!this.attacker.getNavigator().tryMoveToEntityLiving(entitylivingbase, this.speedTowardsTarget))
-            {
+            if (!this.attacker.getNavigator().tryMoveToEntityLiving(entitylivingbase, this.speedTowardsTarget)) {
                 this.delayCounter += 15;
             }
 
@@ -191,62 +153,49 @@ public class EntityAIAttackTGMelee extends EntityAIBase
         this.checkAndPerformAttack(entitylivingbase, d0);
     }
 
-    protected void checkAndPerformAttack(EntityLivingBase p_190102_1_, double p_190102_2_)
-    {
+    protected void checkAndPerformAttack(EntityLivingBase p_190102_1_, double p_190102_2_) {
         double d0 = this.getAttackReachSqr(p_190102_1_);
 
-        if (p_190102_2_ <= d0 && this.attackTick <= 0)
-        {
+        if (p_190102_2_ <= d0 && this.attackTick <= 0) {
             this.attackTick = 20;
             this.attacker.swingArm(EnumHand.MAIN_HAND);
             this.attacker.attackEntityAsMob(p_190102_1_);
         }
     }
 
-    protected double getAttackReachSqr(EntityLivingBase attackTarget)
-    {
-        return (double)(this.attacker.width * 2.0F * this.attacker.width * 2.0F + attackTarget.width);
+    protected double getAttackReachSqr(EntityLivingBase attackTarget) {
+        return (double) (this.attacker.width * 2.0F * this.attacker.width * 2.0F + attackTarget.width);
     }
 
-    private class EntityAIOpenTGDoor extends EntityAIBase
-    {
+    private class EntityAIOpenTGDoor extends EntityAIBase {
         private final EntityLiving entity;
         private BlockPos doorPosition;
         private boolean hasStoppedDoorInteraction;
         private float entityPositionX;
         private float entityPositionZ;
 
-        public EntityAIOpenTGDoor(EntityLiving entityIn, boolean shouldClose)
-        {
+        public EntityAIOpenTGDoor(EntityLiving entityIn, boolean shouldClose) {
             this.entity = entityIn;
             this.setMutexBits(3);
         }
 
         @Override
-        public boolean shouldExecute()
-        {
-            if (!this.entity.collidedHorizontally)
-            {
+        public boolean shouldExecute() {
+            if (!this.entity.collidedHorizontally) {
                 return false;
-            }
-            else
-            {
-                PathNavigateGround pathnavigateground = (PathNavigateGround)this.entity.getNavigator();
+            } else {
+                PathNavigateGround pathnavigateground = (PathNavigateGround) this.entity.getNavigator();
                 Path path = pathnavigateground.getPath();
 
-                if (path != null && !path.isFinished() && pathnavigateground.getEnterDoors())
-                {
-                    for (int i = 0; i < Math.min(path.getCurrentPathIndex() + 2, path.getCurrentPathLength()); ++i)
-                    {
+                if (path != null && !path.isFinished() && pathnavigateground.getEnterDoors()) {
+                    for (int i = 0; i < Math.min(path.getCurrentPathIndex() + 2, path.getCurrentPathLength()); ++i) {
                         PathPoint pathpoint = path.getPathPointFromIndex(i);
                         BlockPos pos = new BlockPos(pathpoint.x, pathpoint.y, pathpoint.z);
 
-                        if (this.entity.getDistanceSq(pos.getX(), this.entity.posY, pos.getZ()) <= 2.25D)
-                        {
+                        if (this.entity.getDistanceSq(pos.getX(), this.entity.posY, pos.getZ()) <= 2.25D) {
                             this.doorPosition = this.getDoorPosition(pos);
 
-                            if (this.doorPosition != null)
-                            {
+                            if (this.doorPosition != null) {
                                 return true;
                             }
                         }
@@ -254,33 +203,27 @@ public class EntityAIAttackTGMelee extends EntityAIBase
 
                     this.doorPosition = this.getDoorPosition(new BlockPos(this.entity).up());
                     return this.doorPosition != null;
-                }
-                else
-                {
+                } else {
                     return false;
                 }
             }
         }
 
         @Override
-        public void startExecuting()
-        {
+        public void startExecuting() {
             this.hasStoppedDoorInteraction = false;
-            this.entityPositionX = (float)((double)this.doorPosition.getX() + 0.5D - this.entity.posX);
-            this.entityPositionZ = (float)((double)this.doorPosition.getZ() + 0.5D - this.entity.posZ);
+            this.entityPositionX = (float) ((double) this.doorPosition.getX() + 0.5D - this.entity.posX);
+            this.entityPositionZ = (float) ((double) this.doorPosition.getZ() + 0.5D - this.entity.posZ);
         }
 
         @Override
-        public boolean shouldContinueExecuting()
-        {
+        public boolean shouldContinueExecuting() {
             return !this.hasStoppedDoorInteraction;
         }
 
         @Override
-        public void updateTask()
-        {
-            if (this.doorPosition != null)
-            {
+        public void updateTask() {
+            if (this.doorPosition != null) {
                 double distanceSq = this.entity.getDistanceSq(
                         this.doorPosition.getX() + 0.5D,
                         this.doorPosition.getY() + 0.5D,
@@ -289,37 +232,29 @@ public class EntityAIAttackTGMelee extends EntityAIBase
 
                 boolean nearDoor = distanceSq < 2.25D;
 
-                if (nearDoor)
-                {
+                if (nearDoor) {
                     this.interactWithDoor(this.doorPosition, true);
                 }
 
-                float f = (float)((double)this.doorPosition.getX() + 0.5D - this.entity.posX);
-                float f1 = (float)((double)this.doorPosition.getZ() + 0.5D - this.entity.posZ);
+                float f = (float) ((double) this.doorPosition.getX() + 0.5D - this.entity.posX);
+                float f1 = (float) ((double) this.doorPosition.getZ() + 0.5D - this.entity.posZ);
                 float f2 = this.entityPositionX * f + this.entityPositionZ * f1;
 
-                if (f2 < 0.0F || !nearDoor)
-                {
+                if (f2 < 0.0F || !nearDoor) {
                     this.hasStoppedDoorInteraction = true;
                 }
-            }
-            else
-            {
+            } else {
                 this.hasStoppedDoorInteraction = true;
             }
         }
 
-        private BlockPos getDoorPosition(BlockPos pos)
-        {
+        private BlockPos getDoorPosition(BlockPos pos) {
             IBlockState iblockstate = this.entity.world.getBlockState(pos);
             Block block = iblockstate.getBlock();
 
-            if (block instanceof BlockDoor && iblockstate.getMaterial() == Material.WOOD)
-            {
+            if (block instanceof BlockDoor && iblockstate.getMaterial() == Material.WOOD) {
                 return pos;
-            }
-            else if (block instanceof BlockTGDoor2x1)
-            {
+            } else if (block instanceof BlockTGDoor2x1) {
                 return pos;
             }
 

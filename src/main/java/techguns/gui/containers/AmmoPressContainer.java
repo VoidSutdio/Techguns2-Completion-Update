@@ -9,7 +9,11 @@ import net.minecraft.util.EnumFacing;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import org.jetbrains.annotations.NotNull;
-import techguns.gui.widgets.*;
+import techguns.gui.widgets.SlotAmmoPressInput;
+import techguns.gui.widgets.SlotFabricator;
+import techguns.gui.widgets.SlotItemHandlerOutput;
+import techguns.gui.widgets.SlotMachineUpgrade;
+import techguns.gui.widgets.SlotTG;
 import techguns.tileentities.AmmoPressTileEnt;
 import techguns.tileentities.operation.ItemStackHandlerPlus;
 
