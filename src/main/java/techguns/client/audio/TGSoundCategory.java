@@ -6,15 +6,15 @@ import net.minecraft.util.SoundCategory;
 
 public class TGSoundCategory {
 
-    protected static ArrayList<TGSoundCategory> CATEGORIES = new ArrayList<>();
+    protected static ArrayList<TGSoundCategory> CATEGORIES;
 
-    public static TGSoundCategory GUN_FIRE = new TGSoundCategory("gunfire", SoundCategory.PLAYERS);
-    public static TGSoundCategory PLAYER_EFFECT = new TGSoundCategory("playereffect", SoundCategory.PLAYERS);
-    public static TGSoundCategory RELOAD = new TGSoundCategory("reload", SoundCategory.PLAYERS);
-    public static TGSoundCategory EXPLOISON = new TGSoundCategory("explosion", SoundCategory.MASTER);
-    public static TGSoundCategory MACHINE = new TGSoundCategory("machine", SoundCategory.BLOCKS);
-    public static TGSoundCategory DEATHEFFECT = new TGSoundCategory("deathFX", SoundCategory.HOSTILE);
-    public static TGSoundCategory HOSTILE = new TGSoundCategory("hostile", SoundCategory.HOSTILE);
+    public static final TGSoundCategory GUN_FIRE = new TGSoundCategory("gunfire", SoundCategory.PLAYERS);
+    public static final TGSoundCategory PLAYER_EFFECT = new TGSoundCategory("playereffect", SoundCategory.PLAYERS);
+    public static final TGSoundCategory RELOAD = new TGSoundCategory("reload", SoundCategory.PLAYERS);
+    public static final TGSoundCategory EXPLOISON = new TGSoundCategory("explosion", SoundCategory.MASTER);
+    public static final TGSoundCategory MACHINE = new TGSoundCategory("machine", SoundCategory.BLOCKS);
+    public static final TGSoundCategory DEATHEFFECT = new TGSoundCategory("deathFX", SoundCategory.HOSTILE);
+    public static final TGSoundCategory HOSTILE = new TGSoundCategory("hostile", SoundCategory.HOSTILE);
 
     protected int id;
     protected String name;
@@ -22,6 +22,10 @@ public class TGSoundCategory {
 
     public TGSoundCategory(String name, SoundCategory vanillaCategory) {
         super();
+        if (CATEGORIES == null) {
+            CATEGORIES = new ArrayList<>();
+        }
+
         this.id = CATEGORIES.size();
         this.name = name;
         this.vanillaCategory = vanillaCategory;
