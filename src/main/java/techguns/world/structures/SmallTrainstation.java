@@ -1,5 +1,7 @@
 package techguns.world.structures;
 
+import techguns.TGConfig;
+
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.ResourceLocation;
@@ -64,7 +66,7 @@ public class SmallTrainstation extends WorldgenStructure {
         //blockList.add(new MBlock(Block.getBlockFromName("tile.chisel.limestone_stairs.0"), 9));
         blockList.add(MBlockRegister.STONEBRICK_STAIRS_WEST_CRACKED_RND); //new MultiMBlock(new Block[]{ChiselBlocks.limestoneStairs[0], ChiselBlocks.limestoneStairs[3], Blocks.AIR},new int[]{9,1,0}, new int[]{2,2,1}, new BlockType[]{BlockType.STAIRS2_CHISEL,BlockType.STAIRS, BlockType.TG}, new boolean[]{true,true,false}));
 
-        blockList.add(new MBlockTGSpawner(EnumMonsterSpawnerType.HOLE, 3, 2, 200, 1).addMobType(ZombieMiner.class, 1));
+        blockList.add(new MBlockTGSpawner(EnumMonsterSpawnerType.HOLE, TGConfig.spawnerBlockWorldgenMobsTotal, TGConfig.spawnerBlockWorldgenMobsConcurrent, TGConfig.getSpawnerBlockIntervalTicks(), 1).addMobType(ZombieMiner.class, 1));
 
         blocks = BlockUtils.loadStructureFromFile("small_trainstation");
     }

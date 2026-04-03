@@ -167,6 +167,14 @@ public class TGConfig {
     public static boolean spawnOreClusterStructures;
 
     /**
+     * TG spawner blocks (hole / soldier spawner) in structures and maze dungeons.
+     */
+    public static int spawnerBlockIntervalSeconds;
+    public static int spawnerBlockWorldgenMobsTotal;
+    public static int spawnerBlockWorldgenMobsConcurrent;
+    public static int spawnerBlockMaxLinkedMobs;
+
+    /**
      * CATEGORIES
      */
     private static final String CATEGORY_ENABLING_ITEMS = "Disable Items";
@@ -176,6 +184,7 @@ public class TGConfig {
     private static final String WORLDGEN = "World Generation";
     private static final String DAMAGE_FACTORS = "Damage Factors";
     private static final String ORE_DRILLS = "Ore Drills";
+    private static final String TG_SPAWNER_BLOCK = "TG Spawner Block";
 
 
     public static void init(FMLPreInitializationEvent event) {
@@ -285,6 +294,15 @@ public class TGConfig {
 
         spawnOreClusterStructures = config.getBoolean("SpawnOreClusterStructures", WORLDGEN, true, "When worldgen is enabled, include structure spawns that contain ore clusters.");
 
+        config.addCustomCategoryComment(TG_SPAWNER_BLOCK, "Techguns monster spawner blocks (holes / soldier spawns) used in world structures and dungeon presets. Does not change vanilla mob spawners.");
+        spawnerBlockIntervalSeconds = config.getInt("SpawnerIntervalSeconds", TG_SPAWNER_BLOCK, 25, 1, 3600, "Seconds between spawn attempts for TG spawner tile entities (default worldgen/dungeon tuning).");
+        spawnerBlockWorldgenMobsTotal = config.getInt("SpawnerWorldgenMobsTotal", TG_SPAWNER_BLOCK, 2, 1, 64, "Default maximum mobs one spawner may spawn in total before removing itself (used by structure presets and dungeon initSpawner).");
+        spawnerBlockWorldgenMobsConcurrent = config.getInt("SpawnerWorldgenMobsConcurrent", TG_SPAWNER_BLOCK, 2, 1, 64, "Default maximum mobs alive at once per spawner. Should not exceed SpawnerWorldgenMobsTotal.");
+        spawnerBlockMaxLinkedMobs = config.getInt("SpawnerMaxLinkedMobsSafety", TG_SPAWNER_BLOCK, 12, 1, 256, "Safety cap: maximum mobs linked to one spawner tile in range (prevents pile-ups if something goes wrong).");
+        if (spawnerBlockWorldgenMobsConcurrent > spawnerBlockWorldgenMobsTotal) {
+            spawnerBlockWorldgenMobsConcurrent = spawnerBlockWorldgenMobsTotal;
+        }
+
         explosiveChargeMaxBlockHardness = config.getFloat("ExplosiveChargeMaxHardness", Configuration.CATEGORY_GENERAL, 30.0f, 0.0f, Float.MAX_VALUE, "Highest blockHardness normal explosive charges can break, obsidian is 50.0)");
 
         explosiveChargeAdvancedMaxBlockHardness = config.getFloat("ExplosiveChargeAdvancedMaxHardness", Configuration.CATEGORY_GENERAL, 100.0f, 0.0f, Float.MAX_VALUE, "Highest blockHardness advanced explosive charges can break, obsidian is 50.0)");
@@ -361,6 +379,11 @@ public class TGConfig {
         if (config.hasChanged()) {
             config.save();
         }
+    }
+
+    /** Spawn interval for TG spawner blocks, in game ticks (20 ticks = 1 s). */
+    public static int getSpawnerBlockIntervalTicks() {
+        return Math.max(1, spawnerBlockIntervalSeconds) * 20;
     }
 
     @SubscribeEvent

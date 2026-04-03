@@ -1,5 +1,7 @@
 package techguns.world.structures;
 
+import techguns.TGConfig;
+
 import net.minecraft.init.Blocks;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
@@ -86,7 +88,7 @@ public class Train extends WorldgenStructure {
         blockList.add(new MBlock("techguns:sandbags", 0));
         blockList.add(new MBlock("minecraft:stone", 0));
         blockList.add(new MBlock("techguns:concrete", 1));
-        blockList.add(new MBlockTGSpawner(EnumMonsterSpawnerType.HOLE, 8, 3, 100, 0).addMobType(Commando.class, 20).addMobType(Bandit.class, 40));
+        blockList.add(new MBlockTGSpawner(EnumMonsterSpawnerType.HOLE, TGConfig.spawnerBlockWorldgenMobsTotal, TGConfig.spawnerBlockWorldgenMobsConcurrent, TGConfig.getSpawnerBlockIntervalTicks(), 0).addMobType(Commando.class, 20).addMobType(Bandit.class, 40));
         blockList.add(new MBlock("techguns:military_crate", 5));
         blockList.add(new MBlock("techguns:military_crate", 4));
         blockList.add(new MBlock("minecraft:iron_block", 0));

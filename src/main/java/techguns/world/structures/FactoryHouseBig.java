@@ -1,5 +1,7 @@
 package techguns.world.structures;
 
+import techguns.TGConfig;
+
 import net.minecraft.init.Blocks;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
@@ -37,7 +39,7 @@ public class FactoryHouseBig extends WorldgenStructure {
         blockList.add(new MBlock("minecraft:hardened_clay", 0));
         blockList.add(new MBlock("techguns:lamp0", 4));
         blockList.add(new MBlock("techguns:bunkerdoor", 1));
-        blockList.add(new MBlockTGSpawner(EnumMonsterSpawnerType.HOLE, 6, 2, 100, 2).addMobType(ZombieMiner.class, 1).addMobType(ZombieSoldier.class, 1));
+        blockList.add(new MBlockTGSpawner(EnumMonsterSpawnerType.HOLE, TGConfig.spawnerBlockWorldgenMobsTotal, TGConfig.spawnerBlockWorldgenMobsConcurrent, TGConfig.getSpawnerBlockIntervalTicks(), 2).addMobType(ZombieMiner.class, 1).addMobType(ZombieSoldier.class, 1));
         blockList.add(new MBlock("minecraft:crafting_table", 0));
         blockList.add(new MBlock("techguns:bunkerdoor", 9));
         blockList.add(new MBlock("techguns:lamp0", 2));

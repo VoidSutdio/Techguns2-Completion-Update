@@ -1,5 +1,7 @@
 package techguns.world.structures;
 
+import techguns.TGConfig;
+
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import techguns.blocks.EnumMonsterSpawnerType;
@@ -20,7 +22,7 @@ public class EndCluster extends WorldgenStructure {
     static {
         blockList.add(new MBlock("minecraft:end_stone", 0));
         blockList.add(new MBlock("techguns:basicore", 4));
-        blockList.add(new MBlockTGSpawner(EnumMonsterSpawnerType.HOLE, 6, 3, 100, 0).addMobType(StormTrooper.class, 20).addMobType(SuperMutantElite.class, 40));
+        blockList.add(new MBlockTGSpawner(EnumMonsterSpawnerType.HOLE, TGConfig.spawnerBlockWorldgenMobsTotal, TGConfig.spawnerBlockWorldgenMobsConcurrent, TGConfig.getSpawnerBlockIntervalTicks(), 0).addMobType(StormTrooper.class, 20).addMobType(SuperMutantElite.class, 40));
         blockList.add(new MBlock("techguns:orecluster", 4));
 
         blocks = BlockUtils.loadStructureFromFile("end_cluster");

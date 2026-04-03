@@ -1,5 +1,7 @@
 package techguns.world.structures;
 
+import techguns.TGConfig;
+
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.tileentity.TileEntity;
@@ -228,7 +230,7 @@ public class MilitaryCamp {
         if (tile instanceof TGSpawnerTileEnt) {
             TGSpawnerTileEnt spawner = (TGSpawnerTileEnt) tile;
             spawner.addMobType(AttackHelicopter.class, 1);
-            spawner.setParams(1, 1, 200, 0);
+            spawner.setParams(1, 1, TGConfig.getSpawnerBlockIntervalTicks(), 0);
 
             int h = Math.min(posY + 64, world.getActualHeight()) - posY;
             spawner.setSpawnHeightOffset(h);
@@ -247,7 +249,7 @@ public class MilitaryCamp {
             if (tile instanceof TGSpawnerTileEnt) {
                 TGSpawnerTileEnt spawner = (TGSpawnerTileEnt) tile;
                 spawner.addMobType(ArmySoldier.class, 1);
-                spawner.setParams(3, 1, 200, 0);
+                spawner.setParams(3, 1, TGConfig.getSpawnerBlockIntervalTicks(), 0);
             }
         }
 

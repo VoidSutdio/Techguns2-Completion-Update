@@ -1,5 +1,7 @@
 package techguns.world.structures;
 
+import techguns.TGConfig;
+
 import net.minecraft.init.Blocks;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
@@ -44,7 +46,7 @@ public class EndFloatingShip extends WorldgenStructure {
         blockList.add(new MBlock("minecraft:purpur_stairs", 2));
         blockList.add(new MBlock("techguns:neonlights", 0));
         blockList.add(new MBlock("minecraft:purpur_stairs", 1));
-        blockList.add(new MBlockTGSpawner(EnumMonsterSpawnerType.HOLE, 6, 2, 120, 1).addMobType(DictatorDave.class, 2).addMobType(Outcast.class, 20).addMobType(Commando.class, 13));
+        blockList.add(new MBlockTGSpawner(EnumMonsterSpawnerType.HOLE, TGConfig.spawnerBlockWorldgenMobsTotal, TGConfig.spawnerBlockWorldgenMobsConcurrent, TGConfig.getSpawnerBlockIntervalTicks(), 1).addMobType(DictatorDave.class, 2).addMobType(Outcast.class, 20).addMobType(Commando.class, 13));
         blockList.add(new MBlock("minecraft:purpur_pillar", 8));
         blockList.add(new MBlock("minecraft:purpur_block", 0));
         blockList.add(new MBlock("minecraft:purpur_pillar", 0));

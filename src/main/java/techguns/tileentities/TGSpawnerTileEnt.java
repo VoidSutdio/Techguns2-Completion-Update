@@ -11,27 +11,34 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.WeightedRandom;
 import net.minecraft.util.WeightedSpawnerEntity;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.chunk.storage.AnvilChunkLoader;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
 import org.jetbrains.annotations.NotNull;
+import techguns.TGConfig;
 import techguns.capabilities.TGSpawnerNPCData;
 import techguns.entities.npcs.ITGSpawnerNPC;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Objects;
 import java.util.Random;
 
 public class TGSpawnerTileEnt extends BasicTGTileEntity implements ITickable {
+    /**
+     * Radius (in blocks) used to scan nearby mobs and count only those linked to this spawner.
+     */
+    protected static final double SPAWNER_MOB_COUNT_RADIUS_BLOCKS = 24.0D;
 
     protected Random rand = new Random();
-    protected int delay = 200;
-    protected int spawndelay = 200;
-    protected int mobsLeft = 5;
-    protected int maxActive = 3;
+    protected int delay;
+    protected int spawndelay;
+    protected int mobsLeft;
+    protected int maxActive;
 
     protected int spawnHeightOffset = 0;
 
@@ -46,7 +53,11 @@ public class TGSpawnerTileEnt extends BasicTGTileEntity implements ITickable {
 
     public TGSpawnerTileEnt() {
         super(false);
-        //this.addMobType(ZombieSoldier.class, 100);
+        int ticks = TGConfig.getSpawnerBlockIntervalTicks();
+        this.delay = ticks;
+        this.spawndelay = ticks;
+        this.mobsLeft = Math.max(1, TGConfig.spawnerBlockWorldgenMobsTotal);
+        this.maxActive = Math.max(1, Math.min(TGConfig.spawnerBlockWorldgenMobsConcurrent, this.mobsLeft));
     }
 
     public <T extends EntityLiving & ITGSpawnerNPC> void addMobType(Class<T> clazz, int weight) {
@@ -129,7 +140,7 @@ public class TGSpawnerTileEnt extends BasicTGTileEntity implements ITickable {
         this.delay = compound.getShort("delay");
         this.spawndelay = compound.getShort("spawnDelay");
         if (spawndelay < 1) {
-            spawndelay = 200;
+            spawndelay = TGConfig.getSpawnerBlockIntervalTicks();
         }
         this.maxActive = compound.getShort("maxActive");
         if (maxActive < 1) {
@@ -168,11 +179,24 @@ public class TGSpawnerTileEnt extends BasicTGTileEntity implements ITickable {
         return this.mobtypes.size() > 0;
     }
 
+    protected boolean hasTooManyNearbySpawnerMobs() {
+        BlockPos pos = this.getPos();
+        AxisAlignedBB area = new AxisAlignedBB(pos).grow(SPAWNER_MOB_COUNT_RADIUS_BLOCKS);
+        List<EntityLiving> mobs = this.world.getEntitiesWithinAABB(EntityLiving.class, area, e -> {
+            if (!(e instanceof ITGSpawnerNPC)) {
+                return false;
+            }
+            TGSpawnerNPCData dat = TGSpawnerNPCData.get((ITGSpawnerNPC) e);
+            return dat != null && pos.equals(dat.getSpawnerPos());
+        });
+        return mobs.size() >= TGConfig.spawnerBlockMaxLinkedMobs;
+    }
+
     @Override
     public void update() {
         if (this.world.isRemote) return;
         this.delay--;
-        if (this.delay <= 0 && activeMobs.size() < Math.min(maxActive, mobsLeft) && this.hasMobTypes()) {
+        if (this.delay <= 0 && activeMobs.size() < Math.min(maxActive, mobsLeft) && this.hasMobTypes() && !this.hasTooManyNearbySpawnerMobs()) {
 
             if (this.world.getDifficulty() != EnumDifficulty.PEACEFUL) {
 

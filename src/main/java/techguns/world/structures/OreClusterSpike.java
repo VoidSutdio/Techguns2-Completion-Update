@@ -1,5 +1,7 @@
 package techguns.world.structures;
 
+import techguns.TGConfig;
+
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
@@ -39,7 +41,7 @@ public class OreClusterSpike extends WorldgenStructure {
     static {
         Arrays.stream(clusterWeights).forEach(i -> totalweight += i);
         blockList.add(new MBlock(Blocks.AIR, 0));
-        blockList.add(new MBlockTGSpawner(EnumMonsterSpawnerType.HOLE, 4, 2, 200, 1).addMobType(AlienBug.class, 1));
+        blockList.add(new MBlockTGSpawner(EnumMonsterSpawnerType.HOLE, TGConfig.spawnerBlockWorldgenMobsTotal, TGConfig.spawnerBlockWorldgenMobsConcurrent, TGConfig.getSpawnerBlockIntervalTicks(), 1).addMobType(AlienBug.class, 1));
         blockList.add(new MultiMBlock(new Block[]{Blocks.STONE, Blocks.AIR}, new int[]{0, 0}, new int[]{1, 1}));
         blockList.add(new MBlock(TGBlocks.SLIMY_LADDER, 4));
         blockList.add(new MBlock(TGBlocks.SLIMY_BLOCK, 0));

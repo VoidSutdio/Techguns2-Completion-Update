@@ -1,5 +1,7 @@
 package techguns.world.dungeon.presets;
 
+import techguns.TGConfig;
+
 import net.minecraft.util.ResourceLocation;
 import techguns.Tags;
 import techguns.entities.npcs.SkeletonSoldier;
@@ -95,7 +97,7 @@ public class PresetCastle implements IDungeonPreset {
 
     @Override
     public void initSpawner(TGSpawnerTileEnt spawner) {
-        spawner.setParams(2, 2, 200, 2);
+        spawner.setParams(TGConfig.spawnerBlockWorldgenMobsTotal, TGConfig.spawnerBlockWorldgenMobsConcurrent, TGConfig.getSpawnerBlockIntervalTicks(), 2);
         spawner.addMobType(ZombieSoldier.class, 1);
         spawner.addMobType(SkeletonSoldier.class, 1);
     }

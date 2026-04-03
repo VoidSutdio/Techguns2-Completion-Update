@@ -1,5 +1,7 @@
 package techguns.world.structures;
 
+import techguns.TGConfig;
+
 import net.minecraft.init.Blocks;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
@@ -37,7 +39,7 @@ public class PoliceStation extends WorldgenStructure {
         blockList.add(MBlockRegister.OAK_PLANKS_1);
         blockList.add(new MBlockChestLoottable(Blocks.CHEST, 2, CHEST_LOOT));
         blockList.add(MBlockRegister.COBBLESTONE_7);
-        blockList.add(new MBlockTGSpawner(EnumMonsterSpawnerType.SOLDIER_SPAWN, 3, 1, 200, 1).addMobType(ZombiePoliceman.class, 1));
+        blockList.add(new MBlockTGSpawner(EnumMonsterSpawnerType.SOLDIER_SPAWN, TGConfig.spawnerBlockWorldgenMobsTotal, TGConfig.spawnerBlockWorldgenMobsConcurrent, TGConfig.getSpawnerBlockIntervalTicks(), 1).addMobType(ZombiePoliceman.class, 1));
         blockList.add(new MBlock(TGBlocks.LAMP_0, 7));
         blockList.add(new MBlock(Blocks.RAIL, 6));
         blockList.add(new MBlock(Blocks.RAIL, 9));

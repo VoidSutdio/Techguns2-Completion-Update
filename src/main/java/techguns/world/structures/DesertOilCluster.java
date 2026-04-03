@@ -1,5 +1,7 @@
 package techguns.world.structures;
 
+import techguns.TGConfig;
+
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 import techguns.TGBlocks;
@@ -47,7 +49,7 @@ public class DesertOilCluster extends WorldgenStructure {
         blockList.add(new MBlock(Blocks.SANDSTONE, 0));
         blockList.add(new MBlock(TGBlocks.SANDBAGS, 0));
         blockList.add(new MBlock(Blocks.AIR, 0));
-        blockList.add(new MBlockTGSpawner(EnumMonsterSpawnerType.SOLDIER_SPAWN, 3, 1, 200, 1).addMobType(ArmySoldier.class, 4).addMobType(Commando.class, 1));
+        blockList.add(new MBlockTGSpawner(EnumMonsterSpawnerType.SOLDIER_SPAWN, TGConfig.spawnerBlockWorldgenMobsTotal, TGConfig.spawnerBlockWorldgenMobsConcurrent, TGConfig.getSpawnerBlockIntervalTicks(), 1).addMobType(ArmySoldier.class, 4).addMobType(Commando.class, 1));
         blockList.add(oilblockSand);
         blockList.add(new MBlockOreclusterType(types, clusterWeights, 0.5f, ores));
         blockList.add(oilblock);

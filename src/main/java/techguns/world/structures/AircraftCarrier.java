@@ -1,5 +1,7 @@
 package techguns.world.structures;
 
+import techguns.TGConfig;
+
 import net.minecraft.init.Blocks;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
@@ -66,8 +68,8 @@ public class AircraftCarrier extends WorldgenStructure {
         blockList.add(new MBlockChestLoottable(Blocks.CHEST, 3, LOOT_TABLE));//TGBlocks.tgchest, 3, true, BlockType.CHEST));
         blockList.add(MBlockRegister.TECHNICAL2_FAN);//new MBlock(ChiselBlocks.technical2, 1));
         blockList.add(new MBlockChestLoottable(Blocks.CHEST, 4, LOOT_TABLE));//TGBlocks.tgchest, 4, true, BlockType.CHEST));
-        blockList.add(new MBlockTGSpawner(EnumMonsterSpawnerType.HOLE, 6, 2, 150, 2).addMobType(ArmySoldier.class, 1).addMobType(Commando.class, 1));
-        blockList.add(new MBlockTGSpawner(EnumMonsterSpawnerType.SOLDIER_SPAWN, 2, 2, 100, 0).addMobType(AttackHelicopter.class, 1));
+        blockList.add(new MBlockTGSpawner(EnumMonsterSpawnerType.HOLE, TGConfig.spawnerBlockWorldgenMobsTotal, TGConfig.spawnerBlockWorldgenMobsConcurrent, TGConfig.getSpawnerBlockIntervalTicks(), 2).addMobType(ArmySoldier.class, 1).addMobType(Commando.class, 1));
+        blockList.add(new MBlockTGSpawner(EnumMonsterSpawnerType.SOLDIER_SPAWN, 1, 1, TGConfig.getSpawnerBlockIntervalTicks(), 0).addMobType(AttackHelicopter.class, 1));
         blockList.add(MBlockRegister.SUPPLY_CRATES_CHANCE);
         blocks = BlockUtils.loadStructureFromFile("aircraft_carrier");
     }
