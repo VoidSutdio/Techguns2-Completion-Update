@@ -173,6 +173,7 @@ public class TGConfig {
     public static int spawnerBlockWorldgenMobsTotal;
     public static int spawnerBlockWorldgenMobsConcurrent;
     public static int spawnerBlockMaxLinkedMobs;
+    public static boolean spawnerBlockUseCustomEntitySpawn;
 
     /**
      * CATEGORIES
@@ -299,6 +300,8 @@ public class TGConfig {
         spawnerBlockWorldgenMobsTotal = config.getInt("SpawnerWorldgenMobsTotal", TG_SPAWNER_BLOCK, 2, 1, 64, "Default maximum mobs one spawner may spawn in total before removing itself (used by structure presets and dungeon initSpawner).");
         spawnerBlockWorldgenMobsConcurrent = config.getInt("SpawnerWorldgenMobsConcurrent", TG_SPAWNER_BLOCK, 2, 1, 64, "Default maximum mobs alive at once per spawner. Should not exceed SpawnerWorldgenMobsTotal.");
         spawnerBlockMaxLinkedMobs = config.getInt("SpawnerMaxLinkedMobsSafety", TG_SPAWNER_BLOCK, 12, 1, 256, "Safety cap: maximum mobs linked to one spawner tile in range (prevents pile-ups if something goes wrong).");
+        spawnerBlockUseCustomEntitySpawn = config.getBoolean("SpawnerUseCustomEntitySpawn", TG_SPAWNER_BLOCK, false,
+                "false = default TG mode (spawns only ITGSpawnerNPC mobs from presets). true = custom mode (spawns any EntityLiving from this spawner's mobtypes NBT id; use this when editing spawner NBT to point at entities from other mods).");
         if (spawnerBlockWorldgenMobsConcurrent > spawnerBlockWorldgenMobsTotal) {
             spawnerBlockWorldgenMobsConcurrent = spawnerBlockWorldgenMobsTotal;
         }
