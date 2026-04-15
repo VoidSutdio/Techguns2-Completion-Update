@@ -3,16 +3,8 @@ package techguns.entities.npcs;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDoor;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.IEntityLivingData;
-import net.minecraft.entity.IRangedAttackMob;
-import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.EntityAILookIdle;
-import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
-import net.minecraft.entity.ai.EntityAISwimming;
-import net.minecraft.entity.ai.EntityAIWander;
-import net.minecraft.entity.ai.EntityAIWatchClosest;
+import net.minecraft.entity.*;
+import net.minecraft.entity.ai.*;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
@@ -23,12 +15,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
-import net.minecraft.pathfinding.Path;
-import net.minecraft.pathfinding.PathFinder;
-import net.minecraft.pathfinding.PathNavigate;
-import net.minecraft.pathfinding.PathNavigateGround;
-import net.minecraft.pathfinding.PathNodeType;
-import net.minecraft.pathfinding.WalkNodeProcessor;
+import net.minecraft.pathfinding.*;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
@@ -173,7 +160,7 @@ public class GenericNPC extends EntityMob implements IRangedAttackMob, INPCTechg
     @Override
     protected void setEquipmentBasedOnDifficulty(DifficultyInstance difficulty) {
         int d = Math.round(difficulty.getClampedAdditionalDifficulty() * 3f);
-        this.addRandomArmor(d);
+        this.addRandomArmorIfEmpty(d);
     }
 
 
@@ -188,8 +175,22 @@ public class GenericNPC extends EntityMob implements IRangedAttackMob, INPCTechg
 
     public void onSpawnByManager(int difficulty) {
         this.setCanPickUpLoot(false);
-        this.addRandomArmor(difficulty);
+        this.addRandomArmorIfEmpty(difficulty);
         this.setCombatTask();
+    }
+
+    /**
+     * Applies random armor only if all armor slots are empty
+     * (e.g. no preset armor provided via NBT).
+     */
+    protected void addRandomArmorIfEmpty(int difficulty) {
+        for (EntityEquipmentSlot slot : EntityEquipmentSlot.values()) {
+            if (slot.getSlotType() == EntityEquipmentSlot.Type.ARMOR && !this.getItemStackFromSlot(slot).isEmpty()) {
+                return;
+            }
+        }
+
+        this.addRandomArmor(difficulty);
     }
 
 
