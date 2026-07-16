@@ -43,6 +43,7 @@ import net.minecraftforge.client.event.RenderHandEvent;
 import net.minecraftforge.client.event.RenderLivingEvent;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.client.event.TextureStitchEvent;
+import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.event.entity.EntityEvent.EntityConstructing;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
@@ -770,10 +771,17 @@ public class TGEventHandler {
 
     @SubscribeEvent
     public static void onEntityConstruction(EntityConstructing event) {
+        if (event.getEntity() instanceof FakePlayer) {
+            return;
+        }
 
-        if (event.getEntity() instanceof EntityLivingBase) {
-            EntityLivingBase elb = (EntityLivingBase) event.getEntity();
-            elb.getAttributeMap().registerAttribute(TGRadiation.RADIATION_RESISTANCE).setBaseValue(0);
+        if (event.getEntity() instanceof EntityLivingBase elb) {
+
+            if (elb.getAttributeMap().getAttributeInstance(TGRadiation.RADIATION_RESISTANCE) == null) {
+                elb.getAttributeMap()
+                        .registerAttribute(TGRadiation.RADIATION_RESISTANCE)
+                        .setBaseValue(0);
+            }
         }
     }
 }

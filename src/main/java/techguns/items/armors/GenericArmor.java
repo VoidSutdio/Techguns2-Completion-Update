@@ -178,6 +178,11 @@ public class GenericArmor extends ItemArmor implements ISpecialArmor, IItemTGRen
         return this;
     }
 
+    public GenericArmor setArmorDisplayValue(int value) {
+        this.armorValue = Math.max(0, value);
+        return this;
+    }
+
     public GenericArmor setKnockbackResistance(float resistpercent) {
         this.knockbackresistance = resistpercent;
         return this;
@@ -401,6 +406,15 @@ public class GenericArmor extends ItemArmor implements ISpecialArmor, IItemTGRen
 
     public float getArmorValue(DamageType type) {
         return this.material.getArmorValueSlot(armorType, type);
+    }
+
+    public TGArmorMaterial getTGArmorMaterial() {
+        return this.material;
+    }
+
+    public void refreshMaterialDerivedStats() {
+        this.armorValue = Math.round(this.material.getArmorValueSlot(this.armorType, DamageType.PHYSICAL));
+        this.setMaxDamage(this.material.getDurability(this.armorType));
     }
 
     public float getToughness() {

@@ -47,3 +47,60 @@ This mod is a modernized version of original discontinued 1.12 **Techguns** mod,
 
 ## Important note: the mod is not fully polished; there may be some minor bugs. You can report them in the ["Issues" tab on this repository](https://github.com/TheSlize/Techguns2-Completion-Update/issues)!
 
+## CraftTweaker: Armor tuning
+
+This fork provides `mods.techguns.ArmorStats` methods to tune armor via scripts.
+
+Supported methods:
+- `setArmorStat(String armorname, String stat, float value)`
+- `setArmorStat(String armorname, String stat, float powered, float unpowered)`
+- `setArmorDurability(String armorname, int durability)`
+- `setArmorDisplayValue(String armorname, int value)`
+- `setArmorKnockbackResistance(String armorname, float value)`
+- `setArmorRadResistance(String armorname, float value)`
+- `setArmorHiddenSlots(String armorname, boolean hideFace, boolean hideBack, boolean hideGlove)`
+- `setArmorRepairMats(String armorname, IItemStack metal, IItemStack cloth, float metalPercent, int totalMats)`
+- `setMaterialArmorValue(String material, String damagetype, float amount)`
+- `setMaterialBaseDurability(String material, int baseDurability)`
+- `setMaterialDurabilityFactor(String material, String slot, float factor)` (`HEAD`, `CHEST`, `LEGS`, `FEET`)
+- `setMaterialToughness(String material, float amount)`
+- `setPoweredArmorMaxPower(String armorname, int maxPower)`
+- `setPoweredArmorBattery(String armorname, IItemStack battery)`
+- `setPoweredArmorBattery(String armorname, IItemStack battery, IItemStack emptyBattery)`
+
+Gun methods (`mods.techguns.GunStats`):
+- `setWeaponStat(String weaponname, String fieldname, float value)` (`DAMAGE`, `DAMAGE_MIN`, `DAMAGE_DROP_START`, `DAMAGE_DROP_END`, `BULLET_SPEED`, `BULLET_DISTANCE`, `GRAVITY`, `MINING_SPEED`, `MIN_FIRE_TIME`, `ACCURACY`, `SPREAD`, `PENETRATION`, `CLIP_SIZE`, `AMMO_COUNT`, `BULLET_COUNT`, `RELOAD_TIME`)
+- `setWeaponDamageDrop(String weaponname, float start, float end, float minDamage)`
+- `setWeaponZoom(String weaponname, float zoomMult, boolean toggleZoom, float zoomSpreadMultiplier, boolean fireCenteredZoomed)`
+- `setWeaponShotgunSpread(String weaponname, int bulletCount, float spread, boolean burst)`
+- `setWeaponSilenced(String weaponname, boolean value)`
+- `setWeaponShootWithLeftClick(String weaponname, boolean value)`
+- `setWeaponHandType(String weaponname, String handType)` (`ONE_HANDED` / `TWO_HANDED`)
+- `setWeaponAIStats(String weaponname, float attackRange, int attackTime, int burstCount, int burstAttackTime)`
+
+Example (`scripts/techguns_armor.zs`):
+
+```zenscript
+mods.techguns.ArmorStats.setArmorDurability("t3_power_chestplate", 2400);
+mods.techguns.ArmorStats.setArmorDisplayValue("t3_power_chestplate", 10);
+mods.techguns.ArmorStats.setArmorKnockbackResistance("t3_power_chestplate", 0.35);
+mods.techguns.ArmorStats.setArmorRadResistance("t3_power_chestplate", 1.0);
+mods.techguns.ArmorStats.setArmorHiddenSlots("t3_power_chestplate", false, true, true);
+mods.techguns.ArmorStats.setArmorRepairMats("t3_power_chestplate", <techguns:plate_carbon>, <techguns:circuit_board_elite>, 0.5, 4);
+mods.techguns.ArmorStats.setPoweredArmorMaxPower("t3_power_chestplate", 10000);
+mods.techguns.ArmorStats.setPoweredArmorBattery("t3_power_chestplate", <techguns:energy_cell>, <techguns:energy_cell_empty>);
+mods.techguns.ArmorStats.setArmorStat("t3_power_chestplate", "SPEED", 0.08);
+
+mods.techguns.ArmorStats.setMaterialBaseDurability("T3_POWER", 420);
+mods.techguns.ArmorStats.setMaterialDurabilityFactor("T3_POWER", "CHEST", 0.35);
+mods.techguns.ArmorStats.setMaterialToughness("T3_POWER", 3.0);
+mods.techguns.ArmorStats.setMaterialArmorValue("T3_POWER", "PROJECTILE", 24.0);
+
+mods.techguns.GunStats.setWeaponStat("ak47", "DAMAGE", 8.0);
+mods.techguns.GunStats.setWeaponStat("ak47", "ACCURACY", 0.03);
+mods.techguns.GunStats.setWeaponStat("ak47", "MIN_FIRE_TIME", 4);
+mods.techguns.GunStats.setWeaponStat("ak47", "RELOAD_TIME", 38);
+mods.techguns.GunStats.setWeaponDamageDrop("ak47", 18, 42, 5.5);
+mods.techguns.GunStats.setWeaponZoom("ak47", 1.35, false, 0.7, false);
+mods.techguns.GunStats.setWeaponHandType("ak47", "TWO_HANDED");
+```

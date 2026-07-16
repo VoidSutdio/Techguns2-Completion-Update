@@ -121,10 +121,21 @@ public class BasicInventoryTileEnt extends BasicTGTileEntity {
     @Override
     public boolean shouldRefresh(@NotNull World world, @NotNull BlockPos pos, @NotNull IBlockState oldState, @NotNull IBlockState newState) {
         if (!this.hasRotation) {
-            return (oldState.getBlock() != newState.getBlock()) || (oldState.getValue(this.getMachineBlockType().MACHINE_TYPE) != newState.getValue(this.getMachineBlockType().MACHINE_TYPE));
-        } else {
-            return super.shouldRefresh(world, pos, oldState, newState);
+            BasicMachine machine = this.getMachineBlockType();
+
+            if (oldState.getBlock() != newState.getBlock()) {
+                return true;
+            }
+
+            if (!oldState.getPropertyKeys().contains(machine.MACHINE_TYPE)
+                    || !newState.getPropertyKeys().contains(machine.MACHINE_TYPE)) {
+                return true;
+            }
+
+            return oldState.getValue(machine.MACHINE_TYPE) != newState.getValue(machine.MACHINE_TYPE);
         }
+
+        return super.shouldRefresh(world, pos, oldState, newState);
     }
 
     /**
